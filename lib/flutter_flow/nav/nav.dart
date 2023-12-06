@@ -132,6 +132,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'exercises')
               : ExercisesWidget(),
+        ),
+        FFRoute(
+          name: 'newTestPage',
+          path: '/newTestPage',
+          builder: (context, params) => NewTestPageWidget(),
+        ),
+        FFRoute(
+          name: 'ForgotPassword01',
+          path: '/forgotPassword01',
+          builder: (context, params) => ForgotPassword01Widget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

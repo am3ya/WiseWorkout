@@ -175,7 +175,7 @@ class _NavBarPageState extends State<NavBarPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.start,
+              Icons.add_circle_outline,
               size: 24.0,
             ),
             label: 'Home',
@@ -183,7 +183,7 @@ class _NavBarPageState extends State<NavBarPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.extension_rounded,
+              Icons.fitness_center_outlined,
               size: 24.0,
             ),
             label: 'Home',

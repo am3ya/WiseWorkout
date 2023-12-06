@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/components/email_not_verified_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_button_tabbar.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -22,54 +23,54 @@ class LoginModel extends FlutterFlowModel<LoginWidget> {
       tabBarController != null ? tabBarController!.index : 0;
 
   // State field(s) for emailAddress widget.
-  FocusNode? emailAddressFocusNode1;
-  TextEditingController? emailAddressController1;
-  String? Function(BuildContext, String?)? emailAddressController1Validator;
+  FocusNode? emailAddressFocusNode;
+  TextEditingController? emailAddressController;
+  String? Function(BuildContext, String?)? emailAddressControllerValidator;
   // State field(s) for password widget.
-  FocusNode? passwordFocusNode1;
-  TextEditingController? passwordController1;
-  late bool passwordVisibility1;
-  String? Function(BuildContext, String?)? passwordController1Validator;
+  FocusNode? passwordFocusNode;
+  TextEditingController? passwordController;
+  late bool passwordVisibility;
+  String? Function(BuildContext, String?)? passwordControllerValidator;
   // State field(s) for password2 widget.
   FocusNode? password2FocusNode;
   TextEditingController? password2Controller;
   late bool password2Visibility;
   String? Function(BuildContext, String?)? password2ControllerValidator;
-  // State field(s) for emailAddress widget.
-  FocusNode? emailAddressFocusNode2;
-  TextEditingController? emailAddressController2;
-  String? Function(BuildContext, String?)? emailAddressController2Validator;
-  // State field(s) for password widget.
-  FocusNode? passwordFocusNode2;
-  TextEditingController? passwordController2;
-  late bool passwordVisibility2;
-  String? Function(BuildContext, String?)? passwordController2Validator;
+  // State field(s) for loginEmail widget.
+  FocusNode? loginEmailFocusNode;
+  TextEditingController? loginEmailController;
+  String? Function(BuildContext, String?)? loginEmailControllerValidator;
+  // State field(s) for loginPassword widget.
+  FocusNode? loginPasswordFocusNode;
+  TextEditingController? loginPasswordController;
+  late bool loginPasswordVisibility;
+  String? Function(BuildContext, String?)? loginPasswordControllerValidator;
 
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {
-    passwordVisibility1 = false;
+    passwordVisibility = false;
     password2Visibility = false;
-    passwordVisibility2 = false;
+    loginPasswordVisibility = false;
   }
 
   void dispose() {
     unfocusNode.dispose();
     tabBarController?.dispose();
-    emailAddressFocusNode1?.dispose();
-    emailAddressController1?.dispose();
+    emailAddressFocusNode?.dispose();
+    emailAddressController?.dispose();
 
-    passwordFocusNode1?.dispose();
-    passwordController1?.dispose();
+    passwordFocusNode?.dispose();
+    passwordController?.dispose();
 
     password2FocusNode?.dispose();
     password2Controller?.dispose();
 
-    emailAddressFocusNode2?.dispose();
-    emailAddressController2?.dispose();
+    loginEmailFocusNode?.dispose();
+    loginEmailController?.dispose();
 
-    passwordFocusNode2?.dispose();
-    passwordController2?.dispose();
+    loginPasswordFocusNode?.dispose();
+    loginPasswordController?.dispose();
   }
 
   /// Action blocks are added here.

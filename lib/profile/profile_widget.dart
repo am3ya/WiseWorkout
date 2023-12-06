@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -298,8 +299,12 @@ class _ProfileWidgetState extends State<ProfileWidget> {
           Padding(
             padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 40.0),
             child: FFButtonWidget(
-              onPressed: () {
-                print('Button pressed ...');
+              onPressed: () async {
+                GoRouter.of(context).prepareAuthEvent();
+                await authManager.signOut();
+                GoRouter.of(context).clearRedirectLocation();
+
+                context.goNamedAuth('login', context.mounted);
               },
               text: 'Log Out',
               options: FFButtonOptions(

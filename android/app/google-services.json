@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "692770947303",
+    "project_id": "wise-workout-jep57d",
+    "storage_bucket": "wise-workout-jep57d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:692770947303:android:0578bb5a198402e4616242",
+        "android_client_info": {
+          "package_name": "com.mycompany.wiseworkout"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAj5_sXvTWwY8utGeEX2jlPkvTVS0xhA-U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:692770947303:android:aa9a32548c449b85616242",
+        "android_client_info": {
+          "package_name": "com.mycompany.workoutapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAj5_sXvTWwY8utGeEX2jlPkvTVS0xhA-U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

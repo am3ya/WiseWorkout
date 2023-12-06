@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/components/email_not_verified_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_button_tabbar.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -106,20 +107,20 @@ class _LoginWidgetState extends State<LoginWidget>
       length: 2,
       initialIndex: 0,
     )..addListener(() => setState(() {}));
-    _model.emailAddressController1 ??= TextEditingController();
-    _model.emailAddressFocusNode1 ??= FocusNode();
+    _model.emailAddressController ??= TextEditingController();
+    _model.emailAddressFocusNode ??= FocusNode();
 
-    _model.passwordController1 ??= TextEditingController();
-    _model.passwordFocusNode1 ??= FocusNode();
+    _model.passwordController ??= TextEditingController();
+    _model.passwordFocusNode ??= FocusNode();
 
     _model.password2Controller ??= TextEditingController();
     _model.password2FocusNode ??= FocusNode();
 
-    _model.emailAddressController2 ??= TextEditingController();
-    _model.emailAddressFocusNode2 ??= FocusNode();
+    _model.loginEmailController ??= TextEditingController();
+    _model.loginEmailFocusNode ??= FocusNode();
 
-    _model.passwordController2 ??= TextEditingController();
-    _model.passwordFocusNode2 ??= FocusNode();
+    _model.loginPasswordController ??= TextEditingController();
+    _model.loginPasswordFocusNode ??= FocusNode();
   }
 
   @override
@@ -157,7 +158,7 @@ class _LoginWidgetState extends State<LoginWidget>
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 32.0, 0.0, 16.0),
                 child: Text(
-                  'brand.ai',
+                  'Wise workout',
                   style: FlutterFlowTheme.of(context).displaySmall.override(
                         fontFamily: 'Plus Jakarta Sans',
                         color: Color(0xFF101213),
@@ -252,9 +253,9 @@ class _LoginWidgetState extends State<LoginWidget>
                                               width: double.infinity,
                                               child: TextFormField(
                                                 controller: _model
-                                                    .emailAddressController1,
+                                                    .emailAddressController,
                                                 focusNode: _model
-                                                    .emailAddressFocusNode1,
+                                                    .emailAddressFocusNode,
                                                 autofocus: true,
                                                 autofillHints: [
                                                   AutofillHints.email
@@ -337,7 +338,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                 keyboardType:
                                                     TextInputType.emailAddress,
                                                 validator: _model
-                                                    .emailAddressController1Validator
+                                                    .emailAddressControllerValidator
                                                     .asValidator(context),
                                               ),
                                             ),
@@ -350,15 +351,15 @@ class _LoginWidgetState extends State<LoginWidget>
                                               width: double.infinity,
                                               child: TextFormField(
                                                 controller:
-                                                    _model.passwordController1,
+                                                    _model.passwordController,
                                                 focusNode:
-                                                    _model.passwordFocusNode1,
+                                                    _model.passwordFocusNode,
                                                 autofocus: true,
                                                 autofillHints: [
                                                   AutofillHints.password
                                                 ],
                                                 obscureText:
-                                                    !_model.passwordVisibility1,
+                                                    !_model.passwordVisibility,
                                                 decoration: InputDecoration(
                                                   labelText: 'Password',
                                                   labelStyle: FlutterFlowTheme
@@ -422,14 +423,14 @@ class _LoginWidgetState extends State<LoginWidget>
                                                   suffixIcon: InkWell(
                                                     onTap: () => setState(
                                                       () => _model
-                                                              .passwordVisibility1 =
+                                                              .passwordVisibility =
                                                           !_model
-                                                              .passwordVisibility1,
+                                                              .passwordVisibility,
                                                     ),
                                                     focusNode: FocusNode(
                                                         skipTraversal: true),
                                                     child: Icon(
-                                                      _model.passwordVisibility1
+                                                      _model.passwordVisibility
                                                           ? Icons
                                                               .visibility_outlined
                                                           : Icons
@@ -453,7 +454,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                               FontWeight.w500,
                                                         ),
                                                 validator: _model
-                                                    .passwordController1Validator
+                                                    .passwordControllerValidator
                                                     .asValidator(context),
                                               ),
                                             ),
@@ -585,7 +586,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                 onPressed: () async {
                                                   GoRouter.of(context)
                                                       .prepareAuthEvent();
-                                                  if (_model.passwordController1
+                                                  if (_model.passwordController
                                                           .text !=
                                                       _model.password2Controller
                                                           .text) {
@@ -605,18 +606,20 @@ class _LoginWidgetState extends State<LoginWidget>
                                                       .createAccountWithEmail(
                                                     context,
                                                     _model
-                                                        .emailAddressController1
+                                                        .emailAddressController
                                                         .text,
-                                                    _model.passwordController1
+                                                    _model.passwordController
                                                         .text,
                                                   );
                                                   if (user == null) {
                                                     return;
                                                   }
 
-                                                  context.goNamedAuth(
-                                                      'homepage',
-                                                      context.mounted);
+                                                  await authManager
+                                                      .sendEmailVerification();
+
+                                                  context.pushNamedAuth(
+                                                      'login', context.mounted);
                                                 },
                                                 text: 'Get Started',
                                                 options: FFButtonOptions(
@@ -653,6 +656,24 @@ class _LoginWidgetState extends State<LoginWidget>
                                                 ),
                                               ),
                                             ),
+                                          ),
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceEvenly,
+                                            children: [
+                                              Text(
+                                                'View about',
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      fontFamily: 'Readex Pro',
+                                                      decoration: TextDecoration
+                                                          .underline,
+                                                    ),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
@@ -722,10 +743,10 @@ class _LoginWidgetState extends State<LoginWidget>
                                             child: Container(
                                               width: double.infinity,
                                               child: TextFormField(
-                                                controller: _model
-                                                    .emailAddressController2,
-                                                focusNode: _model
-                                                    .emailAddressFocusNode2,
+                                                controller:
+                                                    _model.loginEmailController,
+                                                focusNode:
+                                                    _model.loginEmailFocusNode,
                                                 autofocus: true,
                                                 autofillHints: [
                                                   AutofillHints.email
@@ -807,7 +828,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                 keyboardType:
                                                     TextInputType.emailAddress,
                                                 validator: _model
-                                                    .emailAddressController2Validator
+                                                    .loginEmailControllerValidator
                                                     .asValidator(context),
                                               ),
                                             ),
@@ -819,16 +840,16 @@ class _LoginWidgetState extends State<LoginWidget>
                                             child: Container(
                                               width: double.infinity,
                                               child: TextFormField(
-                                                controller:
-                                                    _model.passwordController2,
-                                                focusNode:
-                                                    _model.passwordFocusNode2,
+                                                controller: _model
+                                                    .loginPasswordController,
+                                                focusNode: _model
+                                                    .loginPasswordFocusNode,
                                                 autofocus: true,
                                                 autofillHints: [
                                                   AutofillHints.password
                                                 ],
-                                                obscureText:
-                                                    !_model.passwordVisibility2,
+                                                obscureText: !_model
+                                                    .loginPasswordVisibility,
                                                 decoration: InputDecoration(
                                                   labelText: 'Password',
                                                   labelStyle: FlutterFlowTheme
@@ -892,14 +913,14 @@ class _LoginWidgetState extends State<LoginWidget>
                                                   suffixIcon: InkWell(
                                                     onTap: () => setState(
                                                       () => _model
-                                                              .passwordVisibility2 =
+                                                              .loginPasswordVisibility =
                                                           !_model
-                                                              .passwordVisibility2,
+                                                              .loginPasswordVisibility,
                                                     ),
                                                     focusNode: FocusNode(
                                                         skipTraversal: true),
                                                     child: Icon(
-                                                      _model.passwordVisibility2
+                                                      _model.loginPasswordVisibility
                                                           ? Icons
                                                               .visibility_outlined
                                                           : Icons
@@ -922,7 +943,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                               FontWeight.w500,
                                                         ),
                                                 validator: _model
-                                                    .passwordController2Validator
+                                                    .loginPasswordControllerValidator
                                                     .asValidator(context),
                                               ),
                                             ),
@@ -936,25 +957,61 @@ class _LoginWidgetState extends State<LoginWidget>
                                                       0.0, 0.0, 0.0, 16.0),
                                               child: FFButtonWidget(
                                                 onPressed: () async {
+                                                  await authManager
+                                                      .refreshUser();
                                                   GoRouter.of(context)
                                                       .prepareAuthEvent();
 
                                                   final user = await authManager
                                                       .signInWithEmail(
                                                     context,
-                                                    _model
-                                                        .emailAddressController2
+                                                    _model.loginEmailController
                                                         .text,
-                                                    _model.passwordController2
+                                                    _model
+                                                        .loginPasswordController
                                                         .text,
                                                   );
                                                   if (user == null) {
                                                     return;
                                                   }
 
-                                                  context.goNamedAuth(
-                                                      'homepage',
-                                                      context.mounted);
+                                                  if (currentUserEmailVerified ==
+                                                      true) {
+                                                    context.pushNamedAuth(
+                                                        'homepage',
+                                                        context.mounted);
+                                                  } else {
+                                                    await showModalBottomSheet(
+                                                      isScrollControlled: true,
+                                                      backgroundColor:
+                                                          Colors.transparent,
+                                                      enableDrag: false,
+                                                      context: context,
+                                                      builder: (context) {
+                                                        return GestureDetector(
+                                                          onTap: () => _model
+                                                                  .unfocusNode
+                                                                  .canRequestFocus
+                                                              ? FocusScope.of(
+                                                                      context)
+                                                                  .requestFocus(
+                                                                      _model
+                                                                          .unfocusNode)
+                                                              : FocusScope.of(
+                                                                      context)
+                                                                  .unfocus(),
+                                                          child: Padding(
+                                                            padding: MediaQuery
+                                                                .viewInsetsOf(
+                                                                    context),
+                                                            child:
+                                                                EmailNotVerifiedWidget(),
+                                                          ),
+                                                        );
+                                                      },
+                                                    ).then((value) =>
+                                                        safeSetState(() {}));
+                                                  }
                                                 },
                                                 text: 'Sign In',
                                                 options: FFButtonOptions(
@@ -1001,18 +1058,8 @@ class _LoginWidgetState extends State<LoginWidget>
                                                       0.0, 0.0, 0.0, 16.0),
                                               child: FFButtonWidget(
                                                 onPressed: () async {
-                                                  GoRouter.of(context)
-                                                      .prepareAuthEvent();
-                                                  final user = await authManager
-                                                      .signInWithGoogle(
-                                                          context);
-                                                  if (user == null) {
-                                                    return;
-                                                  }
-
-                                                  context.goNamedAuth(
-                                                      'homepage',
-                                                      context.mounted);
+                                                  context.pushNamed(
+                                                      'ForgotPassword01');
                                                 },
                                                 text: 'Forgot Password?',
                                                 options: FFButtonOptions(
