@@ -60,6 +60,33 @@ class _HistoryWidgetState extends State<HistoryWidget> {
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primary,
           automaticallyImplyLeading: false,
+          leading: FFButtonWidget(
+            onPressed: () async {
+              context.safePop();
+            },
+            text: '',
+            icon: Icon(
+              Icons.keyboard_backspace,
+              size: 15.0,
+            ),
+            options: FFButtonOptions(
+              width: 48.0,
+              height: 48.0,
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+              iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+              color: FlutterFlowTheme.of(context).primary,
+              textStyle: FlutterFlowTheme.of(context).titleSmall.override(
+                    fontFamily: 'Readex Pro',
+                    color: Colors.white,
+                  ),
+              elevation: 3.0,
+              borderSide: BorderSide(
+                color: Colors.transparent,
+                width: 1.0,
+              ),
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+          ),
           title: Text(
             'History',
             style: FlutterFlowTheme.of(context).headlineMedium.override(

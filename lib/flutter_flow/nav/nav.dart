@@ -103,9 +103,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'history',
           path: '/history',
-          builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'history')
-              : HistoryWidget(),
+          builder: (context, params) => HistoryWidget(),
         ),
         FFRoute(
           name: 'profile',

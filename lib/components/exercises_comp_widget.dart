@@ -132,6 +132,11 @@ class _ExercisesCompWidgetState extends State<ExercisesCompWidget> {
                             setState(() {
                               _model.total = _model.total + -1;
                             });
+                            setState(() {
+                              FFAppState().updateWorkoutStruct(
+                                (e) => e,
+                              );
+                            });
                           }
                         },
                         title: Text(

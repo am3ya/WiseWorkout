@@ -169,18 +169,6 @@ class _StartWorkoutCompWidgetState extends State<StartWorkoutCompWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Text(
-                      'Notes',
-                      style: FlutterFlowTheme.of(context).bodyMedium,
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 10.0),
                 child: Builder(
                   builder: (context) {
@@ -326,47 +314,105 @@ class _StartWorkoutCompWidgetState extends State<StartWorkoutCompWidget> {
                                   );
                                 },
                               ),
-                              FFButtonWidget(
-                                onPressed: () async {
-                                  setState(() {
-                                    FFAppState().updateWorkoutStruct(
-                                      (e) => e
-                                        ..updateExercises(
-                                          (e) => e[exerciseIndex]
-                                            ..updateSets(
-                                              (e) => e.add(SetStruct(
-                                                weight: 200,
-                                                reps: 10,
-                                                number:
-                                                    exerciseItem.sets.length +
-                                                        1,
-                                              )),
-                                            ),
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Align(
+                                    alignment:
+                                        AlignmentDirectional(-1.00, 1.00),
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 0.0, 30.0, 0.0),
+                                      child: FFButtonWidget(
+                                        onPressed: () async {
+                                          setState(() {
+                                            FFAppState().updateWorkoutStruct(
+                                              (e) => e
+                                                ..updateExercises(
+                                                  (e) => e[exerciseIndex]
+                                                    ..updateSets(
+                                                      (e) => e.add(SetStruct(
+                                                        weight: 200,
+                                                        reps: 10,
+                                                        number: exerciseItem
+                                                                .sets.length +
+                                                            1,
+                                                      )),
+                                                    ),
+                                                ),
+                                            );
+                                          });
+                                        },
+                                        text: 'NEW SET',
+                                        options: FFButtonOptions(
+                                          height: 40.0,
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  24.0, 0.0, 24.0, 0.0),
+                                          iconPadding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          textStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .titleSmall
+                                                  .override(
+                                                    fontFamily: 'Readex Pro',
+                                                    color: Colors.white,
+                                                  ),
+                                          elevation: 3.0,
+                                          borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
                                         ),
-                                    );
-                                  });
-                                },
-                                text: 'NEW SET',
-                                options: FFButtonOptions(
-                                  height: 40.0,
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      24.0, 0.0, 24.0, 0.0),
-                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .override(
-                                        fontFamily: 'Readex Pro',
-                                        color: Colors.white,
                                       ),
-                                  elevation: 3.0,
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1.0,
+                                    ),
                                   ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
+                                  Align(
+                                    alignment: AlignmentDirectional(1.00, 1.00),
+                                    child: FFButtonWidget(
+                                      onPressed: () async {
+                                        setState(() {
+                                          FFAppState().updateWorkoutStruct(
+                                            (e) => e
+                                              ..updateExercises(
+                                                (e) =>
+                                                    e.removeAt(exerciseIndex),
+                                              ),
+                                          );
+                                        });
+                                      },
+                                      text: 'REMOVE',
+                                      options: FFButtonOptions(
+                                        height: 40.0,
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            24.0, 0.0, 24.0, 0.0),
+                                        iconPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0.0, 0.0, 0.0, 0.0),
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .override(
+                                              fontFamily: 'Readex Pro',
+                                              color: Colors.white,
+                                            ),
+                                        elevation: 3.0,
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),

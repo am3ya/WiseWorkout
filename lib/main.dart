@@ -135,7 +135,6 @@ class _NavBarPageState extends State<NavBarPage> {
   Widget build(BuildContext context) {
     final tabs = {
       'homepage': HomepageWidget(),
-      'history': HistoryWidget(),
       'startworkout': StartworkoutWidget(),
       'exercises': ExercisesWidget(),
       'profile': ProfileWidget(),
@@ -160,14 +159,6 @@ class _NavBarPageState extends State<NavBarPage> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home_outlined,
-              size: 24.0,
-            ),
-            label: 'Home',
-            tooltip: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.history,
               size: 24.0,
             ),
             label: 'Home',

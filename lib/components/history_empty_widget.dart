@@ -70,15 +70,15 @@ class _HistoryEmptyWidgetState extends State<HistoryEmptyWidget> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Text(
-                    'Completed workouts will appear hear',
+                    'Completed workouts will appear here',
                     style: FlutterFlowTheme.of(context).bodyMedium,
                   ),
                 ],
               ),
             ),
             FFButtonWidget(
-              onPressed: () {
-                print('Button pressed ...');
+              onPressed: () async {
+                context.pushNamed('startworkout');
               },
               text: 'START WORKOUT',
               icon: Icon(

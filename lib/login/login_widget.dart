@@ -328,9 +328,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                         .override(
                                                           fontFamily:
                                                               'Plus Jakarta Sans',
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primaryText,
+                                                          color: Colors.black,
                                                           fontSize: 18.0,
                                                           fontWeight:
                                                               FontWeight.w500,
