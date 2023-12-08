@@ -1,4 +1,3 @@
-import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -8,18 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'email_not_verified_model.dart';
-export 'email_not_verified_model.dart';
+import 'username_empty_model.dart';
+export 'username_empty_model.dart';
 
-class EmailNotVerifiedWidget extends StatefulWidget {
-  const EmailNotVerifiedWidget({Key? key}) : super(key: key);
+class UsernameEmptyWidget extends StatefulWidget {
+  const UsernameEmptyWidget({Key? key}) : super(key: key);
 
   @override
-  _EmailNotVerifiedWidgetState createState() => _EmailNotVerifiedWidgetState();
+  _UsernameEmptyWidgetState createState() => _UsernameEmptyWidgetState();
 }
 
-class _EmailNotVerifiedWidgetState extends State<EmailNotVerifiedWidget> {
-  late EmailNotVerifiedModel _model;
+class _UsernameEmptyWidgetState extends State<UsernameEmptyWidget> {
+  late UsernameEmptyModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -30,7 +29,7 @@ class _EmailNotVerifiedWidgetState extends State<EmailNotVerifiedWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => EmailNotVerifiedModel());
+    _model = createModel(context, () => UsernameEmptyModel());
   }
 
   @override
@@ -99,18 +98,9 @@ class _EmailNotVerifiedWidgetState extends State<EmailNotVerifiedWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'User not found',
+                                      'Invalid username',
                                       style: FlutterFlowTheme.of(context)
                                           .headlineLarge,
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 4.0, 0.0, 0.0),
-                                      child: Text(
-                                        'No user exists with this email address/This email address has not been verified',
-                                        style: FlutterFlowTheme.of(context)
-                                            .labelMedium,
-                                      ),
                                     ),
                                   ],
                                 ),
@@ -137,7 +127,7 @@ class _EmailNotVerifiedWidgetState extends State<EmailNotVerifiedWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 8.0, 0.0, 0.0),
                           child: Text(
-                            'If you have created an account, please verify your account by clicking the verification link in your email. If you have not received an email, please click the resend button.\n\n',
+                            'You must enter a username.\n\n',
                             style: FlutterFlowTheme.of(context).labelLarge,
                           ),
                         ),
@@ -150,9 +140,9 @@ class _EmailNotVerifiedWidgetState extends State<EmailNotVerifiedWidget> {
                             children: [
                               FFButtonWidget(
                                 onPressed: () async {
-                                  await authManager.sendEmailVerification();
+                                  Navigator.pop(context);
                                 },
-                                text: 'Resend',
+                                text: 'OK',
                                 options: FFButtonOptions(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       24.0, 24.0, 24.0, 24.0),

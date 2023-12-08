@@ -140,6 +140,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'ForgotPassword01',
           path: '/forgotPassword01',
           builder: (context, params) => ForgotPassword01Widget(),
+        ),
+        FFRoute(
+          name: 'deleteAccount',
+          path: '/deleteAccount',
+          builder: (context, params) => DeleteAccountWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

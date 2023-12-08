@@ -41,3 +41,27 @@ List<int> getFrequency(List<DateTime> workouts) {
 
   return frequency;
 }
+
+bool hasNoSpaces(String input) {
+  return !input.contains(' ');
+}
+
+bool isEmpty(String input) {
+  return input.isEmpty;
+}
+
+bool doesUserExist(
+  List<UsersRecord> usersCollection,
+  String input,
+) {
+  return usersCollection.any((user) => user.displayName == input);
+}
+
+bool deleteUser(UsersRecord thisUser) {
+  String userID = thisUser.uid;
+
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  firestore.collection('users').doc(userID).delete();
+  return true;
+}

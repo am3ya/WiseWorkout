@@ -1,10 +1,15 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/components/email_not_verified_widget.dart';
+import '/components/username_empty_widget.dart';
+import '/components/username_exists_widget.dart';
+import '/components/username_no_spaces_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_button_tabbar.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'login_widget.dart' show LoginWidget;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -26,6 +31,10 @@ class LoginModel extends FlutterFlowModel<LoginWidget> {
   FocusNode? emailAddressFocusNode;
   TextEditingController? emailAddressController;
   String? Function(BuildContext, String?)? emailAddressControllerValidator;
+  // State field(s) for username widget.
+  FocusNode? usernameFocusNode;
+  TextEditingController? usernameController;
+  String? Function(BuildContext, String?)? usernameControllerValidator;
   // State field(s) for password widget.
   FocusNode? passwordFocusNode;
   TextEditingController? passwordController;
@@ -59,6 +68,9 @@ class LoginModel extends FlutterFlowModel<LoginWidget> {
     tabBarController?.dispose();
     emailAddressFocusNode?.dispose();
     emailAddressController?.dispose();
+
+    usernameFocusNode?.dispose();
+    usernameController?.dispose();
 
     passwordFocusNode?.dispose();
     passwordController?.dispose();

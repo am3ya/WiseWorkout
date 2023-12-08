@@ -175,7 +175,7 @@ class _StartworkoutWidgetState extends State<StartworkoutWidget> {
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Text(
-                              'Templates',
+                              'Training plans',
                               style:
                                   FlutterFlowTheme.of(context).headlineMedium,
                             ),
