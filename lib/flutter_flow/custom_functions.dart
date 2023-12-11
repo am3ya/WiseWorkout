@@ -65,3 +65,77 @@ bool deleteUser(UsersRecord thisUser) {
   firestore.collection('users').doc(userID).delete();
   return true;
 }
+
+List<UsersRecord>? searchUsers(
+  String searchedUsername,
+  List<UsersRecord> usersCollection,
+) {
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  List<UsersRecord> searchedUsers = [];
+
+  for (UsersRecord user in usersCollection) {
+    if (user.displayName
+        .toLowerCase()
+        .contains(searchedUsername.toLowerCase())) {
+      searchedUsers.add(user);
+    }
+  }
+
+  return searchedUsers;
+  //usersCollection.any((user) => user.displayName.toLowerCase().contains(searchedUsername.toLowerCase()));
+
+  //usersCollection.any((user) => user.displayName == input);
+}
+
+String? searchUsersPhotoURL(
+  String searchedUsername,
+  List<UsersRecord> usersCollection,
+) {
+  String? photoURL;
+
+  for (UsersRecord user in usersCollection) {
+    if (user.displayName
+        .toLowerCase()
+        .contains(searchedUsername.toLowerCase())) {
+      photoURL = user.photoUrl;
+    }
+  }
+
+  return photoURL;
+}
+
+bool? sendFriendRequest(
+  String senderUsername,
+  String receiverUsername,
+  List<UsersRecord> usersCollection,
+) {
+  UsersRecord senderUser = usersCollection[0];
+  UsersRecord receiverUser = usersCollection[1];
+  bool toReturn;
+
+  for (UsersRecord user in usersCollection) {
+    if (senderUsername.toLowerCase() == user.displayName.toLowerCase()) {
+      /*UsersRecord*/ senderUser = user;
+    }
+    if (receiverUsername.toLowerCase() == user.displayName.toLowerCase()) {
+      /*UsersRecord*/ receiverUser = user;
+    }
+  }
+
+  if (receiverUser.friendRequests.contains(senderUser)) {
+    toReturn = false;
+  } else {
+    receiverUser.friendRequests.add(senderUser as DocumentReference<Object?>);
+    toReturn = true;
+  }
+
+  return toReturn;
+
+  /*if (senderUser in receiverUser.friendRequests){
+    toReturn = false;
+  } else {
+  receiverUser.friendRequests.add(senderUser);
+  toReturn = true;
+  }
+  return toReturn;*/
+}

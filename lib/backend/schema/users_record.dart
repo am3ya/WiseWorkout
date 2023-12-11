@@ -51,6 +51,46 @@ class UsersRecord extends FirestoreRecord {
   String get userType => _userType ?? '';
   bool hasUserType() => _userType != null;
 
+  // "friends_list" field.
+  List<DocumentReference>? _friendsList;
+  List<DocumentReference> get friendsList => _friendsList ?? const [];
+  bool hasFriendsList() => _friendsList != null;
+
+  // "friend_requests" field.
+  List<DocumentReference>? _friendRequests;
+  List<DocumentReference> get friendRequests => _friendRequests ?? const [];
+  bool hasFriendRequests() => _friendRequests != null;
+
+  // "weight" field.
+  double? _weight;
+  double get weight => _weight ?? 0.0;
+  bool hasWeight() => _weight != null;
+
+  // "height" field.
+  double? _height;
+  double get height => _height ?? 0.0;
+  bool hasHeight() => _height != null;
+
+  // "interests" field.
+  List<String>? _interests;
+  List<String> get interests => _interests ?? const [];
+  bool hasInterests() => _interests != null;
+
+  // "age" field.
+  int? _age;
+  int get age => _age ?? 0;
+  bool hasAge() => _age != null;
+
+  // "fitness_goal" field.
+  List<String>? _fitnessGoal;
+  List<String> get fitnessGoal => _fitnessGoal ?? const [];
+  bool hasFitnessGoal() => _fitnessGoal != null;
+
+  // "info_collection_complete" field.
+  bool? _infoCollectionComplete;
+  bool get infoCollectionComplete => _infoCollectionComplete ?? false;
+  bool hasInfoCollectionComplete() => _infoCollectionComplete != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -59,6 +99,14 @@ class UsersRecord extends FirestoreRecord {
     _createdTime = snapshotData['created_time'] as DateTime?;
     _phoneNumber = snapshotData['phone_number'] as String?;
     _userType = snapshotData['user_type'] as String?;
+    _friendsList = getDataList(snapshotData['friends_list']);
+    _friendRequests = getDataList(snapshotData['friend_requests']);
+    _weight = castToType<double>(snapshotData['weight']);
+    _height = castToType<double>(snapshotData['height']);
+    _interests = getDataList(snapshotData['interests']);
+    _age = castToType<int>(snapshotData['age']);
+    _fitnessGoal = getDataList(snapshotData['fitness_goal']);
+    _infoCollectionComplete = snapshotData['info_collection_complete'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -102,6 +150,10 @@ Map<String, dynamic> createUsersRecordData({
   DateTime? createdTime,
   String? phoneNumber,
   String? userType,
+  double? weight,
+  double? height,
+  int? age,
+  bool? infoCollectionComplete,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -112,6 +164,10 @@ Map<String, dynamic> createUsersRecordData({
       'created_time': createdTime,
       'phone_number': phoneNumber,
       'user_type': userType,
+      'weight': weight,
+      'height': height,
+      'age': age,
+      'info_collection_complete': infoCollectionComplete,
     }.withoutNulls,
   );
 
@@ -123,13 +179,22 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
 
   @override
   bool equals(UsersRecord? e1, UsersRecord? e2) {
+    const listEquality = ListEquality();
     return e1?.email == e2?.email &&
         e1?.displayName == e2?.displayName &&
         e1?.photoUrl == e2?.photoUrl &&
         e1?.uid == e2?.uid &&
         e1?.createdTime == e2?.createdTime &&
         e1?.phoneNumber == e2?.phoneNumber &&
-        e1?.userType == e2?.userType;
+        e1?.userType == e2?.userType &&
+        listEquality.equals(e1?.friendsList, e2?.friendsList) &&
+        listEquality.equals(e1?.friendRequests, e2?.friendRequests) &&
+        e1?.weight == e2?.weight &&
+        e1?.height == e2?.height &&
+        listEquality.equals(e1?.interests, e2?.interests) &&
+        e1?.age == e2?.age &&
+        listEquality.equals(e1?.fitnessGoal, e2?.fitnessGoal) &&
+        e1?.infoCollectionComplete == e2?.infoCollectionComplete;
   }
 
   @override
@@ -140,7 +205,15 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.uid,
         e?.createdTime,
         e?.phoneNumber,
-        e?.userType
+        e?.userType,
+        e?.friendsList,
+        e?.friendRequests,
+        e?.weight,
+        e?.height,
+        e?.interests,
+        e?.age,
+        e?.fitnessGoal,
+        e?.infoCollectionComplete
       ]);
 
   @override

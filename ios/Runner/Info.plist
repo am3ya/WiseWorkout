@@ -54,7 +54,12 @@
 	<true/>
 
 
-
+	<key>NSBluetoothAlwaysUsageDescription</key>
+    <string>We need access to bluetooth to connect to smart wearables to collect heart rate and other health data.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+    <string>We need access to location services to track distance covered.</string>
+	<key>PermissionGroupNotification</key>
+    <string>Allow notifications to be notified of important information regarding your workouts.</string>
 
 
 	<key>UILaunchStoryboardName</key>

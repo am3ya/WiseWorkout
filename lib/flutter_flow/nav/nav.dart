@@ -145,6 +145,38 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'deleteAccount',
           path: '/deleteAccount',
           builder: (context, params) => DeleteAccountWidget(),
+        ),
+        FFRoute(
+          name: 'searchUsers',
+          path: '/searchUsers',
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'searchUsers')
+              : SearchUsersWidget(),
+        ),
+        FFRoute(
+          name: 'friendsPage',
+          path: '/friendsPage',
+          builder: (context, params) => FriendsPageWidget(),
+        ),
+        FFRoute(
+          name: 'newUserInfoPage',
+          path: '/newUserInfoPage',
+          builder: (context, params) => NewUserInfoPageWidget(),
+        ),
+        FFRoute(
+          name: 'trialNewUserInfoPage',
+          path: '/trialNewUserInfoPage',
+          builder: (context, params) => TrialNewUserInfoPageWidget(),
+        ),
+        FFRoute(
+          name: 'trialNewUserInterests',
+          path: '/trialNewUserInterests',
+          builder: (context, params) => TrialNewUserInterestsWidget(),
+        ),
+        FFRoute(
+          name: 'trialNewUserMetrics',
+          path: '/trialNewUserMetrics',
+          builder: (context, params) => TrialNewUserMetricsWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

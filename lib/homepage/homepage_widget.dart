@@ -1,10 +1,8 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/flutter_flow/flutter_flow_charts.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -101,52 +99,7 @@ class _HomepageWidgetState extends State<HomepageWidget> {
                 padding: EdgeInsetsDirectional.fromSTEB(0.0, 30.0, 0.0, 0.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
-                      child: Text(
-                        'Workout Report',
-                        style: FlutterFlowTheme.of(context).headlineSmall,
-                      ),
-                    ),
-                    Container(
-                      height: 230.0,
-                      child: FlutterFlowBarChart(
-                        barData: [
-                          FFBarChartData(
-                            yData: functions.getFrequency(
-                                homepageWorkoutsRecordList
-                                    .map((e) => e.timestamp)
-                                    .withoutNulls
-                                    .toList()),
-                            color: FlutterFlowTheme.of(context).primary,
-                          )
-                        ],
-                        xLabels: functions.getLabels(),
-                        barWidth: 16.0,
-                        barBorderRadius: BorderRadius.circular(8.0),
-                        groupSpace: 16.0,
-                        chartStylingInfo: ChartStylingInfo(
-                          backgroundColor:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          showGrid: true,
-                          borderColor:
-                              FlutterFlowTheme.of(context).secondaryText,
-                          borderWidth: 1.0,
-                        ),
-                        axisBounds: AxisBounds(),
-                        xAxisLabelInfo: AxisLabelInfo(
-                          showLabels: true,
-                          labelInterval: 10.0,
-                        ),
-                        yAxisLabelInfo: AxisLabelInfo(
-                          showLabels: true,
-                          labelInterval: 10.0,
-                        ),
-                      ),
-                    ),
-                  ],
+                  children: [],
                 ),
               ),
             ),

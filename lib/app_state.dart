@@ -17,12 +17,23 @@ class FFAppState extends ChangeNotifier {
     _instance = FFAppState._internal();
   }
 
-  Future initializePersistedState() async {}
+  Future initializePersistedState() async {
+    prefs = await SharedPreferences.getInstance();
+    _safeInit(() {
+      _showOnboard = prefs.getBool('ff_showOnboard') ?? _showOnboard;
+    });
+    _safeInit(() {
+      _showInfoCollection =
+          prefs.getBool('ff_showInfoCollection') ?? _showInfoCollection;
+    });
+  }
 
   void update(VoidCallback callback) {
     callback();
     notifyListeners();
   }
+
+  late SharedPreferences prefs;
 
   WorkoutStruct _workout = WorkoutStruct();
   WorkoutStruct get workout => _workout;
@@ -32,6 +43,20 @@ class FFAppState extends ChangeNotifier {
 
   void updateWorkoutStruct(Function(WorkoutStruct) updateFn) {
     updateFn(_workout);
+  }
+
+  bool _showOnboard = false;
+  bool get showOnboard => _showOnboard;
+  set showOnboard(bool _value) {
+    _showOnboard = _value;
+    prefs.setBool('ff_showOnboard', _value);
+  }
+
+  bool _showInfoCollection = true;
+  bool get showInfoCollection => _showInfoCollection;
+  set showInfoCollection(bool _value) {
+    _showInfoCollection = _value;
+    prefs.setBool('ff_showInfoCollection', _value);
   }
 }
 
