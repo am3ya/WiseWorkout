@@ -186,9 +186,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
           name: 'adminProfile',
           path: '/adminProfile',
-          builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'adminProfile')
-              : AdminProfileWidget(),
+          builder: (context, params) => AdminProfileWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

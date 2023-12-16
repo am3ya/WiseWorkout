@@ -77,13 +77,15 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       ),
                       child: Padding(
                         padding: EdgeInsets.all(2.0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8.0),
-                          child: Image.network(
-                            'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/workout-app-o0nwer/assets/wxddpzwj052m/blank-profile-picture-973460_640.png',
-                            width: 80.0,
-                            height: 80.0,
-                            fit: BoxFit.cover,
+                        child: AuthUserStreamWidget(
+                          builder: (context) => ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.network(
+                              currentUserPhoto,
+                              width: 80.0,
+                              height: 80.0,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),

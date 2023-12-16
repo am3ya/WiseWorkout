@@ -139,7 +139,6 @@ class _NavBarPageState extends State<NavBarPage> {
       'startworkout': StartworkoutWidget(),
       'exercises': ExercisesWidget(),
       'profile': ProfileWidget(),
-      'adminProfile': AdminProfileWidget(),
     };
     final currentIndex = tabs.keys.toList().indexOf(_currentPageName);
 
@@ -188,14 +187,6 @@ class _NavBarPageState extends State<NavBarPage> {
               size: 24.0,
             ),
             label: 'Home',
-            tooltip: '',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person,
-              size: 24.0,
-            ),
-            label: '',
             tooltip: '',
           ),
           BottomNavigationBarItem(

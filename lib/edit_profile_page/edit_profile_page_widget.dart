@@ -213,6 +213,10 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                           return;
                         }
                       }
+
+                      await currentUserReference!.update(createUsersRecordData(
+                        photoUrl: _model.uploadedFileUrl,
+                      ));
                     },
                     child: Container(
                       width: 100.0,
