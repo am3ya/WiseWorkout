@@ -1,24 +1,20 @@
+import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'new_user_info_page_widget.dart' show NewUserInfoPageWidget;
+import 'dart:ui';
+import 'friend_request_sent_widget.dart' show FriendRequestSentWidget;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class NewUserInfoPageModel extends FlutterFlowModel<NewUserInfoPageWidget> {
-  ///  State fields for stateful widgets in this page.
-
-  final unfocusNode = FocusNode();
-
+class FriendRequestSentModel extends FlutterFlowModel<FriendRequestSentWidget> {
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {}
 
-  void dispose() {
-    unfocusNode.dispose();
-  }
+  void dispose() {}
 
   /// Action blocks are added here.
 

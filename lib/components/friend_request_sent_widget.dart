@@ -7,18 +7,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'username_exists_model.dart';
-export 'username_exists_model.dart';
+import 'friend_request_sent_model.dart';
+export 'friend_request_sent_model.dart';
 
-class UsernameExistsWidget extends StatefulWidget {
-  const UsernameExistsWidget({Key? key}) : super(key: key);
+class FriendRequestSentWidget extends StatefulWidget {
+  const FriendRequestSentWidget({Key? key}) : super(key: key);
 
   @override
-  _UsernameExistsWidgetState createState() => _UsernameExistsWidgetState();
+  _FriendRequestSentWidgetState createState() =>
+      _FriendRequestSentWidgetState();
 }
 
-class _UsernameExistsWidgetState extends State<UsernameExistsWidget> {
-  late UsernameExistsModel _model;
+class _FriendRequestSentWidgetState extends State<FriendRequestSentWidget> {
+  late FriendRequestSentModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -29,7 +30,7 @@ class _UsernameExistsWidgetState extends State<UsernameExistsWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => UsernameExistsModel());
+    _model = createModel(context, () => FriendRequestSentModel());
   }
 
   @override
@@ -97,7 +98,7 @@ class _UsernameExistsWidgetState extends State<UsernameExistsWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Invalid username',
+                                      'Friend request sent',
                                       style: FlutterFlowTheme.of(context)
                                           .headlineLarge,
                                     ),
@@ -126,7 +127,7 @@ class _UsernameExistsWidgetState extends State<UsernameExistsWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 8.0, 0.0, 0.0),
                           child: Text(
-                            'This username already exists, please try entering another username.\n\n',
+                            'Wait for them to accept your friend request.\n\n',
                             style: FlutterFlowTheme.of(context).labelLarge,
                           ),
                         ),

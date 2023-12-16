@@ -7,18 +7,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'username_exists_model.dart';
-export 'username_exists_model.dart';
+import 'friend_request_unsuccessful_model.dart';
+export 'friend_request_unsuccessful_model.dart';
 
-class UsernameExistsWidget extends StatefulWidget {
-  const UsernameExistsWidget({Key? key}) : super(key: key);
+class FriendRequestUnsuccessfulWidget extends StatefulWidget {
+  const FriendRequestUnsuccessfulWidget({Key? key}) : super(key: key);
 
   @override
-  _UsernameExistsWidgetState createState() => _UsernameExistsWidgetState();
+  _FriendRequestUnsuccessfulWidgetState createState() =>
+      _FriendRequestUnsuccessfulWidgetState();
 }
 
-class _UsernameExistsWidgetState extends State<UsernameExistsWidget> {
-  late UsernameExistsModel _model;
+class _FriendRequestUnsuccessfulWidgetState
+    extends State<FriendRequestUnsuccessfulWidget> {
+  late FriendRequestUnsuccessfulModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -29,7 +31,7 @@ class _UsernameExistsWidgetState extends State<UsernameExistsWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => UsernameExistsModel());
+    _model = createModel(context, () => FriendRequestUnsuccessfulModel());
   }
 
   @override
@@ -97,7 +99,7 @@ class _UsernameExistsWidgetState extends State<UsernameExistsWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Invalid username',
+                                      'Friend request could not be sent',
                                       style: FlutterFlowTheme.of(context)
                                           .headlineLarge,
                                     ),
@@ -126,7 +128,7 @@ class _UsernameExistsWidgetState extends State<UsernameExistsWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 8.0, 0.0, 0.0),
                           child: Text(
-                            'This username already exists, please try entering another username.\n\n',
+                            'This user may already be on your friends list or they have a pending friend request from you.\n',
                             style: FlutterFlowTheme.of(context).labelLarge,
                           ),
                         ),

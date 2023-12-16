@@ -81,15 +81,40 @@ class UsersRecord extends FirestoreRecord {
   int get age => _age ?? 0;
   bool hasAge() => _age != null;
 
-  // "fitness_goal" field.
-  List<String>? _fitnessGoal;
-  List<String> get fitnessGoal => _fitnessGoal ?? const [];
-  bool hasFitnessGoal() => _fitnessGoal != null;
-
   // "info_collection_complete" field.
   bool? _infoCollectionComplete;
   bool get infoCollectionComplete => _infoCollectionComplete ?? false;
   bool hasInfoCollectionComplete() => _infoCollectionComplete != null;
+
+  // "fitness_goal2" field.
+  String? _fitnessGoal2;
+  String get fitnessGoal2 => _fitnessGoal2 ?? '';
+  bool hasFitnessGoal2() => _fitnessGoal2 != null;
+
+  // "bio" field.
+  String? _bio;
+  String get bio => _bio ?? '';
+  bool hasBio() => _bio != null;
+
+  // "category" field.
+  String? _category;
+  String get category => _category ?? '';
+  bool hasCategory() => _category != null;
+
+  // "credential_doc" field.
+  String? _credentialDoc;
+  String get credentialDoc => _credentialDoc ?? '';
+  bool hasCredentialDoc() => _credentialDoc != null;
+
+  // "brand_name" field.
+  String? _brandName;
+  String get brandName => _brandName ?? '';
+  bool hasBrandName() => _brandName != null;
+
+  // "isActive" field.
+  bool? _isActive;
+  bool get isActive => _isActive ?? false;
+  bool hasIsActive() => _isActive != null;
 
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
@@ -105,8 +130,13 @@ class UsersRecord extends FirestoreRecord {
     _height = castToType<double>(snapshotData['height']);
     _interests = getDataList(snapshotData['interests']);
     _age = castToType<int>(snapshotData['age']);
-    _fitnessGoal = getDataList(snapshotData['fitness_goal']);
     _infoCollectionComplete = snapshotData['info_collection_complete'] as bool?;
+    _fitnessGoal2 = snapshotData['fitness_goal2'] as String?;
+    _bio = snapshotData['bio'] as String?;
+    _category = snapshotData['category'] as String?;
+    _credentialDoc = snapshotData['credential_doc'] as String?;
+    _brandName = snapshotData['brand_name'] as String?;
+    _isActive = snapshotData['isActive'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -154,6 +184,12 @@ Map<String, dynamic> createUsersRecordData({
   double? height,
   int? age,
   bool? infoCollectionComplete,
+  String? fitnessGoal2,
+  String? bio,
+  String? category,
+  String? credentialDoc,
+  String? brandName,
+  bool? isActive,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -168,6 +204,12 @@ Map<String, dynamic> createUsersRecordData({
       'height': height,
       'age': age,
       'info_collection_complete': infoCollectionComplete,
+      'fitness_goal2': fitnessGoal2,
+      'bio': bio,
+      'category': category,
+      'credential_doc': credentialDoc,
+      'brand_name': brandName,
+      'isActive': isActive,
     }.withoutNulls,
   );
 
@@ -193,8 +235,13 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.height == e2?.height &&
         listEquality.equals(e1?.interests, e2?.interests) &&
         e1?.age == e2?.age &&
-        listEquality.equals(e1?.fitnessGoal, e2?.fitnessGoal) &&
-        e1?.infoCollectionComplete == e2?.infoCollectionComplete;
+        e1?.infoCollectionComplete == e2?.infoCollectionComplete &&
+        e1?.fitnessGoal2 == e2?.fitnessGoal2 &&
+        e1?.bio == e2?.bio &&
+        e1?.category == e2?.category &&
+        e1?.credentialDoc == e2?.credentialDoc &&
+        e1?.brandName == e2?.brandName &&
+        e1?.isActive == e2?.isActive;
   }
 
   @override
@@ -212,8 +259,13 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.height,
         e?.interests,
         e?.age,
-        e?.fitnessGoal,
-        e?.infoCollectionComplete
+        e?.infoCollectionComplete,
+        e?.fitnessGoal2,
+        e?.bio,
+        e?.category,
+        e?.credentialDoc,
+        e?.brandName,
+        e?.isActive
       ]);
 
   @override

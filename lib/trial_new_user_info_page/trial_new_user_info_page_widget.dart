@@ -135,8 +135,8 @@ class _TrialNewUserInfoPageWidgetState extends State<TrialNewUserInfoPageWidget>
                   color: FlutterFlowTheme.of(context).secondaryText,
                   size: 30.0,
                 ),
-                onPressed: () {
-                  print('IconButton pressed ...');
+                onPressed: () async {
+                  context.safePop();
                 },
               ),
             ),
@@ -157,7 +157,7 @@ class _TrialNewUserInfoPageWidgetState extends State<TrialNewUserInfoPageWidget>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Align(
-                        alignment: AlignmentDirectional(-1.00, 0.00),
+                        alignment: AlignmentDirectional(-1.0, 0.0),
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               16.0, 12.0, 0.0, 0.0),
@@ -301,14 +301,10 @@ class _TrialNewUserInfoPageWidgetState extends State<TrialNewUserInfoPageWidget>
                         return FFButtonWidget(
                           onPressed: () async {
                             if (_model.dropDownValue != '') {
-                              await currentUserReference!.update({
-                                ...mapToFirestore(
-                                  {
-                                    'fitness_goal': FieldValue.arrayUnion(
-                                        [_model.dropDownValue]),
-                                  },
-                                ),
-                              });
+                              await currentUserReference!
+                                  .update(createUsersRecordData(
+                                fitnessGoal2: _model.dropDownValue,
+                              ));
                             } else {
                               await showModalBottomSheet(
                                 isScrollControlled: true,

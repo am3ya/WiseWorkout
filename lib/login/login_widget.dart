@@ -176,10 +176,9 @@ class _LoginWidgetState extends State<LoginWidget>
                 ),
               ),
               Align(
-                alignment: AlignmentDirectional(0.00, 0.00),
+                alignment: AlignmentDirectional(0.0, 0.0),
                 child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 12.0),
+                  padding: EdgeInsets.all(12.0),
                   child: Container(
                     width: double.infinity,
                     height: MediaQuery.sizeOf(context).height * 0.8,
@@ -199,7 +198,7 @@ class _LoginWidgetState extends State<LoginWidget>
                               controller: _model.tabBarController,
                               children: [
                                 Align(
-                                  alignment: AlignmentDirectional(0.00, -1.00),
+                                  alignment: AlignmentDirectional(0.0, -1.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         24.0, 16.0, 24.0, 0.0),
@@ -328,9 +327,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                   filled: true,
                                                   fillColor: Colors.white,
                                                   contentPadding:
-                                                      EdgeInsetsDirectional
-                                                          .fromSTEB(24.0, 24.0,
-                                                              24.0, 24.0),
+                                                      EdgeInsets.all(24.0),
                                                 ),
                                                 style:
                                                     FlutterFlowTheme.of(context)
@@ -421,9 +418,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                   filled: true,
                                                   fillColor: Colors.white,
                                                   contentPadding:
-                                                      EdgeInsetsDirectional
-                                                          .fromSTEB(24.0, 24.0,
-                                                              24.0, 24.0),
+                                                      EdgeInsets.all(24.0),
                                                 ),
                                                 style:
                                                     FlutterFlowTheme.of(context)
@@ -516,9 +511,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                   filled: true,
                                                   fillColor: Colors.white,
                                                   contentPadding:
-                                                      EdgeInsetsDirectional
-                                                          .fromSTEB(24.0, 24.0,
-                                                              24.0, 24.0),
+                                                      EdgeInsets.all(24.0),
                                                   suffixIcon: InkWell(
                                                     onTap: () => setState(
                                                       () => _model
@@ -631,9 +624,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                   filled: true,
                                                   fillColor: Colors.white,
                                                   contentPadding:
-                                                      EdgeInsetsDirectional
-                                                          .fromSTEB(24.0, 24.0,
-                                                              24.0, 24.0),
+                                                      EdgeInsets.all(24.0),
                                                   suffixIcon: InkWell(
                                                     onTap: () => setState(
                                                       () => _model
@@ -673,8 +664,8 @@ class _LoginWidgetState extends State<LoginWidget>
                                             ),
                                           ),
                                           Align(
-                                            alignment: AlignmentDirectional(
-                                                0.00, 0.00),
+                                            alignment:
+                                                AlignmentDirectional(0.0, 0.0),
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(
@@ -875,6 +866,9 @@ class _LoginWidgetState extends State<LoginWidget>
                                                                 .usernameController
                                                                 .text,
                                                             userType: 'user',
+                                                            photoUrl:
+                                                                'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/workout-app-o0nwer/assets/wxddpzwj052m/blank-profile-picture-973460_640.png',
+                                                            isActive: true,
                                                           ));
 
                                                       await authManager
@@ -932,16 +926,6 @@ class _LoginWidgetState extends State<LoginWidget>
                                               ),
                                             ),
                                           ),
-                                          Text(
-                                            'View about',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily: 'Readex Pro',
-                                                  decoration:
-                                                      TextDecoration.underline,
-                                                ),
-                                          ),
                                         ],
                                       ),
                                     ).animateOnPageLoad(animationsMap[
@@ -949,7 +933,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                   ),
                                 ),
                                 Align(
-                                  alignment: AlignmentDirectional(0.00, -1.00),
+                                  alignment: AlignmentDirectional(0.0, -1.0),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         24.0, 16.0, 24.0, 0.0),
@@ -1216,8 +1200,8 @@ class _LoginWidgetState extends State<LoginWidget>
                                             ),
                                           ),
                                           Align(
-                                            alignment: AlignmentDirectional(
-                                                0.00, 0.00),
+                                            alignment:
+                                                AlignmentDirectional(0.0, 0.0),
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(
@@ -1242,42 +1226,79 @@ class _LoginWidgetState extends State<LoginWidget>
                                                     return;
                                                   }
 
-                                                  if (currentUserEmailVerified ==
-                                                      true) {
+                                                  if (currentUserEmailVerified &&
+                                                      (valueOrDefault(
+                                                              currentUserDocument
+                                                                  ?.userType,
+                                                              '') ==
+                                                          'user')) {
                                                     context.pushNamedAuth(
                                                         'homepage',
                                                         context.mounted);
+
+                                                    return;
                                                   } else {
-                                                    await showModalBottomSheet(
-                                                      isScrollControlled: true,
-                                                      backgroundColor:
-                                                          Colors.transparent,
-                                                      enableDrag: false,
-                                                      context: context,
-                                                      builder: (context) {
-                                                        return GestureDetector(
-                                                          onTap: () => _model
-                                                                  .unfocusNode
-                                                                  .canRequestFocus
-                                                              ? FocusScope.of(
-                                                                      context)
-                                                                  .requestFocus(
-                                                                      _model
-                                                                          .unfocusNode)
-                                                              : FocusScope.of(
-                                                                      context)
-                                                                  .unfocus(),
-                                                          child: Padding(
-                                                            padding: MediaQuery
-                                                                .viewInsetsOf(
-                                                                    context),
-                                                            child:
-                                                                EmailNotVerifiedWidget(),
-                                                          ),
-                                                        );
-                                                      },
-                                                    ).then((value) =>
-                                                        safeSetState(() {}));
+                                                    if (currentUserEmailVerified &&
+                                                        (valueOrDefault(
+                                                                currentUserDocument
+                                                                    ?.userType,
+                                                                '') ==
+                                                            'business')) {
+                                                      context.pushNamedAuth(
+                                                          'newTestPage',
+                                                          context.mounted);
+
+                                                      return;
+                                                    } else {
+                                                      if (currentUserEmailVerified &&
+                                                          (valueOrDefault(
+                                                                  currentUserDocument
+                                                                      ?.userType,
+                                                                  '') ==
+                                                              'admin')) {
+                                                        context.pushNamedAuth(
+                                                            'profile',
+                                                            context.mounted);
+
+                                                        return;
+                                                      } else {
+                                                        await showModalBottomSheet(
+                                                          isScrollControlled:
+                                                              true,
+                                                          backgroundColor:
+                                                              Colors
+                                                                  .transparent,
+                                                          enableDrag: false,
+                                                          context: context,
+                                                          builder: (context) {
+                                                            return GestureDetector(
+                                                              onTap: () => _model
+                                                                      .unfocusNode
+                                                                      .canRequestFocus
+                                                                  ? FocusScope.of(
+                                                                          context)
+                                                                      .requestFocus(
+                                                                          _model
+                                                                              .unfocusNode)
+                                                                  : FocusScope.of(
+                                                                          context)
+                                                                      .unfocus(),
+                                                              child: Padding(
+                                                                padding: MediaQuery
+                                                                    .viewInsetsOf(
+                                                                        context),
+                                                                child:
+                                                                    EmailNotVerifiedWidget(),
+                                                              ),
+                                                            );
+                                                          },
+                                                        ).then((value) =>
+                                                            safeSetState(
+                                                                () {}));
+
+                                                        return;
+                                                      }
+                                                    }
                                                   }
                                                 },
                                                 text: 'Sign In',
@@ -1317,8 +1338,8 @@ class _LoginWidgetState extends State<LoginWidget>
                                             ),
                                           ),
                                           Align(
-                                            alignment: AlignmentDirectional(
-                                                0.00, 0.00),
+                                            alignment:
+                                                AlignmentDirectional(0.0, 0.0),
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(

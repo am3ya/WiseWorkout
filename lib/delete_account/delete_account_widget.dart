@@ -57,13 +57,13 @@ class _DeleteAccountWidgetState extends State<DeleteAccountWidget> {
         body: SafeArea(
           top: true,
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
+            padding: EdgeInsets.all(16.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Align(
-                  alignment: AlignmentDirectional(-1.00, -1.00),
+                  alignment: AlignmentDirectional(-1.0, -1.0),
                   child: FFButtonWidget(
                     onPressed: () async {
                       context.safePop();

@@ -1,10 +1,14 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/components/friend_request_sent_widget.dart';
+import '/components/friend_request_unsuccessful_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -156,192 +160,344 @@ class _SearchUsersWidgetState extends State<SearchUsersWidget>
               Expanded(
                 child: Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 0.0),
-                  child: StreamBuilder<List<UsersRecord>>(
-                    stream: queryUsersRecord(
-                      queryBuilder: (usersRecord) => usersRecord.where(
-                        'display_name',
-                        isEqualTo: _model.searchUsersTextFieldController.text,
-                      ),
-                    ),
-                    builder: (context, snapshot) {
-                      // Customize what your widget looks like when it's loading.
-                      if (!snapshot.hasData) {
-                        return Center(
-                          child: SizedBox(
-                            width: 50.0,
-                            height: 50.0,
-                            child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                FlutterFlowTheme.of(context).primary,
-                              ),
+                  child: AuthUserStreamWidget(
+                    builder: (context) => StreamBuilder<List<UsersRecord>>(
+                      stream: queryUsersRecord(
+                        queryBuilder: (usersRecord) => usersRecord
+                            .where(
+                              'display_name',
+                              isEqualTo:
+                                  _model.searchUsersTextFieldController.text,
+                            )
+                            .where(
+                              'user_type',
+                              isEqualTo: valueOrDefault(
+                                  currentUserDocument?.userType, ''),
                             ),
-                          ),
-                        );
-                      }
-                      List<UsersRecord> listViewUsersRecordList =
-                          snapshot.data!;
-                      return ListView.builder(
-                        padding: EdgeInsets.zero,
-                        scrollDirection: Axis.vertical,
-                        itemCount: listViewUsersRecordList.length,
-                        itemBuilder: (context, listViewIndex) {
-                          final listViewUsersRecord =
-                              listViewUsersRecordList[listViewIndex];
-                          return Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 1.0),
-                            child: Container(
-                              width: 100.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 0.0,
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    offset: Offset(0.0, 1.0),
-                                  )
-                                ],
-                              ),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    8.0, 8.0, 8.0, 8.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    StreamBuilder<List<UsersRecord>>(
-                                      stream: queryUsersRecord(),
-                                      builder: (context, snapshot) {
-                                        // Customize what your widget looks like when it's loading.
-                                        if (!snapshot.hasData) {
-                                          return Center(
-                                            child: SizedBox(
-                                              width: 50.0,
-                                              height: 50.0,
-                                              child: CircularProgressIndicator(
-                                                valueColor:
-                                                    AlwaysStoppedAnimation<
-                                                        Color>(
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        }
-                                        List<UsersRecord> imageUsersRecordList =
-                                            snapshot.data!;
-                                        return ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(40.0),
-                                          child: Image.network(
-                                            functions.searchUsersPhotoURL(
-                                                _model
-                                                    .searchUsersTextFieldController
-                                                    .text,
-                                                imageUsersRecordList.toList())!,
-                                            width: 60.0,
-                                            height: 60.0,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    12.0, 0.0, 0.0, 0.0),
-                                            child: StreamBuilder<
-                                                List<UsersRecord>>(
-                                              stream: queryUsersRecord(
-                                                queryBuilder: (usersRecord) =>
-                                                    usersRecord.where(
-                                                  'display_name',
-                                                  isEqualTo: _model
-                                                      .searchUsersTextFieldController
-                                                      .text,
-                                                ),
-                                              ),
-                                              builder: (context, snapshot) {
-                                                // Customize what your widget looks like when it's loading.
-                                                if (!snapshot.hasData) {
-                                                  return Center(
-                                                    child: SizedBox(
-                                                      width: 50.0,
-                                                      height: 50.0,
-                                                      child:
-                                                          CircularProgressIndicator(
-                                                        valueColor:
-                                                            AlwaysStoppedAnimation<
-                                                                Color>(
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primary,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  );
-                                                }
-                                                List<UsersRecord>
-                                                    textUsersRecordList =
-                                                    snapshot.data!;
-                                                return Text(
-                                                  listViewUsersRecord
-                                                      .displayName,
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyLarge,
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    FFButtonWidget(
-                                      onPressed: () {
-                                        print('Button pressed ...');
-                                      },
-                                      text: 'Add',
-                                      options: FFButtonOptions(
-                                        height: 40.0,
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            10.0, 0.0, 10.0, 0.0),
-                                        iconPadding:
-                                            EdgeInsetsDirectional.fromSTEB(
-                                                0.0, 0.0, 0.0, 0.0),
-                                        color: FlutterFlowTheme.of(context)
-                                            .primary,
-                                        textStyle: FlutterFlowTheme.of(context)
-                                            .titleSmall
-                                            .override(
-                                              fontFamily: 'Readex Pro',
-                                              color: Colors.white,
-                                            ),
-                                        elevation: 3.0,
-                                        borderSide: BorderSide(
-                                          color: Colors.transparent,
-                                          width: 1.0,
-                                        ),
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                    ),
-                                  ],
+                      ),
+                      builder: (context, snapshot) {
+                        // Customize what your widget looks like when it's loading.
+                        if (!snapshot.hasData) {
+                          return Center(
+                            child: SizedBox(
+                              width: 50.0,
+                              height: 50.0,
+                              child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  FlutterFlowTheme.of(context).primary,
                                 ),
                               ),
                             ),
                           );
-                        },
-                      );
-                    },
+                        }
+                        List<UsersRecord> listViewUsersRecordList =
+                            snapshot.data!;
+                        return ListView.builder(
+                          padding: EdgeInsets.zero,
+                          scrollDirection: Axis.vertical,
+                          itemCount: listViewUsersRecordList.length,
+                          itemBuilder: (context, listViewIndex) {
+                            final listViewUsersRecord =
+                                listViewUsersRecordList[listViewIndex];
+                            return Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 1.0),
+                              child: Container(
+                                width: 100.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 0.0,
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      offset: Offset(0.0, 1.0),
+                                    )
+                                  ],
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      StreamBuilder<List<UsersRecord>>(
+                                        stream: queryUsersRecord(),
+                                        builder: (context, snapshot) {
+                                          // Customize what your widget looks like when it's loading.
+                                          if (!snapshot.hasData) {
+                                            return Center(
+                                              child: SizedBox(
+                                                width: 50.0,
+                                                height: 50.0,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  valueColor:
+                                                      AlwaysStoppedAnimation<
+                                                          Color>(
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                          List<UsersRecord>
+                                              imageUsersRecordList =
+                                              snapshot.data!;
+                                          return ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(40.0),
+                                            child: Image.network(
+                                              functions.searchUsersPhotoURL(
+                                                  _model
+                                                      .searchUsersTextFieldController
+                                                      .text,
+                                                  imageUsersRecordList
+                                                      .toList())!,
+                                              width: 60.0,
+                                              height: 60.0,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      12.0, 0.0, 0.0, 0.0),
+                                              child: StreamBuilder<
+                                                  List<UsersRecord>>(
+                                                stream: queryUsersRecord(
+                                                  queryBuilder: (usersRecord) =>
+                                                      usersRecord.where(
+                                                    'display_name',
+                                                    isEqualTo: _model
+                                                        .searchUsersTextFieldController
+                                                        .text,
+                                                  ),
+                                                ),
+                                                builder: (context, snapshot) {
+                                                  // Customize what your widget looks like when it's loading.
+                                                  if (!snapshot.hasData) {
+                                                    return Center(
+                                                      child: SizedBox(
+                                                        width: 50.0,
+                                                        height: 50.0,
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                          valueColor:
+                                                              AlwaysStoppedAnimation<
+                                                                  Color>(
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }
+                                                  List<UsersRecord>
+                                                      textUsersRecordList =
+                                                      snapshot.data!;
+                                                  return Text(
+                                                    listViewUsersRecord
+                                                        .displayName,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyLarge,
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      StreamBuilder<List<UsersRecord>>(
+                                        stream: queryUsersRecord(),
+                                        builder: (context, snapshot) {
+                                          // Customize what your widget looks like when it's loading.
+                                          if (!snapshot.hasData) {
+                                            return Center(
+                                              child: SizedBox(
+                                                width: 50.0,
+                                                height: 50.0,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  valueColor:
+                                                      AlwaysStoppedAnimation<
+                                                          Color>(
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          }
+                                          List<UsersRecord>
+                                              buttonUsersRecordList =
+                                              snapshot.data!;
+                                          return FFButtonWidget(
+                                            onPressed: () async {
+                                              if ((currentUserDocument
+                                                          ?.friendRequests
+                                                          ?.toList() ??
+                                                      [])
+                                                  .contains(listViewUsersRecord
+                                                      .reference)) {
+                                                await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  enableDrag: false,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return GestureDetector(
+                                                      onTap: () => _model
+                                                              .unfocusNode
+                                                              .canRequestFocus
+                                                          ? FocusScope.of(
+                                                                  context)
+                                                              .requestFocus(_model
+                                                                  .unfocusNode)
+                                                          : FocusScope.of(
+                                                                  context)
+                                                              .unfocus(),
+                                                      child: Padding(
+                                                        padding: MediaQuery
+                                                            .viewInsetsOf(
+                                                                context),
+                                                        child:
+                                                            FriendRequestUnsuccessfulWidget(),
+                                                      ),
+                                                    );
+                                                  },
+                                                ).then((value) =>
+                                                    safeSetState(() {}));
+                                              }
+                                              if (listViewUsersRecord
+                                                  .friendRequests
+                                                  .contains(
+                                                      currentUserReference)) {
+                                                await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  enableDrag: false,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return GestureDetector(
+                                                      onTap: () => _model
+                                                              .unfocusNode
+                                                              .canRequestFocus
+                                                          ? FocusScope.of(
+                                                                  context)
+                                                              .requestFocus(_model
+                                                                  .unfocusNode)
+                                                          : FocusScope.of(
+                                                                  context)
+                                                              .unfocus(),
+                                                      child: Padding(
+                                                        padding: MediaQuery
+                                                            .viewInsetsOf(
+                                                                context),
+                                                        child:
+                                                            FriendRequestUnsuccessfulWidget(),
+                                                      ),
+                                                    );
+                                                  },
+                                                ).then((value) =>
+                                                    safeSetState(() {}));
+                                              } else {
+                                                await listViewUsersRecord
+                                                    .reference
+                                                    .update({
+                                                  ...mapToFirestore(
+                                                    {
+                                                      'friend_requests':
+                                                          FieldValue
+                                                              .arrayUnion([
+                                                        currentUserReference
+                                                      ]),
+                                                    },
+                                                  ),
+                                                });
+                                                await showModalBottomSheet(
+                                                  isScrollControlled: true,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  enableDrag: false,
+                                                  context: context,
+                                                  builder: (context) {
+                                                    return GestureDetector(
+                                                      onTap: () => _model
+                                                              .unfocusNode
+                                                              .canRequestFocus
+                                                          ? FocusScope.of(
+                                                                  context)
+                                                              .requestFocus(_model
+                                                                  .unfocusNode)
+                                                          : FocusScope.of(
+                                                                  context)
+                                                              .unfocus(),
+                                                      child: Padding(
+                                                        padding: MediaQuery
+                                                            .viewInsetsOf(
+                                                                context),
+                                                        child:
+                                                            FriendRequestSentWidget(),
+                                                      ),
+                                                    );
+                                                  },
+                                                ).then((value) =>
+                                                    safeSetState(() {}));
+                                              }
+                                            },
+                                            text: 'Add',
+                                            options: FFButtonOptions(
+                                              height: 40.0,
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      10.0, 0.0, 10.0, 0.0),
+                                              iconPadding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              textStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .override(
+                                                        fontFamily:
+                                                            'Readex Pro',
+                                                        color: Colors.white,
+                                                      ),
+                                              elevation: 3.0,
+                                              borderSide: BorderSide(
+                                                color: Colors.transparent,
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),

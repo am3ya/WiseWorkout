@@ -7,25 +7,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'profile_model.dart';
-export 'profile_model.dart';
+import 'admin_profile_model.dart';
+export 'admin_profile_model.dart';
 
-class ProfileWidget extends StatefulWidget {
-  const ProfileWidget({Key? key}) : super(key: key);
+class AdminProfileWidget extends StatefulWidget {
+  const AdminProfileWidget({Key? key}) : super(key: key);
 
   @override
-  _ProfileWidgetState createState() => _ProfileWidgetState();
+  _AdminProfileWidgetState createState() => _AdminProfileWidgetState();
 }
 
-class _ProfileWidgetState extends State<ProfileWidget> {
-  late ProfileModel _model;
+class _AdminProfileWidgetState extends State<AdminProfileWidget> {
+  late AdminProfileModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => ProfileModel());
+    _model = createModel(context, () => AdminProfileModel());
   }
 
   @override
@@ -163,49 +163,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           ),
                         ],
                       ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
-              child: Material(
-                color: Colors.transparent,
-                elevation: 0.0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: Container(
-                  width: double.infinity,
-                  height: 60.0,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).secondaryBackground,
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 3.0,
-                        color: Color(0x33000000),
-                        offset: Offset(0.0, 1.0),
-                      )
-                    ],
-                    borderRadius: BorderRadius.circular(8.0),
-                    border: Border.all(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                      width: 0.0,
-                    ),
-                  ),
-                  child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 4.0, 0.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Enter calories intake',
-                          style: FlutterFlowTheme.of(context).bodyLarge,
-                        ),
-                      ],
                     ),
                   ),
                 ),

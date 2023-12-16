@@ -68,7 +68,7 @@ class _StartWorkoutCompWidgetState extends State<StartWorkoutCompWidget> {
         color: FlutterFlowTheme.of(context).secondaryBackground,
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(30.0, 30.0, 30.0, 30.0),
+        padding: EdgeInsets.all(30.0),
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -169,7 +169,7 @@ class _StartWorkoutCompWidgetState extends State<StartWorkoutCompWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 10.0),
+                padding: EdgeInsets.all(10.0),
                 child: Builder(
                   builder: (context) {
                     final exercise = FFAppState().workout.exercises.toList();
@@ -318,8 +318,7 @@ class _StartWorkoutCompWidgetState extends State<StartWorkoutCompWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Align(
-                                    alignment:
-                                        AlignmentDirectional(-1.00, 1.00),
+                                    alignment: AlignmentDirectional(-1.0, 1.0),
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 30.0, 0.0),
@@ -373,7 +372,7 @@ class _StartWorkoutCompWidgetState extends State<StartWorkoutCompWidget> {
                                     ),
                                   ),
                                   Align(
-                                    alignment: AlignmentDirectional(1.00, 1.00),
+                                    alignment: AlignmentDirectional(1.0, 1.0),
                                     child: FFButtonWidget(
                                       onPressed: () async {
                                         setState(() {

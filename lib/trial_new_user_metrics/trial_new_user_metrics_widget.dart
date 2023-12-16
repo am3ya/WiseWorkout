@@ -143,8 +143,8 @@ class _TrialNewUserMetricsWidgetState extends State<TrialNewUserMetricsWidget>
                   color: FlutterFlowTheme.of(context).secondaryText,
                   size: 30.0,
                 ),
-                onPressed: () {
-                  print('IconButton pressed ...');
+                onPressed: () async {
+                  context.pushNamed('profile');
                 },
               ),
             ),
@@ -165,7 +165,7 @@ class _TrialNewUserMetricsWidgetState extends State<TrialNewUserMetricsWidget>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Align(
-                        alignment: AlignmentDirectional(-1.00, 0.00),
+                        alignment: AlignmentDirectional(-1.0, 0.0),
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               16.0, 12.0, 0.0, 0.0),

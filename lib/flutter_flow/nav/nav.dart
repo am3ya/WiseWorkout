@@ -154,16 +154,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : SearchUsersWidget(),
         ),
         FFRoute(
-          name: 'friendsPage',
-          path: '/friendsPage',
-          builder: (context, params) => FriendsPageWidget(),
-        ),
-        FFRoute(
-          name: 'newUserInfoPage',
-          path: '/newUserInfoPage',
-          builder: (context, params) => NewUserInfoPageWidget(),
-        ),
-        FFRoute(
           name: 'trialNewUserInfoPage',
           path: '/trialNewUserInfoPage',
           builder: (context, params) => TrialNewUserInfoPageWidget(),
@@ -177,6 +167,28 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'trialNewUserMetrics',
           path: '/trialNewUserMetrics',
           builder: (context, params) => TrialNewUserMetricsWidget(),
+        ),
+        FFRoute(
+          name: 'friendsPage',
+          path: '/friendsPage',
+          builder: (context, params) => FriendsPageWidget(),
+        ),
+        FFRoute(
+          name: 'editProfilePage',
+          path: '/editProfilePage',
+          builder: (context, params) => EditProfilePageWidget(),
+        ),
+        FFRoute(
+          name: 'applicationPending',
+          path: '/applicationPending',
+          builder: (context, params) => ApplicationPendingWidget(),
+        ),
+        FFRoute(
+          name: 'adminProfile',
+          path: '/adminProfile',
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'adminProfile')
+              : AdminProfileWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -375,13 +387,20 @@ class FFRoute {
                   key: state.pageKey,
                   child: child,
                   transitionDuration: transitionInfo.duration,
-                  transitionsBuilder: PageTransition(
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) =>
+                          PageTransition(
                     type: transitionInfo.transitionType,
                     duration: transitionInfo.duration,
                     reverseDuration: transitionInfo.duration,
                     alignment: transitionInfo.alignment,
                     child: child,
-                  ).transitionsBuilder,
+                  ).buildTransitions(
+                    context,
+                    animation,
+                    secondaryAnimation,
+                    child,
+                  ),
                 )
               : MaterialPage(key: state.pageKey, child: child);
         },

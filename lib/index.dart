@@ -11,12 +11,15 @@ export '/forgot_password01/forgot_password01_widget.dart'
     show ForgotPassword01Widget;
 export '/delete_account/delete_account_widget.dart' show DeleteAccountWidget;
 export '/search_users/search_users_widget.dart' show SearchUsersWidget;
-export '/friends_page/friends_page_widget.dart' show FriendsPageWidget;
-export '/new_user_info_page/new_user_info_page_widget.dart'
-    show NewUserInfoPageWidget;
 export '/trial_new_user_info_page/trial_new_user_info_page_widget.dart'
     show TrialNewUserInfoPageWidget;
 export '/trial_new_user_interests/trial_new_user_interests_widget.dart'
     show TrialNewUserInterestsWidget;
 export '/trial_new_user_metrics/trial_new_user_metrics_widget.dart'
     show TrialNewUserMetricsWidget;
+export '/friends_page/friends_page_widget.dart' show FriendsPageWidget;
+export '/edit_profile_page/edit_profile_page_widget.dart'
+    show EditProfilePageWidget;
+export '/application_pending/application_pending_widget.dart'
+    show ApplicationPendingWidget;
+export '/admin_profile/admin_profile_widget.dart' show AdminProfileWidget;

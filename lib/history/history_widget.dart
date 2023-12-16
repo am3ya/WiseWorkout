@@ -72,7 +72,7 @@ class _HistoryWidgetState extends State<HistoryWidget> {
             options: FFButtonOptions(
               width: 48.0,
               height: 48.0,
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+              padding: EdgeInsets.all(0.0),
               iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
               color: FlutterFlowTheme.of(context).primary,
               textStyle: FlutterFlowTheme.of(context).titleSmall.override(

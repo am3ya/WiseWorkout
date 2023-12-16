@@ -61,7 +61,7 @@ class _UsernameNoSpacesWidgetState extends State<UsernameNoSpacesWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Align(
-                alignment: AlignmentDirectional(0.00, 0.00),
+                alignment: AlignmentDirectional(0.0, 0.0),
                 child: Container(
                   width: double.infinity,
                   constraints: BoxConstraints(
@@ -79,8 +79,7 @@ class _UsernameNoSpacesWidgetState extends State<UsernameNoSpacesWidget> {
                     borderRadius: BorderRadius.circular(16.0),
                   ),
                   child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 20.0),
+                    padding: EdgeInsets.all(20.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -144,8 +143,7 @@ class _UsernameNoSpacesWidgetState extends State<UsernameNoSpacesWidget> {
                                 },
                                 text: 'OK',
                                 options: FFButtonOptions(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      24.0, 24.0, 24.0, 24.0),
+                                  padding: EdgeInsets.all(24.0),
                                   iconPadding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
                                   color: FlutterFlowTheme.of(context).primary,

@@ -104,21 +104,52 @@ String? searchUsersPhotoURL(
   return photoURL;
 }
 
-bool? sendFriendRequest(
-  String senderUsername,
+bool sendFriendRequest(
+  DocumentReference senderRef,
   String receiverUsername,
   List<UsersRecord> usersCollection,
 ) {
+  bool toReturn = false;
+  UsersRecord receiverUser = usersCollection[0];
+  String senderRefAsString = senderRef.path;
+  String senderRefID = senderRefAsString.substring(7);
   UsersRecord senderUser = usersCollection[0];
+
+  for (int usersIndex = 0; usersIndex < usersCollection.length; usersIndex++) {
+    if (usersCollection[usersIndex].uid == senderRefID) {
+      senderUser = usersCollection[usersIndex];
+    }
+  }
+
+  for (UsersRecord user in usersCollection) {
+    if (receiverUsername.toLowerCase() == user.displayName.toLowerCase()) {
+      receiverUser = user;
+    }
+  }
+
+  DocumentReference receiverRef = receiverUser.reference;
+
+  if (receiverUser.friendRequests.contains(senderRef) ||
+      receiverUser.friendsList.contains(senderRef)) {
+    toReturn = false;
+  } else if (senderUser.friendRequests.contains(receiverRef) ||
+      senderUser.friendsList.contains(receiverRef)) {
+    toReturn = false;
+  } else {
+    receiverUser.friendRequests.add(senderRef);
+    toReturn = true;
+  }
+
+  /*UsersRecord senderUser = usersCollection[0];
   UsersRecord receiverUser = usersCollection[1];
   bool toReturn;
 
   for (UsersRecord user in usersCollection) {
     if (senderUsername.toLowerCase() == user.displayName.toLowerCase()) {
-      /*UsersRecord*/ senderUser = user;
+      UsersRecord senderUser = user;
     }
     if (receiverUsername.toLowerCase() == user.displayName.toLowerCase()) {
-      /*UsersRecord*/ receiverUser = user;
+      UsersRecord receiverUser = user;
     }
   }
 
@@ -131,11 +162,29 @@ bool? sendFriendRequest(
 
   return toReturn;
 
-  /*if (senderUser in receiverUser.friendRequests){
+  if (senderUser in receiverUser.friendRequests){
     toReturn = false;
   } else {
   receiverUser.friendRequests.add(senderUser);
   toReturn = true;
   }
   return toReturn;*/
+
+  return toReturn;
+}
+
+DocumentReference? friendRequestUsernames(
+  UsersRecord authUser,
+  int indexInList,
+  List<UsersRecord> allUsers,
+) {
+  String returnUsername = "";
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  DocumentReference<Object?> returnUserRef =
+      authUser.friendRequests.elementAt(indexInList);
+
+  return returnUserRef;
+
+  //return "Test";
 }

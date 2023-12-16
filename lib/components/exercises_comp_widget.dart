@@ -48,7 +48,7 @@ class _ExercisesCompWidgetState extends State<ExercisesCompWidget> {
         color: FlutterFlowTheme.of(context).secondaryBackground,
       ),
       child: Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(5.0, 5.0, 5.0, 5.0),
+        padding: EdgeInsets.all(5.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

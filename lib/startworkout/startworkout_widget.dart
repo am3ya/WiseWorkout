@@ -78,14 +78,13 @@ class _StartworkoutWidgetState extends State<StartworkoutWidget> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(30.0, 30.0, 30.0, 30.0),
+                padding: EdgeInsets.all(30.0),
                 child: Container(
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).secondaryBackground,
                   ),
                   child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 10.0),
+                    padding: EdgeInsets.all(10.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
@@ -171,15 +170,14 @@ class _StartworkoutWidgetState extends State<StartworkoutWidget> {
                 ),
               ),
               Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(30.0, 30.0, 30.0, 30.0),
+                padding: EdgeInsets.all(30.0),
                 child: Container(
                   height: 400.0,
                   decoration: BoxDecoration(
                     color: FlutterFlowTheme.of(context).secondaryBackground,
                   ),
                   child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(10.0, 10.0, 10.0, 10.0),
+                    padding: EdgeInsets.all(10.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       children: [
