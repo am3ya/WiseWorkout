@@ -1,5 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/components/error_occured_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -72,63 +73,84 @@ class _AreYouSureDeleteAccountWidgetState
           children: [
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
-              child: StreamBuilder<List<UsersRecord>>(
-                stream: queryUsersRecord(
-                  singleRecord: true,
-                ),
-                builder: (context, snapshot) {
-                  // Customize what your widget looks like when it's loading.
-                  if (!snapshot.hasData) {
-                    return Center(
-                      child: SizedBox(
-                        width: 50.0,
-                        height: 50.0,
-                        child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                            FlutterFlowTheme.of(context).primary,
+              child: AuthUserStreamWidget(
+                builder: (context) => StreamBuilder<List<UsersRecord>>(
+                  stream: queryUsersRecord(
+                    queryBuilder: (usersRecord) => usersRecord.where(
+                      'display_name',
+                      isEqualTo: currentUserDisplayName,
+                    ),
+                    singleRecord: true,
+                  ),
+                  builder: (context, snapshot) {
+                    // Customize what your widget looks like when it's loading.
+                    if (!snapshot.hasData) {
+                      return Center(
+                        child: SizedBox(
+                          width: 50.0,
+                          height: 50.0,
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                              FlutterFlowTheme.of(context).primary,
+                            ),
                           ),
+                        ),
+                      );
+                    }
+                    List<UsersRecord> buttonUsersRecordList = snapshot.data!;
+                    // Return an empty Container when the item does not exist.
+                    if (snapshot.data!.isEmpty) {
+                      return Container();
+                    }
+                    final buttonUsersRecord = buttonUsersRecordList.isNotEmpty
+                        ? buttonUsersRecordList.first
+                        : null;
+                    return FFButtonWidget(
+                      onPressed: () async {
+                        if (functions.deleteUser(buttonUsersRecord!)) {
+                          await authManager.deleteUser(context);
+
+                          context.pushNamed('login');
+                        } else {
+                          await showModalBottomSheet(
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            enableDrag: false,
+                            context: context,
+                            builder: (context) {
+                              return Padding(
+                                padding: MediaQuery.viewInsetsOf(context),
+                                child: ErrorOccuredWidget(),
+                              );
+                            },
+                          ).then((value) => safeSetState(() {}));
+
+                          return;
+                        }
+                      },
+                      text: 'Delete Account',
+                      options: FFButtonOptions(
+                        width: double.infinity,
+                        height: 60.0,
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        iconPadding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        color: Color(0xFFD71A35),
+                        textStyle:
+                            FlutterFlowTheme.of(context).bodyLarge.override(
+                                  fontFamily: 'Readex Pro',
+                                  color: Color(0xFFF6F7F8),
+                                ),
+                        elevation: 2.0,
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1.0,
                         ),
                       ),
                     );
-                  }
-                  List<UsersRecord> buttonUsersRecordList = snapshot.data!;
-                  // Return an empty Container when the item does not exist.
-                  if (snapshot.data!.isEmpty) {
-                    return Container();
-                  }
-                  final buttonUsersRecord = buttonUsersRecordList.isNotEmpty
-                      ? buttonUsersRecordList.first
-                      : null;
-                  return FFButtonWidget(
-                    onPressed: () async {
-                      if (functions.deleteUser(buttonUsersRecord!)) {
-                        await authManager.deleteUser(context);
-                      }
-
-                      context.pushNamed('login');
-                    },
-                    text: 'Delete Account',
-                    options: FFButtonOptions(
-                      width: double.infinity,
-                      height: 60.0,
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      iconPadding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      color: Color(0xFFD71A35),
-                      textStyle:
-                          FlutterFlowTheme.of(context).bodyLarge.override(
-                                fontFamily: 'Readex Pro',
-                                color: Color(0xFFF6F7F8),
-                              ),
-                      elevation: 2.0,
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                        width: 1.0,
-                      ),
-                    ),
-                  );
-                },
+                  },
+                ),
               ),
             ),
             Padding(

@@ -144,7 +144,7 @@ class _TrialNewUserMetricsWidgetState extends State<TrialNewUserMetricsWidget>
                   size: 30.0,
                 ),
                 onPressed: () async {
-                  context.pushNamed('profile');
+                  context.pushNamed('userProfile');
                 },
               ),
             ),

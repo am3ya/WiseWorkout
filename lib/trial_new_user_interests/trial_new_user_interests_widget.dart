@@ -136,7 +136,7 @@ class _TrialNewUserInterestsWidgetState
                   size: 30.0,
                 ),
                 onPressed: () async {
-                  context.pushNamed('profile');
+                  context.pushNamed('userProfile');
                 },
               ),
             ),

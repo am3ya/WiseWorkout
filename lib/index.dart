@@ -1,8 +1,7 @@
 // Export pages
 export '/login/login_widget.dart' show LoginWidget;
-export '/homepage/homepage_widget.dart' show HomepageWidget;
 export '/history/history_widget.dart' show HistoryWidget;
-export '/profile/profile_widget.dart' show ProfileWidget;
+export '/user_profile/user_profile_widget.dart' show UserProfileWidget;
 export '/startworkout/startworkout_widget.dart' show StartworkoutWidget;
 export '/test/test_widget.dart' show TestWidget;
 export '/exercises/exercises_widget.dart' show ExercisesWidget;
@@ -23,3 +22,17 @@ export '/edit_profile_page/edit_profile_page_widget.dart'
 export '/application_pending/application_pending_widget.dart'
     show ApplicationPendingWidget;
 export '/admin_profile/admin_profile_widget.dart' show AdminProfileWidget;
+export '/test_calendar/test_calendar_widget.dart' show TestCalendarWidget;
+export '/business_profile/business_profile_widget.dart'
+    show BusinessProfileWidget;
+export '/business_exercises/business_exercises_widget.dart'
+    show BusinessExercisesWidget;
+export '/business_account_view_exercise/business_account_view_exercise_widget.dart'
+    show BusinessAccountViewExerciseWidget;
+export '/user_view_exercise/user_view_exercise_widget.dart'
+    show UserViewExerciseWidget;
+export '/start_workout_timer/start_workout_timer_widget.dart'
+    show StartWorkoutTimerWidget;
+export '/send_feedback/send_feedback_widget.dart' show SendFeedbackWidget;
+export '/business_edit_profile/business_edit_profile_widget.dart'
+    show BusinessEditProfileWidget;

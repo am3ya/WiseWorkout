@@ -1,19 +1,22 @@
-import '/auth/firebase_auth/auth_util.dart';
-import '/components/start_workout_comp_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'startworkout_widget.dart' show StartworkoutWidget;
-import 'package:flutter/gestures.dart';
+import 'business_account_view_exercise_widget.dart'
+    show BusinessAccountViewExerciseWidget;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class StartworkoutModel extends FlutterFlowModel<StartworkoutWidget> {
+class BusinessAccountViewExerciseModel
+    extends FlutterFlowModel<BusinessAccountViewExerciseWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
+  // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode;
+  TextEditingController? textController;
+  String? Function(BuildContext, String?)? textControllerValidator;
 
   /// Initialization and disposal methods.
 
@@ -21,6 +24,8 @@ class StartworkoutModel extends FlutterFlowModel<StartworkoutWidget> {
 
   void dispose() {
     unfocusNode.dispose();
+    textFieldFocusNode?.dispose();
+    textController?.dispose();
   }
 
   /// Action blocks are added here.

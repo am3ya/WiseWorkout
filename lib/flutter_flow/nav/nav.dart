@@ -94,23 +94,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => LoginWidget(),
         ),
         FFRoute(
-          name: 'homepage',
-          path: '/homepage',
-          builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'homepage')
-              : HomepageWidget(),
-        ),
-        FFRoute(
           name: 'history',
           path: '/history',
           builder: (context, params) => HistoryWidget(),
         ),
         FFRoute(
-          name: 'profile',
-          path: '/profile',
+          name: 'userProfile',
+          path: '/userProfile',
           builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'profile')
-              : ProfileWidget(),
+              ? NavBarPage(initialPage: 'userProfile')
+              : UserProfileWidget(),
         ),
         FFRoute(
           name: 'startworkout',
@@ -187,6 +180,48 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'adminProfile',
           path: '/adminProfile',
           builder: (context, params) => AdminProfileWidget(),
+        ),
+        FFRoute(
+          name: 'testCalendar',
+          path: '/testCalendar',
+          builder: (context, params) => params.isEmpty
+              ? NavBarPage(initialPage: 'testCalendar')
+              : TestCalendarWidget(),
+        ),
+        FFRoute(
+          name: 'businessProfile',
+          path: '/businessProfile',
+          builder: (context, params) => BusinessProfileWidget(),
+        ),
+        FFRoute(
+          name: 'businessExercises',
+          path: '/businessExercises',
+          builder: (context, params) => BusinessExercisesWidget(),
+        ),
+        FFRoute(
+          name: 'businessAccountViewExercise',
+          path: '/businessAccountViewExercise',
+          builder: (context, params) => BusinessAccountViewExerciseWidget(),
+        ),
+        FFRoute(
+          name: 'userViewExercise',
+          path: '/userViewExercise',
+          builder: (context, params) => UserViewExerciseWidget(),
+        ),
+        FFRoute(
+          name: 'startWorkoutTimer',
+          path: '/startWorkoutTimer',
+          builder: (context, params) => StartWorkoutTimerWidget(),
+        ),
+        FFRoute(
+          name: 'sendFeedback',
+          path: '/sendFeedback',
+          builder: (context, params) => SendFeedbackWidget(),
+        ),
+        FFRoute(
+          name: 'businessEditProfile',
+          path: '/businessEditProfile',
+          builder: (context, params) => BusinessEditProfileWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

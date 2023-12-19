@@ -569,6 +569,7 @@ class _BusinessAccountApplicationWidgetState
                                                 category: _model.dropDownValue,
                                                 user: currentUserReference,
                                               ));
+                                          Navigator.pop(context);
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             SnackBar(

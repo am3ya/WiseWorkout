@@ -869,6 +869,8 @@ class _LoginWidgetState extends State<LoginWidget>
                                                             photoUrl:
                                                                 'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/workout-app-o0nwer/assets/wxddpzwj052m/blank-profile-picture-973460_640.png',
                                                             isActive: true,
+                                                            infoCollectionComplete:
+                                                                false,
                                                           ));
 
                                                       await authManager
@@ -1233,7 +1235,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                               '') ==
                                                           'user')) {
                                                     context.pushNamedAuth(
-                                                        'homepage',
+                                                        'testCalendar',
                                                         context.mounted);
 
                                                     return;
@@ -1245,7 +1247,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                                 '') ==
                                                             'business')) {
                                                       context.pushNamedAuth(
-                                                          'newTestPage',
+                                                          'businessProfile',
                                                           context.mounted);
 
                                                       return;
@@ -1256,11 +1258,23 @@ class _LoginWidgetState extends State<LoginWidget>
                                                                       ?.userType,
                                                                   '') ==
                                                               'admin')) {
-                                                        context.pushNamedAuth(
-                                                            'profile',
-                                                            context.mounted);
+                                                        if (valueOrDefault<
+                                                                bool>(
+                                                            currentUserDocument
+                                                                ?.infoCollectionComplete,
+                                                            false)) {
+                                                          context.pushNamedAuth(
+                                                              'adminProfile',
+                                                              context.mounted);
 
-                                                        return;
+                                                          return;
+                                                        } else {
+                                                          context.pushNamedAuth(
+                                                              'trialNewUserInfoPage',
+                                                              context.mounted);
+
+                                                          return;
+                                                        }
                                                       } else {
                                                         await showModalBottomSheet(
                                                           isScrollControlled:

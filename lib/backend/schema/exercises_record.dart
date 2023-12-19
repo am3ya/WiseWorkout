@@ -31,10 +31,28 @@ class ExercisesRecord extends FirestoreRecord {
   String get bodyPart => _bodyPart ?? '';
   bool hasBodyPart() => _bodyPart != null;
 
+  // "date" field.
+  DateTime? _date;
+  DateTime? get date => _date;
+  bool hasDate() => _date != null;
+
+  // "fitness_goal_achieved" field.
+  String? _fitnessGoalAchieved;
+  String get fitnessGoalAchieved => _fitnessGoalAchieved ?? '';
+  bool hasFitnessGoalAchieved() => _fitnessGoalAchieved != null;
+
+  // "bio" field.
+  String? _bio;
+  String get bio => _bio ?? '';
+  bool hasBio() => _bio != null;
+
   void _initializeFields() {
     _name = snapshotData['name'] as String?;
     _category = snapshotData['category'] as String?;
     _bodyPart = snapshotData['body_part'] as String?;
+    _date = snapshotData['date'] as DateTime?;
+    _fitnessGoalAchieved = snapshotData['fitness_goal_achieved'] as String?;
+    _bio = snapshotData['bio'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -75,12 +93,18 @@ Map<String, dynamic> createExercisesRecordData({
   String? name,
   String? category,
   String? bodyPart,
+  DateTime? date,
+  String? fitnessGoalAchieved,
+  String? bio,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'name': name,
       'category': category,
       'body_part': bodyPart,
+      'date': date,
+      'fitness_goal_achieved': fitnessGoalAchieved,
+      'bio': bio,
     }.withoutNulls,
   );
 
@@ -94,12 +118,21 @@ class ExercisesRecordDocumentEquality implements Equality<ExercisesRecord> {
   bool equals(ExercisesRecord? e1, ExercisesRecord? e2) {
     return e1?.name == e2?.name &&
         e1?.category == e2?.category &&
-        e1?.bodyPart == e2?.bodyPart;
+        e1?.bodyPart == e2?.bodyPart &&
+        e1?.date == e2?.date &&
+        e1?.fitnessGoalAchieved == e2?.fitnessGoalAchieved &&
+        e1?.bio == e2?.bio;
   }
 
   @override
-  int hash(ExercisesRecord? e) =>
-      const ListEquality().hash([e?.name, e?.category, e?.bodyPart]);
+  int hash(ExercisesRecord? e) => const ListEquality().hash([
+        e?.name,
+        e?.category,
+        e?.bodyPart,
+        e?.date,
+        e?.fitnessGoalAchieved,
+        e?.bio
+      ]);
 
   @override
   bool isValidKey(Object? o) => o is ExercisesRecord;

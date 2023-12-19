@@ -59,6 +59,8 @@ bool doesUserExist(
 
 bool deleteUser(UsersRecord thisUser) {
   String userID = thisUser.uid;
+  //String thisUserAsString = thisUser.path;
+  //String thisUserID = thisUserAsString.substring(7);
 
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 

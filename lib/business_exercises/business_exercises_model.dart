@@ -1,16 +1,14 @@
-import '/auth/firebase_auth/auth_util.dart';
-import '/components/start_workout_comp_widget.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'startworkout_widget.dart' show StartworkoutWidget;
-import 'package:flutter/gestures.dart';
+import 'business_exercises_widget.dart' show BusinessExercisesWidget;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class StartworkoutModel extends FlutterFlowModel<StartworkoutWidget> {
+class BusinessExercisesModel extends FlutterFlowModel<BusinessExercisesWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
