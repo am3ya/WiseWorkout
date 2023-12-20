@@ -36,3 +36,4 @@ export '/start_workout_timer/start_workout_timer_widget.dart'
 export '/send_feedback/send_feedback_widget.dart' show SendFeedbackWidget;
 export '/business_edit_profile/business_edit_profile_widget.dart'
     show BusinessEditProfileWidget;
+export '/view_about_page/view_about_page_widget.dart' show ViewAboutPageWidget;

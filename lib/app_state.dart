@@ -45,7 +45,7 @@ class FFAppState extends ChangeNotifier {
     updateFn(_workout);
   }
 
-  bool _showOnboard = false;
+  bool _showOnboard = true;
   bool get showOnboard => _showOnboard;
   set showOnboard(bool _value) {
     _showOnboard = _value;
