@@ -107,6 +107,18 @@ class _LoginWidgetState extends State<LoginWidget>
     super.initState();
     _model = createModel(context, () => LoginModel());
 
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (FFAppState().showOnboard) {
+        context.pushNamed('viewAboutPage');
+
+        setState(() {
+          FFAppState().showOnboard = false;
+        });
+        return;
+      }
+    });
+
     _model.tabBarController = TabController(
       vsync: this,
       length: 2,

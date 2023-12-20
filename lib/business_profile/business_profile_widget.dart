@@ -368,7 +368,7 @@ class _BusinessProfileWidgetState extends State<BusinessProfileWidget> {
                   await authManager.signOut();
                   GoRouter.of(context).clearRedirectLocation();
 
-                  context.goNamedAuth('viewAboutPage', context.mounted);
+                  context.goNamedAuth('login', context.mounted);
                 },
                 text: 'Log Out',
                 options: FFButtonOptions(
