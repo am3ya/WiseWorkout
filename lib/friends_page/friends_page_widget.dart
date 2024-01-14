@@ -192,6 +192,9 @@ class _FriendsPageWidgetState extends State<FriendsPageWidget>
                               ),
                             ],
                             controller: _model.tabBarController,
+                            onTap: (i) async {
+                              [() async {}, () async {}][i]();
+                            },
                           ),
                         ),
                         Expanded(

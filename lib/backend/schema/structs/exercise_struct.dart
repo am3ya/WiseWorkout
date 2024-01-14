@@ -39,7 +39,7 @@ class ExerciseStruct extends FFFirebaseStruct {
       );
 
   static ExerciseStruct? maybeFromMap(dynamic data) =>
-      data is Map<String, dynamic> ? ExerciseStruct.fromMap(data) : null;
+      data is Map ? ExerciseStruct.fromMap(data.cast<String, dynamic>()) : null;
 
   Map<String, dynamic> toMap() => {
         'exerciseRef': _exerciseRef,

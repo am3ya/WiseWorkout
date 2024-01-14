@@ -175,6 +175,10 @@ class _SearchUsersWidgetState extends State<SearchUsersWidget>
                           .where(
                             'user_type',
                             isEqualTo: 'user',
+                          )
+                          .where(
+                            'isActive',
+                            isEqualTo: true,
                           ),
                     ),
                     builder: (context, snapshot) {

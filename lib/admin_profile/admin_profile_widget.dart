@@ -491,7 +491,7 @@ class _AdminProfileWidgetState extends State<AdminProfileWidget> {
                   await authManager.signOut();
                   GoRouter.of(context).clearRedirectLocation();
 
-                  context.goNamedAuth('login', context.mounted);
+                  context.goNamedAuth('viewAboutPage', context.mounted);
                 },
                 text: 'Log Out',
                 options: FFButtonOptions(

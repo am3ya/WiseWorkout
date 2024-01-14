@@ -141,6 +141,9 @@ class _TestCalendarWidgetState extends State<TestCalendarWidget>
                         ),
                       ],
                       controller: _model.tabBarController,
+                      onTap: (i) async {
+                        [() async {}, () async {}][i]();
+                      },
                     ),
                   ),
                   Expanded(

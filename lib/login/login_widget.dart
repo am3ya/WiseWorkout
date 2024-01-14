@@ -10,6 +10,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -106,18 +107,6 @@ class _LoginWidgetState extends State<LoginWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => LoginModel());
-
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if (FFAppState().showOnboard) {
-        context.pushNamed('viewAboutPage');
-
-        setState(() {
-          FFAppState().showOnboard = false;
-        });
-        return;
-      }
-    });
 
     _model.tabBarController = TabController(
       vsync: this,
@@ -880,7 +869,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                             userType: 'user',
                                                             photoUrl:
                                                                 'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/workout-app-o0nwer/assets/wxddpzwj052m/blank-profile-picture-973460_640.png',
-                                                            isActive: true,
+                                                            isActive: false,
                                                             infoCollectionComplete:
                                                                 false,
                                                           ));
@@ -1246,6 +1235,12 @@ class _LoginWidgetState extends State<LoginWidget>
                                                                   ?.userType,
                                                               '') ==
                                                           'user')) {
+                                                    await currentUserReference!
+                                                        .update(
+                                                            createUsersRecordData(
+                                                      isActive: true,
+                                                    ));
+
                                                     context.pushNamedAuth(
                                                         'testCalendar',
                                                         context.mounted);
@@ -1457,6 +1452,9 @@ class _LoginWidgetState extends State<LoginWidget>
                                 ),
                               ],
                               controller: _model.tabBarController,
+                              onTap: (i) async {
+                                [() async {}, () async {}][i]();
+                              },
                             ),
                           ),
                         ],

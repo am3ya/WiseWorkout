@@ -40,7 +40,7 @@ class WorkoutStruct extends FFFirebaseStruct {
       );
 
   static WorkoutStruct? maybeFromMap(dynamic data) =>
-      data is Map<String, dynamic> ? WorkoutStruct.fromMap(data) : null;
+      data is Map ? WorkoutStruct.fromMap(data.cast<String, dynamic>()) : null;
 
   Map<String, dynamic> toMap() => {
         'name': _name,
