@@ -50,6 +50,22 @@ bool isEmpty(String input) {
   return input.isEmpty;
 }
 
+DocumentReference? friendsListUsernames(
+  UsersRecord authUser,
+  int indexInList,
+  List<UsersRecord> allUsers,
+) {
+  String returnUsername = "";
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
+  DocumentReference<Object?> returnUserRef =
+      authUser.friendsList.elementAt(indexInList);
+
+  return returnUserRef;
+
+  //return "Test";
+}
+
 bool doesUserExist(
   List<UsersRecord> usersCollection,
   String input,
@@ -189,4 +205,75 @@ DocumentReference? friendRequestUsernames(
   return returnUserRef;
 
   //return "Test";
+}
+
+bool acceptFriendRequest(
+  String requesterUsername,
+  UsersRecord accepterUser,
+  List<UsersRecord> usersCollection,
+) {
+  bool toReturn = false;
+  UsersRecord requesterUser = usersCollection[0];
+
+  for (int usersIndex = 0; usersIndex < usersCollection.length; usersIndex++) {
+    if (usersCollection[usersIndex].displayName == requesterUsername) {
+      requesterUser = usersCollection[usersIndex];
+    }
+  }
+
+  DocumentReference requesterRef = requesterUser.reference;
+
+  if (accepterUser.friendRequests.contains(requesterRef)) {
+    accepterUser.friendsList.add(requesterRef);
+    accepterUser.friendRequests.remove(requesterRef);
+    toReturn = true;
+  }
+
+  return toReturn;
+}
+
+bool removeFriendsListFriend(
+  String friendUsername,
+  UsersRecord removerUser,
+  List<UsersRecord> usersCollection,
+) {
+  bool toReturn = false;
+  UsersRecord friendUser = usersCollection[0];
+
+  for (int usersIndex = 0; usersIndex < usersCollection.length; usersIndex++) {
+    if (usersCollection[usersIndex].displayName == friendUsername) {
+      friendUser = usersCollection[usersIndex];
+    }
+  }
+
+  DocumentReference friendRef = friendUser.reference;
+
+  if (removerUser.friendsList.contains(friendRef)) {
+    removerUser.friendsList.remove(friendRef);
+    toReturn = true;
+  }
+  return toReturn;
+}
+
+bool removeFriendRequest(
+  String requesterUsername,
+  UsersRecord removerUser,
+  List<UsersRecord> usersCollection,
+) {
+  bool toReturn = false;
+  UsersRecord requesterUser = usersCollection[0];
+
+  for (int usersIndex = 0; usersIndex < usersCollection.length; usersIndex++) {
+    if (usersCollection[usersIndex].displayName == requesterUsername) {
+      requesterUser = usersCollection[usersIndex];
+    }
+  }
+
+  DocumentReference requesterRef = requesterUser.reference;
+
+  if (removerUser.friendRequests.contains(requesterRef)) {
+    removerUser.friendRequests.remove(requesterRef);
+    toReturn = true;
+  }
+  return toReturn;
 }
