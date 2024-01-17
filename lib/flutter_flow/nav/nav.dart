@@ -227,6 +227,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'viewAboutPage',
           path: '/viewAboutPage',
           builder: (context, params) => ViewAboutPageWidget(),
+        ),
+        FFRoute(
+          name: 'adminSearchUsers',
+          path: '/adminSearchUsers',
+          builder: (context, params) => AdminSearchUsersWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

@@ -37,3 +37,5 @@ export '/send_feedback/send_feedback_widget.dart' show SendFeedbackWidget;
 export '/business_edit_profile/business_edit_profile_widget.dart'
     show BusinessEditProfileWidget;
 export '/view_about_page/view_about_page_widget.dart' show ViewAboutPageWidget;
+export '/admin_search_users/admin_search_users_widget.dart'
+    show AdminSearchUsersWidget;

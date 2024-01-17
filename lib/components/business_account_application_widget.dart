@@ -568,6 +568,8 @@ class _BusinessAccountApplicationWidgetState
                                                 bio: _model.bioController.text,
                                                 category: _model.dropDownValue,
                                                 user: currentUserReference,
+                                                credentialDoc:
+                                                    _model.uploadedFileUrl,
                                               ));
                                           Navigator.pop(context);
                                           ScaffoldMessenger.of(context)

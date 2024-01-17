@@ -1,7 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/components/friend_request_sent_widget.dart';
-import '/components/friend_request_unsuccessful_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -16,26 +14,26 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'search_users_model.dart';
-export 'search_users_model.dart';
+import 'admin_search_users_model.dart';
+export 'admin_search_users_model.dart';
 
-class SearchUsersWidget extends StatefulWidget {
-  const SearchUsersWidget({Key? key}) : super(key: key);
+class AdminSearchUsersWidget extends StatefulWidget {
+  const AdminSearchUsersWidget({Key? key}) : super(key: key);
 
   @override
-  _SearchUsersWidgetState createState() => _SearchUsersWidgetState();
+  _AdminSearchUsersWidgetState createState() => _AdminSearchUsersWidgetState();
 }
 
-class _SearchUsersWidgetState extends State<SearchUsersWidget>
+class _AdminSearchUsersWidgetState extends State<AdminSearchUsersWidget>
     with TickerProviderStateMixin {
-  late SearchUsersModel _model;
+  late AdminSearchUsersModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => SearchUsersModel());
+    _model = createModel(context, () => AdminSearchUsersModel());
 
     _model.searchUsersTextFieldController ??= TextEditingController();
     _model.searchUsersTextFieldFocusNode ??= FocusNode();
@@ -175,10 +173,6 @@ class _SearchUsersWidgetState extends State<SearchUsersWidget>
                           .where(
                             'user_type',
                             isEqualTo: 'user',
-                          )
-                          .where(
-                            'isActive',
-                            isEqualTo: true,
                           ),
                     ),
                     builder: (context, snapshot) {
@@ -323,7 +317,16 @@ class _SearchUsersWidgetState extends State<SearchUsersWidget>
                                       ),
                                     ),
                                     StreamBuilder<List<UsersRecord>>(
-                                      stream: queryUsersRecord(),
+                                      stream: queryUsersRecord(
+                                        queryBuilder: (usersRecord) =>
+                                            usersRecord.where(
+                                          'display_name',
+                                          isEqualTo: _model
+                                              .searchUsersTextFieldController
+                                              .text,
+                                        ),
+                                        singleRecord: true,
+                                      ),
                                       builder: (context, snapshot) {
                                         // Customize what your widget looks like when it's loading.
                                         if (!snapshot.hasData) {
@@ -345,116 +348,30 @@ class _SearchUsersWidgetState extends State<SearchUsersWidget>
                                         List<UsersRecord>
                                             buttonUsersRecordList =
                                             snapshot.data!;
+                                        // Return an empty Container when the item does not exist.
+                                        if (snapshot.data!.isEmpty) {
+                                          return Container();
+                                        }
+                                        final buttonUsersRecord =
+                                            buttonUsersRecordList.isNotEmpty
+                                                ? buttonUsersRecordList.first
+                                                : null;
                                         return FFButtonWidget(
                                           onPressed: () async {
-                                            if ((currentUserDocument
-                                                        ?.friendRequests
-                                                        ?.toList() ??
-                                                    [])
-                                                .contains(listViewUsersRecord
-                                                    .reference)) {
-                                              await showModalBottomSheet(
-                                                isScrollControlled: true,
-                                                backgroundColor:
-                                                    Colors.transparent,
-                                                enableDrag: false,
-                                                context: context,
-                                                builder: (context) {
-                                                  return GestureDetector(
-                                                    onTap: () => _model
-                                                            .unfocusNode
-                                                            .canRequestFocus
-                                                        ? FocusScope.of(context)
-                                                            .requestFocus(_model
-                                                                .unfocusNode)
-                                                        : FocusScope.of(context)
-                                                            .unfocus(),
-                                                    child: Padding(
-                                                      padding: MediaQuery
-                                                          .viewInsetsOf(
-                                                              context),
-                                                      child:
-                                                          FriendRequestUnsuccessfulWidget(),
-                                                    ),
-                                                  );
-                                                },
-                                              ).then((value) =>
-                                                  safeSetState(() {}));
-                                            }
-                                            if (listViewUsersRecord
-                                                .friendRequests
-                                                .contains(
-                                                    currentUserReference)) {
-                                              await showModalBottomSheet(
-                                                isScrollControlled: true,
-                                                backgroundColor:
-                                                    Colors.transparent,
-                                                enableDrag: false,
-                                                context: context,
-                                                builder: (context) {
-                                                  return GestureDetector(
-                                                    onTap: () => _model
-                                                            .unfocusNode
-                                                            .canRequestFocus
-                                                        ? FocusScope.of(context)
-                                                            .requestFocus(_model
-                                                                .unfocusNode)
-                                                        : FocusScope.of(context)
-                                                            .unfocus(),
-                                                    child: Padding(
-                                                      padding: MediaQuery
-                                                          .viewInsetsOf(
-                                                              context),
-                                                      child:
-                                                          FriendRequestUnsuccessfulWidget(),
-                                                    ),
-                                                  );
-                                                },
-                                              ).then((value) =>
-                                                  safeSetState(() {}));
+                                            if (buttonUsersRecord?.isActive ==
+                                                true) {
+                                              await buttonUsersRecord!.reference
+                                                  .update(createUsersRecordData(
+                                                isActive: false,
+                                              ));
                                             } else {
-                                              await listViewUsersRecord
-                                                  .reference
-                                                  .update({
-                                                ...mapToFirestore(
-                                                  {
-                                                    'friend_requests':
-                                                        FieldValue.arrayUnion([
-                                                      currentUserReference
-                                                    ]),
-                                                  },
-                                                ),
-                                              });
-                                              await showModalBottomSheet(
-                                                isScrollControlled: true,
-                                                backgroundColor:
-                                                    Colors.transparent,
-                                                enableDrag: false,
-                                                context: context,
-                                                builder: (context) {
-                                                  return GestureDetector(
-                                                    onTap: () => _model
-                                                            .unfocusNode
-                                                            .canRequestFocus
-                                                        ? FocusScope.of(context)
-                                                            .requestFocus(_model
-                                                                .unfocusNode)
-                                                        : FocusScope.of(context)
-                                                            .unfocus(),
-                                                    child: Padding(
-                                                      padding: MediaQuery
-                                                          .viewInsetsOf(
-                                                              context),
-                                                      child:
-                                                          FriendRequestSentWidget(),
-                                                    ),
-                                                  );
-                                                },
-                                              ).then((value) =>
-                                                  safeSetState(() {}));
+                                              await buttonUsersRecord!.reference
+                                                  .update(createUsersRecordData(
+                                                isActive: true,
+                                              ));
                                             }
                                           },
-                                          text: 'Add',
+                                          text: 'Change status',
                                           options: FFButtonOptions(
                                             height: 40.0,
                                             padding:

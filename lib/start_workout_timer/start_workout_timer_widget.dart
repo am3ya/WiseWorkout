@@ -257,7 +257,12 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                                 borderRadius: BorderRadius.circular(8.0),
                               ),
                             ),
-                            style: FlutterFlowTheme.of(context).bodyMedium,
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  color: Color(0xFFEDF0F2),
+                                ),
                             validator: _model.textController1Validator
                                 .asValidator(context),
                           ),

@@ -1,6 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/components/friend_request_sent_widget.dart';
 import '/components/friend_request_unsuccessful_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -755,54 +754,54 @@ class _FriendsPageWidgetState extends State<FriendsPageWidget>
                                                                           0.0,
                                                                           10.0,
                                                                           0.0),
-                                                              child: InkWell(
-                                                                splashColor: Colors
-                                                                    .transparent,
-                                                                focusColor: Colors
-                                                                    .transparent,
-                                                                hoverColor: Colors
-                                                                    .transparent,
-                                                                highlightColor:
-                                                                    Colors
-                                                                        .transparent,
-                                                                onLongPress:
+                                                              child:
+                                                                  FFButtonWidget(
+                                                                onPressed:
                                                                     () async {
-                                                                  if (functions.acceptFriendRequest(
-                                                                      rowUsersRecord
-                                                                          .displayName,
-                                                                      listViewUsersRecord,
-                                                                      friendsPageUsersRecordList
-                                                                          .toList())) {
-                                                                    await showModalBottomSheet(
-                                                                      isScrollControlled:
-                                                                          true,
-                                                                      backgroundColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      enableDrag:
-                                                                          false,
-                                                                      context:
-                                                                          context,
-                                                                      builder:
-                                                                          (context) {
-                                                                        return GestureDetector(
-                                                                          onTap: () => _model.unfocusNode.canRequestFocus
-                                                                              ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-                                                                              : FocusScope.of(context).unfocus(),
-                                                                          child:
-                                                                              Padding(
-                                                                            padding:
-                                                                                MediaQuery.viewInsetsOf(context),
-                                                                            child:
-                                                                                FriendRequestSentWidget(),
-                                                                          ),
-                                                                        );
-                                                                      },
-                                                                    ).then((value) =>
-                                                                        safeSetState(
-                                                                            () {}));
+                                                                  if (listViewUsersRecord
+                                                                      .friendRequests
+                                                                      .contains(functions.friendRequestUsernames(
+                                                                          listViewUsersRecord,
+                                                                          authUsersFriendReqsIndex,
+                                                                          friendsPageUsersRecordList
+                                                                              .toList()))) {
+                                                                    await currentUserReference!
+                                                                        .update({
+                                                                      ...mapToFirestore(
+                                                                        {
+                                                                          'friend_requests':
+                                                                              FieldValue.arrayRemove([
+                                                                            functions.friendRequestUsernames(
+                                                                                listViewUsersRecord,
+                                                                                authUsersFriendReqsIndex,
+                                                                                friendsPageUsersRecordList.toList())
+                                                                          ]),
+                                                                          'friends_list':
+                                                                              FieldValue.arrayUnion([
+                                                                            functions.friendRequestUsernames(
+                                                                                listViewUsersRecord,
+                                                                                authUsersFriendReqsIndex,
+                                                                                friendsPageUsersRecordList.toList())
+                                                                          ]),
+                                                                        },
+                                                                      ),
+                                                                    });
 
-                                                                    return;
+                                                                    await functions
+                                                                        .friendRequestUsernames(
+                                                                            listViewUsersRecord,
+                                                                            authUsersFriendReqsIndex,
+                                                                            friendsPageUsersRecordList.toList())!
+                                                                        .update({
+                                                                      ...mapToFirestore(
+                                                                        {
+                                                                          'friends_list':
+                                                                              FieldValue.arrayUnion([
+                                                                            currentUserReference
+                                                                          ]),
+                                                                        },
+                                                                      ),
+                                                                    });
                                                                   } else {
                                                                     await showModalBottomSheet(
                                                                       isScrollControlled:
@@ -832,124 +831,52 @@ class _FriendsPageWidgetState extends State<FriendsPageWidget>
                                                                     ).then((value) =>
                                                                         safeSetState(
                                                                             () {}));
-
-                                                                    return;
                                                                   }
                                                                 },
-                                                                child:
-                                                                    FFButtonWidget(
-                                                                  onPressed:
-                                                                      () async {
-                                                                    if (listViewUsersRecord.friendRequests.contains(functions.friendRequestUsernames(
-                                                                        listViewUsersRecord,
-                                                                        authUsersFriendReqsIndex,
-                                                                        friendsPageUsersRecordList
-                                                                            .toList()))) {
-                                                                      await currentUserReference!
-                                                                          .update({
-                                                                        ...mapToFirestore(
-                                                                          {
-                                                                            'friend_requests':
-                                                                                FieldValue.arrayRemove([
-                                                                              functions.friendRequestUsernames(listViewUsersRecord, authUsersFriendReqsIndex, friendsPageUsersRecordList.toList())
-                                                                            ]),
-                                                                            'friends_list':
-                                                                                FieldValue.arrayUnion([
-                                                                              functions.friendRequestUsernames(listViewUsersRecord, authUsersFriendReqsIndex, friendsPageUsersRecordList.toList())
-                                                                            ]),
-                                                                          },
-                                                                        ),
-                                                                      });
-
-                                                                      await functions
-                                                                          .friendRequestUsernames(
-                                                                              listViewUsersRecord,
-                                                                              authUsersFriendReqsIndex,
-                                                                              friendsPageUsersRecordList.toList())!
-                                                                          .update({
-                                                                        ...mapToFirestore(
-                                                                          {
-                                                                            'friends_list':
-                                                                                FieldValue.arrayUnion([
-                                                                              currentUserReference
-                                                                            ]),
-                                                                          },
-                                                                        ),
-                                                                      });
-                                                                    } else {
-                                                                      await showModalBottomSheet(
-                                                                        isScrollControlled:
-                                                                            true,
-                                                                        backgroundColor:
-                                                                            Colors.transparent,
-                                                                        enableDrag:
-                                                                            false,
-                                                                        context:
-                                                                            context,
-                                                                        builder:
-                                                                            (context) {
-                                                                          return GestureDetector(
-                                                                            onTap: () => _model.unfocusNode.canRequestFocus
-                                                                                ? FocusScope.of(context).requestFocus(_model.unfocusNode)
-                                                                                : FocusScope.of(context).unfocus(),
-                                                                            child:
-                                                                                Padding(
-                                                                              padding: MediaQuery.viewInsetsOf(context),
-                                                                              child: FriendRequestUnsuccessfulWidget(),
-                                                                            ),
-                                                                          );
-                                                                        },
-                                                                      ).then((value) =>
-                                                                          safeSetState(
-                                                                              () {}));
-                                                                    }
-                                                                  },
-                                                                  text: '',
-                                                                  icon: Icon(
-                                                                    Icons.add,
-                                                                    size: 15.0,
+                                                                text: '',
+                                                                icon: Icon(
+                                                                  Icons.add,
+                                                                  size: 15.0,
+                                                                ),
+                                                                options:
+                                                                    FFButtonOptions(
+                                                                  width: 50.0,
+                                                                  height: 40.0,
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          10.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                  iconPadding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                  color: Color(
+                                                                      0xFF1CC018),
+                                                                  textStyle: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .titleSmall
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Readex Pro',
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
+                                                                  elevation:
+                                                                      3.0,
+                                                                  borderSide:
+                                                                      BorderSide(
+                                                                    color: Colors
+                                                                        .transparent,
+                                                                    width: 1.0,
                                                                   ),
-                                                                  options:
-                                                                      FFButtonOptions(
-                                                                    width: 50.0,
-                                                                    height:
-                                                                        40.0,
-                                                                    padding: EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            10.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                    iconPadding:
-                                                                        EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
-                                                                    color: Color(
-                                                                        0xFF1CC018),
-                                                                    textStyle: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .titleSmall
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              'Readex Pro',
-                                                                          color:
-                                                                              Colors.white,
-                                                                        ),
-                                                                    elevation:
-                                                                        3.0,
-                                                                    borderSide:
-                                                                        BorderSide(
-                                                                      color: Colors
-                                                                          .transparent,
-                                                                      width:
-                                                                          1.0,
-                                                                    ),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            8.0),
-                                                                  ),
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              8.0),
                                                                 ),
                                                               ),
                                                             ),
