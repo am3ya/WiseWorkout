@@ -53,8 +53,8 @@ class WorkoutsRecord extends FirestoreRecord {
           ? parent.collection('workouts')
           : FirebaseFirestore.instance.collectionGroup('workouts');
 
-  static DocumentReference createDoc(DocumentReference parent) =>
-      parent.collection('workouts').doc();
+  static DocumentReference createDoc(DocumentReference parent, {String? id}) =>
+      parent.collection('workouts').doc(id);
 
   static Stream<WorkoutsRecord> getDocument(DocumentReference ref) =>
       ref.snapshots().map((s) => WorkoutsRecord.fromSnapshot(s));

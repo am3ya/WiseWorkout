@@ -12,10 +12,10 @@ import 'email_not_verified_model.dart';
 export 'email_not_verified_model.dart';
 
 class EmailNotVerifiedWidget extends StatefulWidget {
-  const EmailNotVerifiedWidget({Key? key}) : super(key: key);
+  const EmailNotVerifiedWidget({super.key});
 
   @override
-  _EmailNotVerifiedWidgetState createState() => _EmailNotVerifiedWidgetState();
+  State<EmailNotVerifiedWidget> createState() => _EmailNotVerifiedWidgetState();
 }
 
 class _EmailNotVerifiedWidgetState extends State<EmailNotVerifiedWidget> {

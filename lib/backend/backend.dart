@@ -10,6 +10,7 @@ import 'schema/workouts_record.dart';
 import 'schema/exercises_record.dart';
 import 'schema/templates_record.dart';
 import 'schema/applications_record.dart';
+import 'schema/clubs_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,6 +23,7 @@ export 'schema/workouts_record.dart';
 export 'schema/exercises_record.dart';
 export 'schema/templates_record.dart';
 export 'schema/applications_record.dart';
+export 'schema/clubs_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -206,6 +208,43 @@ Future<List<ApplicationsRecord>> queryApplicationsRecordOnce({
     queryCollectionOnce(
       ApplicationsRecord.collection,
       ApplicationsRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query ClubsRecords (as a Stream and as a Future).
+Future<int> queryClubsRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      ClubsRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<ClubsRecord>> queryClubsRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      ClubsRecord.collection,
+      ClubsRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<ClubsRecord>> queryClubsRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      ClubsRecord.collection,
+      ClubsRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

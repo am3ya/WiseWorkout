@@ -11,10 +11,10 @@ import 'username_exists_model.dart';
 export 'username_exists_model.dart';
 
 class UsernameExistsWidget extends StatefulWidget {
-  const UsernameExistsWidget({Key? key}) : super(key: key);
+  const UsernameExistsWidget({super.key});
 
   @override
-  _UsernameExistsWidgetState createState() => _UsernameExistsWidgetState();
+  State<UsernameExistsWidget> createState() => _UsernameExistsWidgetState();
 }
 
 class _UsernameExistsWidgetState extends State<UsernameExistsWidget> {

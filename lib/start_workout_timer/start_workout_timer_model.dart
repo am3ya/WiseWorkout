@@ -14,31 +14,34 @@ class StartWorkoutTimerModel extends FlutterFlowModel<StartWorkoutTimerWidget> {
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
+  // State field(s) for stepsTextField widget.
+  FocusNode? stepsTextFieldFocusNode;
+  TextEditingController? stepsTextFieldController;
+  String? Function(BuildContext, String?)? stepsTextFieldControllerValidator;
+  // State field(s) for distanceTextField widget.
+  FocusNode? distanceTextFieldFocusNode;
+  TextEditingController? distanceTextFieldController;
+  String? Function(BuildContext, String?)? distanceTextFieldControllerValidator;
+  // State field(s) for speedTextField widget.
+  FocusNode? speedTextFieldFocusNode;
+  TextEditingController? speedTextFieldController;
+  String? Function(BuildContext, String?)? speedTextFieldControllerValidator;
+  // State field(s) for caloriesTextField widget.
+  FocusNode? caloriesTextFieldFocusNode;
+  TextEditingController? caloriesTextFieldController;
+  String? Function(BuildContext, String?)? caloriesTextFieldControllerValidator;
+  // State field(s) for targetTextField widget.
+  FocusNode? targetTextFieldFocusNode;
+  TextEditingController? targetTextFieldController;
+  String? Function(BuildContext, String?)? targetTextFieldControllerValidator;
   // State field(s) for Timer widget.
-  int timerMilliseconds = 2700000;
+  int timerMilliseconds = 0;
   String timerValue = StopWatchTimer.getDisplayTime(
-    2700000,
+    0,
     hours: false,
   );
   FlutterFlowTimerController timerController =
-      FlutterFlowTimerController(StopWatchTimer(mode: StopWatchMode.countDown));
-
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode1;
-  TextEditingController? textController1;
-  String? Function(BuildContext, String?)? textController1Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode2;
-  TextEditingController? textController2;
-  String? Function(BuildContext, String?)? textController2Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode3;
-  TextEditingController? textController3;
-  String? Function(BuildContext, String?)? textController3Validator;
-  // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode4;
-  TextEditingController? textController4;
-  String? Function(BuildContext, String?)? textController4Validator;
+      FlutterFlowTimerController(StopWatchTimer(mode: StopWatchMode.countUp));
 
   /// Initialization and disposal methods.
 
@@ -46,18 +49,22 @@ class StartWorkoutTimerModel extends FlutterFlowModel<StartWorkoutTimerWidget> {
 
   void dispose() {
     unfocusNode.dispose();
+    stepsTextFieldFocusNode?.dispose();
+    stepsTextFieldController?.dispose();
+
+    distanceTextFieldFocusNode?.dispose();
+    distanceTextFieldController?.dispose();
+
+    speedTextFieldFocusNode?.dispose();
+    speedTextFieldController?.dispose();
+
+    caloriesTextFieldFocusNode?.dispose();
+    caloriesTextFieldController?.dispose();
+
+    targetTextFieldFocusNode?.dispose();
+    targetTextFieldController?.dispose();
+
     timerController.dispose();
-    textFieldFocusNode1?.dispose();
-    textController1?.dispose();
-
-    textFieldFocusNode2?.dispose();
-    textController2?.dispose();
-
-    textFieldFocusNode3?.dispose();
-    textController3?.dispose();
-
-    textFieldFocusNode4?.dispose();
-    textController4?.dispose();
   }
 
   /// Action blocks are added here.

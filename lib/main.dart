@@ -135,7 +135,7 @@ class _NavBarPageState extends State<NavBarPage> {
   Widget build(BuildContext context) {
     final tabs = {
       'testCalendar': TestCalendarWidget(),
-      'searchUsers': SearchUsersWidget(),
+      'searchPage': SearchPageWidget(),
       'startworkout': StartworkoutWidget(),
       'exercises': ExercisesWidget(),
       'userProfile': UserProfileWidget(),

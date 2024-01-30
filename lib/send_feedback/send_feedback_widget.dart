@@ -10,10 +10,10 @@ import 'send_feedback_model.dart';
 export 'send_feedback_model.dart';
 
 class SendFeedbackWidget extends StatefulWidget {
-  const SendFeedbackWidget({Key? key}) : super(key: key);
+  const SendFeedbackWidget({super.key});
 
   @override
-  _SendFeedbackWidgetState createState() => _SendFeedbackWidgetState();
+  State<SendFeedbackWidget> createState() => _SendFeedbackWidgetState();
 }
 
 class _SendFeedbackWidgetState extends State<SendFeedbackWidget> {

@@ -10,10 +10,10 @@ import 'business_profile_model.dart';
 export 'business_profile_model.dart';
 
 class BusinessProfileWidget extends StatefulWidget {
-  const BusinessProfileWidget({Key? key}) : super(key: key);
+  const BusinessProfileWidget({super.key});
 
   @override
-  _BusinessProfileWidgetState createState() => _BusinessProfileWidgetState();
+  State<BusinessProfileWidget> createState() => _BusinessProfileWidgetState();
 }
 
 class _BusinessProfileWidgetState extends State<BusinessProfileWidget> {

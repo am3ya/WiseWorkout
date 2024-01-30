@@ -11,10 +11,10 @@ import 'user_profile_model.dart';
 export 'user_profile_model.dart';
 
 class UserProfileWidget extends StatefulWidget {
-  const UserProfileWidget({Key? key}) : super(key: key);
+  const UserProfileWidget({super.key});
 
   @override
-  _UserProfileWidgetState createState() => _UserProfileWidgetState();
+  State<UserProfileWidget> createState() => _UserProfileWidgetState();
 }
 
 class _UserProfileWidgetState extends State<UserProfileWidget> {
@@ -377,7 +377,7 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () async {
-                  context.pushNamed('friendsPage');
+                  context.pushNamed('clubsPage');
                 },
                 child: Material(
                   color: Colors.transparent,

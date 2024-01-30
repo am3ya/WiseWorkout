@@ -17,10 +17,10 @@ import 'edit_profile_page_model.dart';
 export 'edit_profile_page_model.dart';
 
 class EditProfilePageWidget extends StatefulWidget {
-  const EditProfilePageWidget({Key? key}) : super(key: key);
+  const EditProfilePageWidget({super.key});
 
   @override
-  _EditProfilePageWidgetState createState() => _EditProfilePageWidgetState();
+  State<EditProfilePageWidget> createState() => _EditProfilePageWidgetState();
 }
 
 class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {

@@ -9,10 +9,10 @@ import 'business_account_view_exercise_model.dart';
 export 'business_account_view_exercise_model.dart';
 
 class BusinessAccountViewExerciseWidget extends StatefulWidget {
-  const BusinessAccountViewExerciseWidget({Key? key}) : super(key: key);
+  const BusinessAccountViewExerciseWidget({super.key});
 
   @override
-  _BusinessAccountViewExerciseWidgetState createState() =>
+  State<BusinessAccountViewExerciseWidget> createState() =>
       _BusinessAccountViewExerciseWidgetState();
 }
 

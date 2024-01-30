@@ -11,10 +11,10 @@ import 'friend_request_sent_model.dart';
 export 'friend_request_sent_model.dart';
 
 class FriendRequestSentWidget extends StatefulWidget {
-  const FriendRequestSentWidget({Key? key}) : super(key: key);
+  const FriendRequestSentWidget({super.key});
 
   @override
-  _FriendRequestSentWidgetState createState() =>
+  State<FriendRequestSentWidget> createState() =>
       _FriendRequestSentWidgetState();
 }
 

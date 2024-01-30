@@ -10,10 +10,10 @@ import 'exercises_model.dart';
 export 'exercises_model.dart';
 
 class ExercisesWidget extends StatefulWidget {
-  const ExercisesWidget({Key? key}) : super(key: key);
+  const ExercisesWidget({super.key});
 
   @override
-  _ExercisesWidgetState createState() => _ExercisesWidgetState();
+  State<ExercisesWidget> createState() => _ExercisesWidgetState();
 }
 
 class _ExercisesWidgetState extends State<ExercisesWidget> {

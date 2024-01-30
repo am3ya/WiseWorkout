@@ -19,10 +19,10 @@ import 'business_edit_profile_model.dart';
 export 'business_edit_profile_model.dart';
 
 class BusinessEditProfileWidget extends StatefulWidget {
-  const BusinessEditProfileWidget({Key? key}) : super(key: key);
+  const BusinessEditProfileWidget({super.key});
 
   @override
-  _BusinessEditProfileWidgetState createState() =>
+  State<BusinessEditProfileWidget> createState() =>
       _BusinessEditProfileWidgetState();
 }
 

@@ -11,10 +11,10 @@ import 'exercises_comp_model.dart';
 export 'exercises_comp_model.dart';
 
 class ExercisesCompWidget extends StatefulWidget {
-  const ExercisesCompWidget({Key? key}) : super(key: key);
+  const ExercisesCompWidget({super.key});
 
   @override
-  _ExercisesCompWidgetState createState() => _ExercisesCompWidgetState();
+  State<ExercisesCompWidget> createState() => _ExercisesCompWidgetState();
 }
 
 class _ExercisesCompWidgetState extends State<ExercisesCompWidget> {

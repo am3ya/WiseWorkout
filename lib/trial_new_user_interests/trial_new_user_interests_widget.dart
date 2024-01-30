@@ -3,11 +3,13 @@ import '/backend/backend.dart';
 import '/components/error_occured_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_checkbox_group.dart';
+import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -20,10 +22,10 @@ import 'trial_new_user_interests_model.dart';
 export 'trial_new_user_interests_model.dart';
 
 class TrialNewUserInterestsWidget extends StatefulWidget {
-  const TrialNewUserInterestsWidget({Key? key}) : super(key: key);
+  const TrialNewUserInterestsWidget({super.key});
 
   @override
-  _TrialNewUserInterestsWidgetState createState() =>
+  State<TrialNewUserInterestsWidget> createState() =>
       _TrialNewUserInterestsWidgetState();
 }
 
@@ -195,7 +197,7 @@ class _TrialNewUserInterestsWidgetState
                         padding:
                             EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 0.0, 0.0),
                         child: Text(
-                          'What are your interests?',
+                          'How many times a week would you like to workout?',
                           style: FlutterFlowTheme.of(context).labelLarge,
                         ).animateOnPageLoad(
                             animationsMap['textOnPageLoadAnimation2']!),
@@ -252,6 +254,41 @@ class _TrialNewUserInterestsWidgetState
                               ],
                             ),
                           ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                20.0, 0.0, 0.0, 0.0),
+                            child: FlutterFlowDropDown<String>(
+                              controller: _model.dropDownValueController ??=
+                                  FormFieldController<String>(null),
+                              options: ['1', '3', '5'],
+                              onChanged: (val) =>
+                                  setState(() => _model.dropDownValue = val),
+                              width: 300.0,
+                              height: 50.0,
+                              textStyle:
+                                  FlutterFlowTheme.of(context).bodyMedium,
+                              hintText: 'Please select...',
+                              icon: Icon(
+                                Icons.keyboard_arrow_down_rounded,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                size: 24.0,
+                              ),
+                              fillColor: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              elevation: 2.0,
+                              borderColor:
+                                  FlutterFlowTheme.of(context).alternate,
+                              borderWidth: 2.0,
+                              borderRadius: 8.0,
+                              margin: EdgeInsetsDirectional.fromSTEB(
+                                  16.0, 4.0, 16.0, 4.0),
+                              hidesUnderline: true,
+                              isOverButton: true,
+                              isSearchable: false,
+                              isMultiSelect: false,
+                            ),
+                          ),
                         ],
                       ),
                     ],
@@ -297,7 +334,7 @@ class _TrialNewUserInterestsWidgetState
                                 : null;
                         return FFButtonWidget(
                           onPressed: () async {
-                            if (_model.checkboxGroupValues?.first == '') {
+                            if (_model.dropDownValue == 'Please select...') {
                               await showModalBottomSheet(
                                 isScrollControlled: true,
                                 backgroundColor: Colors.transparent,
@@ -320,13 +357,11 @@ class _TrialNewUserInterestsWidgetState
 
                               return;
                             } else {
-                              await currentUserReference!.update({
-                                ...mapToFirestore(
-                                  {
-                                    'interests': _model.checkboxGroupValues,
-                                  },
-                                ),
-                              });
+                              await currentUserReference!
+                                  .update(createUsersRecordData(
+                                weeklyWorkouts: functions
+                                    .weeklyWorkouts(_model.dropDownValue!),
+                              ));
                             }
 
                             context.pushNamed('trialNewUserMetrics');

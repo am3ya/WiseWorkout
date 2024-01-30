@@ -9,14 +9,14 @@ export 'input_weight_model.dart';
 
 class InputWeightWidget extends StatefulWidget {
   const InputWeightWidget({
-    Key? key,
+    super.key,
     this.parameter1,
-  }) : super(key: key);
+  });
 
   final int? parameter1;
 
   @override
-  _InputWeightWidgetState createState() => _InputWeightWidgetState();
+  State<InputWeightWidget> createState() => _InputWeightWidgetState();
 }
 
 class _InputWeightWidgetState extends State<InputWeightWidget> {

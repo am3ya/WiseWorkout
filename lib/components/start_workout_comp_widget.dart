@@ -21,10 +21,10 @@ import 'start_workout_comp_model.dart';
 export 'start_workout_comp_model.dart';
 
 class StartWorkoutCompWidget extends StatefulWidget {
-  const StartWorkoutCompWidget({Key? key}) : super(key: key);
+  const StartWorkoutCompWidget({super.key});
 
   @override
-  _StartWorkoutCompWidgetState createState() => _StartWorkoutCompWidgetState();
+  State<StartWorkoutCompWidget> createState() => _StartWorkoutCompWidgetState();
 }
 
 class _StartWorkoutCompWidgetState extends State<StartWorkoutCompWidget> {

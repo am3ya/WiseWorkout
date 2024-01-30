@@ -11,10 +11,10 @@ import 'error_occured_model.dart';
 export 'error_occured_model.dart';
 
 class ErrorOccuredWidget extends StatefulWidget {
-  const ErrorOccuredWidget({Key? key}) : super(key: key);
+  const ErrorOccuredWidget({super.key});
 
   @override
-  _ErrorOccuredWidgetState createState() => _ErrorOccuredWidgetState();
+  State<ErrorOccuredWidget> createState() => _ErrorOccuredWidgetState();
 }
 
 class _ErrorOccuredWidgetState extends State<ErrorOccuredWidget> {

@@ -23,10 +23,10 @@ import 'business_account_application_model.dart';
 export 'business_account_application_model.dart';
 
 class BusinessAccountApplicationWidget extends StatefulWidget {
-  const BusinessAccountApplicationWidget({Key? key}) : super(key: key);
+  const BusinessAccountApplicationWidget({super.key});
 
   @override
-  _BusinessAccountApplicationWidgetState createState() =>
+  State<BusinessAccountApplicationWidget> createState() =>
       _BusinessAccountApplicationWidgetState();
 }
 

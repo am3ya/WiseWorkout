@@ -10,10 +10,10 @@ import 'view_about_page_model.dart';
 export 'view_about_page_model.dart';
 
 class ViewAboutPageWidget extends StatefulWidget {
-  const ViewAboutPageWidget({Key? key}) : super(key: key);
+  const ViewAboutPageWidget({super.key});
 
   @override
-  _ViewAboutPageWidgetState createState() => _ViewAboutPageWidgetState();
+  State<ViewAboutPageWidget> createState() => _ViewAboutPageWidgetState();
 }
 
 class _ViewAboutPageWidgetState extends State<ViewAboutPageWidget> {

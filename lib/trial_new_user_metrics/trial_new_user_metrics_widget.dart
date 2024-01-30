@@ -2,10 +2,12 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/error_occured_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
+import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/form_field_controller.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -19,10 +21,10 @@ import 'trial_new_user_metrics_model.dart';
 export 'trial_new_user_metrics_model.dart';
 
 class TrialNewUserMetricsWidget extends StatefulWidget {
-  const TrialNewUserMetricsWidget({Key? key}) : super(key: key);
+  const TrialNewUserMetricsWidget({super.key});
 
   @override
-  _TrialNewUserMetricsWidgetState createState() =>
+  State<TrialNewUserMetricsWidget> createState() =>
       _TrialNewUserMetricsWidgetState();
 }
 
@@ -170,7 +172,7 @@ class _TrialNewUserMetricsWidgetState extends State<TrialNewUserMetricsWidget>
                           padding: EdgeInsetsDirectional.fromSTEB(
                               16.0, 12.0, 0.0, 0.0),
                           child: Text(
-                            'Question 3/3',
+                            'Question 2/2',
                             style: FlutterFlowTheme.of(context).labelMedium,
                           ),
                         ),
@@ -447,6 +449,51 @@ class _TrialNewUserMetricsWidgetState extends State<TrialNewUserMetricsWidget>
                               ],
                             ),
                           ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                16.0, 12.0, 16.0, 0.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Text(
+                                  'Gender: ',
+                                  style:
+                                      FlutterFlowTheme.of(context).bodyMedium,
+                                ),
+                                FlutterFlowDropDown<String>(
+                                  controller: _model.dropDownValueController ??=
+                                      FormFieldController<String>(null),
+                                  options: ['Male', 'Female'],
+                                  onChanged: (val) => setState(
+                                      () => _model.dropDownValue = val),
+                                  width: 300.0,
+                                  height: 50.0,
+                                  textStyle:
+                                      FlutterFlowTheme.of(context).bodyMedium,
+                                  hintText: 'Please select...',
+                                  icon: Icon(
+                                    Icons.keyboard_arrow_down_rounded,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryText,
+                                    size: 24.0,
+                                  ),
+                                  fillColor: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                  elevation: 2.0,
+                                  borderColor:
+                                      FlutterFlowTheme.of(context).alternate,
+                                  borderWidth: 2.0,
+                                  borderRadius: 8.0,
+                                  margin: EdgeInsetsDirectional.fromSTEB(
+                                      16.0, 4.0, 16.0, 4.0),
+                                  hidesUnderline: true,
+                                  isOverButton: true,
+                                  isSearchable: false,
+                                  isMultiSelect: false,
+                                ),
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ],
@@ -567,6 +614,34 @@ class _TrialNewUserMetricsWidgetState extends State<TrialNewUserMetricsWidget>
 
                                   return;
                                 } else {
+                                  if (!((_model.dropDownValue == 'Male') ||
+                                      (_model.dropDownValue == 'Female'))) {
+                                    await showModalBottomSheet(
+                                      isScrollControlled: true,
+                                      backgroundColor: Colors.transparent,
+                                      enableDrag: false,
+                                      context: context,
+                                      builder: (context) {
+                                        return GestureDetector(
+                                          onTap: () => _model
+                                                  .unfocusNode.canRequestFocus
+                                              ? FocusScope.of(context)
+                                                  .requestFocus(
+                                                      _model.unfocusNode)
+                                              : FocusScope.of(context)
+                                                  .unfocus(),
+                                          child: Padding(
+                                            padding: MediaQuery.viewInsetsOf(
+                                                context),
+                                            child: ErrorOccuredWidget(),
+                                          ),
+                                        );
+                                      },
+                                    ).then((value) => safeSetState(() {}));
+
+                                    return;
+                                  }
+
                                   await currentUserReference!
                                       .update(createUsersRecordData(
                                     age: int.tryParse(
@@ -576,6 +651,20 @@ class _TrialNewUserMetricsWidgetState extends State<TrialNewUserMetricsWidget>
                                     weight: double.tryParse(
                                         _model.textController3.text),
                                     infoCollectionComplete: true,
+                                    gender: _model.dropDownValue,
+                                  ));
+
+                                  await currentUserReference!
+                                      .update(createUsersRecordData(
+                                    bmr: functions.calculateBMR(
+                                        valueOrDefault(
+                                            currentUserDocument?.gender, ''),
+                                        valueOrDefault(
+                                            currentUserDocument?.weight, 0.0),
+                                        valueOrDefault(
+                                            currentUserDocument?.height, 0.0),
+                                        valueOrDefault(
+                                            currentUserDocument?.age, 0)),
                                   ));
                                 }
                               }

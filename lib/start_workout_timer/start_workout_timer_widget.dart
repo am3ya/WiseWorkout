@@ -12,10 +12,10 @@ import 'start_workout_timer_model.dart';
 export 'start_workout_timer_model.dart';
 
 class StartWorkoutTimerWidget extends StatefulWidget {
-  const StartWorkoutTimerWidget({Key? key}) : super(key: key);
+  const StartWorkoutTimerWidget({super.key});
 
   @override
-  _StartWorkoutTimerWidgetState createState() =>
+  State<StartWorkoutTimerWidget> createState() =>
       _StartWorkoutTimerWidgetState();
 }
 
@@ -29,17 +29,20 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
     super.initState();
     _model = createModel(context, () => StartWorkoutTimerModel());
 
-    _model.textController1 ??= TextEditingController();
-    _model.textFieldFocusNode1 ??= FocusNode();
+    _model.stepsTextFieldController ??= TextEditingController();
+    _model.stepsTextFieldFocusNode ??= FocusNode();
 
-    _model.textController2 ??= TextEditingController();
-    _model.textFieldFocusNode2 ??= FocusNode();
+    _model.distanceTextFieldController ??= TextEditingController();
+    _model.distanceTextFieldFocusNode ??= FocusNode();
 
-    _model.textController3 ??= TextEditingController();
-    _model.textFieldFocusNode3 ??= FocusNode();
+    _model.speedTextFieldController ??= TextEditingController();
+    _model.speedTextFieldFocusNode ??= FocusNode();
 
-    _model.textController4 ??= TextEditingController();
-    _model.textFieldFocusNode4 ??= FocusNode();
+    _model.caloriesTextFieldController ??= TextEditingController();
+    _model.caloriesTextFieldFocusNode ??= FocusNode();
+
+    _model.targetTextFieldController ??= TextEditingController();
+    _model.targetTextFieldFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
@@ -88,10 +91,6 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
               context.pushNamed('startworkout');
             },
           ),
-          title: Text(
-            'Squat',
-            style: FlutterFlowTheme.of(context).bodyLarge,
-          ),
           actions: [],
           centerTitle: true,
           elevation: 0.0,
@@ -101,225 +100,187 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 44.0, 0.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(32.0, 8.0, 32.0, 0.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Time Left',
-                          style: FlutterFlowTheme.of(context).headlineSmall,
-                        ),
-                        FlutterFlowIconButton(
-                          borderColor: FlutterFlowTheme.of(context).alternate,
-                          borderRadius: 30.0,
-                          borderWidth: 2.0,
-                          buttonSize: 44.0,
-                          fillColor:
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Container(
+                        width: 386.0,
+                        height: 100.0,
+                        decoration: BoxDecoration(
+                          color:
                               FlutterFlowTheme.of(context).secondaryBackground,
-                          icon: Icon(
-                            Icons.refresh_rounded,
-                            color: FlutterFlowTheme.of(context).primaryText,
-                            size: 20.0,
-                          ),
-                          onPressed: () async {
-                            _model.timerController.onResetTimer();
-                          },
                         ),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(
-                            0.0, 32.0, 0.0, 24.0),
-                        child: FlutterFlowTimer(
-                          initialTime: _model.timerMilliseconds,
-                          getDisplayTime: (value) =>
-                              StopWatchTimer.getDisplayTime(
-                            value,
-                            hours: false,
-                          ),
-                          controller: _model.timerController,
-                          onChanged: (value, displayTime, shouldUpdate) {
-                            _model.timerMilliseconds = value;
-                            _model.timerValue = displayTime;
-                            if (shouldUpdate) setState(() {});
-                          },
-                          textAlign: TextAlign.center,
-                          style: FlutterFlowTheme.of(context)
-                              .displaySmall
-                              .override(
-                                fontFamily: 'Outfit',
-                                fontSize: 64.0,
-                                fontWeight: FontWeight.normal,
-                              ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      FlutterFlowIconButton(
-                        borderColor: FlutterFlowTheme.of(context).alternate,
-                        borderRadius: 30.0,
-                        borderWidth: 2.0,
-                        buttonSize: 60.0,
-                        icon: Icon(
-                          Icons.pause_rounded,
-                          color: FlutterFlowTheme.of(context).primaryText,
-                          size: 30.0,
-                        ),
-                        onPressed: () async {
-                          _model.timerController.onStopTimer();
-                        },
-                      ),
-                      FlutterFlowIconButton(
-                        borderColor: FlutterFlowTheme.of(context).primary,
-                        borderRadius: 30.0,
-                        borderWidth: 2.0,
-                        buttonSize: 60.0,
-                        fillColor: FlutterFlowTheme.of(context).accent1,
-                        icon: Icon(
-                          Icons.play_arrow_rounded,
-                          color: FlutterFlowTheme.of(context).primary,
-                          size: 36.0,
-                        ),
-                        onPressed: () async {
-                          _model.timerController.onStartTimer();
-                        },
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Text(
-                        'Step count: ',
-                        style: FlutterFlowTheme.of(context).bodyMedium,
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              8.0, 0.0, 8.0, 0.0),
-                          child: TextFormField(
-                            controller: _model.textController1,
-                            focusNode: _model.textFieldFocusNode1,
-                            autofocus: true,
-                            readOnly: true,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelStyle:
-                                  FlutterFlowTheme.of(context).labelMedium,
-                              hintStyle: FlutterFlowTheme.of(context)
-                                  .labelMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Color(0xFF000203),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      70.0, 0.0, 0.0, 0.0),
+                                  child: Text(
+                                    'Steps',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          fontSize: 20.0,
+                                        ),
                                   ),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  width: 2.0,
                                 ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  width: 2.0,
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      102.0, 0.0, 0.0, 0.0),
+                                  child: Text(
+                                    'Distance (km)',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          fontSize: 20.0,
+                                        ),
+                                  ),
                                 ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              errorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).error,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              focusedErrorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).error,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
+                              ],
                             ),
-                            style: FlutterFlowTheme.of(context)
-                                .bodyMedium
-                                .override(
-                                  fontFamily: 'Readex Pro',
-                                  color: Color(0xFFEDF0F2),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        8.0, 0.0, 8.0, 0.0),
+                                    child: TextFormField(
+                                      controller:
+                                          _model.stepsTextFieldController,
+                                      focusNode: _model.stepsTextFieldFocusNode,
+                                      autofocus: true,
+                                      readOnly: true,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        labelStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium,
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium,
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        errorBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedErrorBorder:
+                                            UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium,
+                                      textAlign: TextAlign.center,
+                                      validator: _model
+                                          .stepsTextFieldControllerValidator
+                                          .asValidator(context),
+                                    ),
+                                  ),
                                 ),
-                            validator: _model.textController1Validator
-                                .asValidator(context),
-                          ),
-                        ),
-                      ),
-                      Text(
-                        'Distance(m):',
-                        style: FlutterFlowTheme.of(context).bodyMedium,
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              8.0, 0.0, 8.0, 0.0),
-                          child: TextFormField(
-                            controller: _model.textController2,
-                            focusNode: _model.textFieldFocusNode2,
-                            autofocus: true,
-                            readOnly: true,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelStyle:
-                                  FlutterFlowTheme.of(context).labelMedium,
-                              hintStyle:
-                                  FlutterFlowTheme.of(context).labelMedium,
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  width: 2.0,
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        8.0, 0.0, 8.0, 0.0),
+                                    child: TextFormField(
+                                      controller:
+                                          _model.distanceTextFieldController,
+                                      focusNode:
+                                          _model.distanceTextFieldFocusNode,
+                                      autofocus: true,
+                                      readOnly: true,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        labelStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium,
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium,
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        errorBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedErrorBorder:
+                                            UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium,
+                                      textAlign: TextAlign.center,
+                                      validator: _model
+                                          .distanceTextFieldControllerValidator
+                                          .asValidator(context),
+                                    ),
+                                  ),
                                 ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              errorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).error,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              focusedErrorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).error,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
+                              ],
                             ),
-                            style: FlutterFlowTheme.of(context).bodyMedium,
-                            validator: _model.textController2Validator
-                                .asValidator(context),
-                          ),
+                          ],
                         ),
                       ),
                     ],
@@ -327,116 +288,291 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                   Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Text(
-                        'Avg speed (m/s)',
-                        style: FlutterFlowTheme.of(context).bodyMedium,
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              8.0, 0.0, 8.0, 0.0),
-                          child: TextFormField(
-                            controller: _model.textController3,
-                            focusNode: _model.textFieldFocusNode3,
-                            autofocus: true,
-                            readOnly: true,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelStyle:
-                                  FlutterFlowTheme.of(context).labelMedium,
-                              hintStyle: FlutterFlowTheme.of(context)
-                                  .labelMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Color(0xFF000203),
+                      Container(
+                        width: 386.0,
+                        height: 100.0,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      40.0, 0.0, 0.0, 0.0),
+                                  child: Text(
+                                    'Pace (min/km)',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          fontSize: 20.0,
+                                        ),
                                   ),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  width: 2.0,
                                 ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  width: 2.0,
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      50.0, 0.0, 0.0, 0.0),
+                                  child: Text(
+                                    'Calories (kcal)',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          fontSize: 20.0,
+                                        ),
+                                  ),
                                 ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              errorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).error,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              focusedErrorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).error,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
+                              ],
                             ),
-                            style: FlutterFlowTheme.of(context).bodyMedium,
-                            validator: _model.textController3Validator
-                                .asValidator(context),
-                          ),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        8.0, 0.0, 8.0, 0.0),
+                                    child: TextFormField(
+                                      controller:
+                                          _model.speedTextFieldController,
+                                      focusNode: _model.speedTextFieldFocusNode,
+                                      autofocus: true,
+                                      readOnly: true,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        labelStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium,
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium,
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        errorBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedErrorBorder:
+                                            UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium,
+                                      textAlign: TextAlign.center,
+                                      validator: _model
+                                          .speedTextFieldControllerValidator
+                                          .asValidator(context),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        8.0, 0.0, 8.0, 0.0),
+                                    child: TextFormField(
+                                      controller:
+                                          _model.caloriesTextFieldController,
+                                      focusNode:
+                                          _model.caloriesTextFieldFocusNode,
+                                      autofocus: true,
+                                      readOnly: true,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        labelStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium,
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium,
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        errorBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedErrorBorder:
+                                            UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium,
+                                      textAlign: TextAlign.center,
+                                      validator: _model
+                                          .caloriesTextFieldControllerValidator
+                                          .asValidator(context),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
-                      Text(
-                        ':',
-                        style: FlutterFlowTheme.of(context).bodyMedium,
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              8.0, 0.0, 8.0, 0.0),
-                          child: TextFormField(
-                            controller: _model.textController4,
-                            focusNode: _model.textFieldFocusNode4,
-                            autofocus: true,
-                            readOnly: true,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelStyle:
-                                  FlutterFlowTheme.of(context).labelMedium,
-                              hintStyle:
-                                  FlutterFlowTheme.of(context).labelMedium,
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  width: 2.0,
+                    ],
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Container(
+                        width: 386.0,
+                        height: 100.0,
+                        decoration: BoxDecoration(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      130.0, 0.0, 0.0, 0.0),
+                                  child: Text(
+                                    'Calorie target',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: 'Roboto',
+                                          fontSize: 20.0,
+                                        ),
+                                  ),
                                 ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  width: 2.0,
+                                Icon(
+                                  Icons.info,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  size: 24.0,
                                 ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              errorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).error,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              focusedErrorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).error,
-                                  width: 2.0,
-                                ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
+                              ],
                             ),
-                            style: FlutterFlowTheme.of(context).bodyMedium,
-                            validator: _model.textController4Validator
-                                .asValidator(context),
-                          ),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        8.0, 0.0, 8.0, 0.0),
+                                    child: TextFormField(
+                                      controller:
+                                          _model.targetTextFieldController,
+                                      focusNode:
+                                          _model.targetTextFieldFocusNode,
+                                      autofocus: true,
+                                      readOnly: true,
+                                      obscureText: false,
+                                      decoration: InputDecoration(
+                                        labelStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium,
+                                        hintStyle: FlutterFlowTheme.of(context)
+                                            .labelMedium,
+                                        enabledBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .alternate,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        errorBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                        focusedErrorBorder:
+                                            UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context)
+                                                .error,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                        ),
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium,
+                                      textAlign: TextAlign.center,
+                                      validator: _model
+                                          .targetTextFieldControllerValidator
+                                          .asValidator(context),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -480,61 +616,80 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                           children: [
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 32.0, 0.0, 24.0),
+                              child: FlutterFlowTimer(
+                                initialTime: _model.timerMilliseconds,
+                                getDisplayTime: (value) =>
+                                    StopWatchTimer.getDisplayTime(
+                                  value,
+                                  hours: false,
+                                ),
+                                controller: _model.timerController,
+                                onChanged: (value, displayTime, shouldUpdate) {
+                                  _model.timerMilliseconds = value;
+                                  _model.timerValue = displayTime;
+                                  if (shouldUpdate) setState(() {});
+                                },
+                                textAlign: TextAlign.center,
+                                style: FlutterFlowTheme.of(context)
+                                    .displaySmall
+                                    .override(
+                                      fontFamily: 'Outfit',
+                                      fontSize: 40.0,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                              ),
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      90.0, 0.0, 60.0, 0.0),
+                                  child: FlutterFlowIconButton(
+                                    borderColor:
+                                        FlutterFlowTheme.of(context).primary,
+                                    borderRadius: 30.0,
+                                    borderWidth: 2.0,
+                                    buttonSize: 60.0,
+                                    fillColor:
+                                        FlutterFlowTheme.of(context).accent1,
+                                    icon: Icon(
+                                      Icons.play_arrow_rounded,
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      size: 36.0,
+                                    ),
+                                    onPressed: () async {
+                                      _model.timerController.onStartTimer();
+                                    },
+                                  ),
+                                ),
+                                FlutterFlowIconButton(
+                                  borderColor:
+                                      FlutterFlowTheme.of(context).alternate,
+                                  borderRadius: 30.0,
+                                  borderWidth: 2.0,
+                                  buttonSize: 60.0,
+                                  icon: Icon(
+                                    Icons.stop,
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                    size: 30.0,
+                                  ),
+                                  onPressed: () async {
+                                    _model.timerController.onStopTimer();
+                                  },
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 12.0, 0.0, 0.0),
                               child: Column(
                                 mainAxisSize: MainAxisSize.max,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 0.0, 4.0, 0.0),
-                                        child: Text(
-                                          'Workout ',
-                                          style: FlutterFlowTheme.of(context)
-                                              .headlineSmall,
-                                        ),
-                                      ),
-                                      Text(
-                                        'Squat',
-                                        style: FlutterFlowTheme.of(context)
-                                            .headlineSmall
-                                            .override(
-                                              fontFamily: 'Outfit',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                            ),
-                                      ),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 12.0, 0.0, 12.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'Current Set',
-                                          style: FlutterFlowTheme.of(context)
-                                              .headlineMedium,
-                                        ),
-                                        Text(
-                                          '45 minutes',
-                                          style: FlutterFlowTheme.of(context)
-                                              .headlineMedium
-                                              .override(
-                                                fontFamily: 'Outfit',
-                                                fontWeight: FontWeight.w300,
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
                                   Text(
                                     '[tip]-[by business]',
                                     style: FlutterFlowTheme.of(context)

@@ -11,10 +11,10 @@ import 'friend_request_unsuccessful_model.dart';
 export 'friend_request_unsuccessful_model.dart';
 
 class FriendRequestUnsuccessfulWidget extends StatefulWidget {
-  const FriendRequestUnsuccessfulWidget({Key? key}) : super(key: key);
+  const FriendRequestUnsuccessfulWidget({super.key});
 
   @override
-  _FriendRequestUnsuccessfulWidgetState createState() =>
+  State<FriendRequestUnsuccessfulWidget> createState() =>
       _FriendRequestUnsuccessfulWidgetState();
 }
 

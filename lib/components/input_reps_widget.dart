@@ -9,14 +9,14 @@ export 'input_reps_model.dart';
 
 class InputRepsWidget extends StatefulWidget {
   const InputRepsWidget({
-    Key? key,
+    super.key,
     this.parameter1,
-  }) : super(key: key);
+  });
 
   final int? parameter1;
 
   @override
-  _InputRepsWidgetState createState() => _InputRepsWidgetState();
+  State<InputRepsWidget> createState() => _InputRepsWidgetState();
 }
 
 class _InputRepsWidgetState extends State<InputRepsWidget> {

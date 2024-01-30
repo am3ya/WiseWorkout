@@ -11,10 +11,10 @@ import 'admin_profile_model.dart';
 export 'admin_profile_model.dart';
 
 class AdminProfileWidget extends StatefulWidget {
-  const AdminProfileWidget({Key? key}) : super(key: key);
+  const AdminProfileWidget({super.key});
 
   @override
-  _AdminProfileWidgetState createState() => _AdminProfileWidgetState();
+  State<AdminProfileWidget> createState() => _AdminProfileWidgetState();
 }
 
 class _AdminProfileWidgetState extends State<AdminProfileWidget> {
@@ -302,18 +302,7 @@ class _AdminProfileWidgetState extends State<AdminProfileWidget> {
                 hoverColor: Colors.transparent,
                 highlightColor: Colors.transparent,
                 onTap: () async {
-                  await showModalBottomSheet(
-                    isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
-                    enableDrag: false,
-                    context: context,
-                    builder: (context) {
-                      return Padding(
-                        padding: MediaQuery.viewInsetsOf(context),
-                        child: BusinessAccountApplicationWidget(),
-                      );
-                    },
-                  ).then((value) => safeSetState(() {}));
+                  context.pushNamed('adminSearchUsers');
                 },
                 child: Material(
                   color: Colors.transparent,

@@ -13,10 +13,10 @@ import 'history_model.dart';
 export 'history_model.dart';
 
 class HistoryWidget extends StatefulWidget {
-  const HistoryWidget({Key? key}) : super(key: key);
+  const HistoryWidget({super.key});
 
   @override
-  _HistoryWidgetState createState() => _HistoryWidgetState();
+  State<HistoryWidget> createState() => _HistoryWidgetState();
 }
 
 class _HistoryWidgetState extends State<HistoryWidget> {

@@ -9,10 +9,10 @@ import 'history_empty_model.dart';
 export 'history_empty_model.dart';
 
 class HistoryEmptyWidget extends StatefulWidget {
-  const HistoryEmptyWidget({Key? key}) : super(key: key);
+  const HistoryEmptyWidget({super.key});
 
   @override
-  _HistoryEmptyWidgetState createState() => _HistoryEmptyWidgetState();
+  State<HistoryEmptyWidget> createState() => _HistoryEmptyWidgetState();
 }
 
 class _HistoryEmptyWidgetState extends State<HistoryEmptyWidget> {

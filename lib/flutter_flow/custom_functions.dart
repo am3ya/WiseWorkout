@@ -277,3 +277,63 @@ bool removeFriendRequest(
   }
   return toReturn;
 }
+
+int weeklyWorkouts(String selectedNum) {
+  int weekly = 0;
+
+  if (selectedNum == "1") {
+    weekly = 1;
+  } else if (selectedNum == "3") {
+    weekly = 3;
+  } else {
+    weekly = 5;
+  }
+
+  return weekly;
+}
+
+bool doesClubExist(
+  List<ClubsRecord> clubsCollection,
+  String input,
+) {
+  return clubsCollection.any((club) => club.clubName == input);
+}
+
+bool compareUserRefs(
+  DocumentReference ref1,
+  DocumentReference ref2,
+) {
+  if (ref1 == ref2) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+bool removeClubRefFromUsers(
+  List<UsersRecord> usersCollection,
+  DocumentReference clubRef,
+) {
+  for (int i = 0; i < usersCollection.length; i++) {
+    usersCollection[i].clubs.remove(clubRef);
+  }
+
+  return true;
+}
+
+double calculateBMR(
+  String gender,
+  double weight,
+  double height,
+  int age,
+) {
+  double bmr = 0.0;
+
+  if (gender == "Male") {
+    bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age);
+  } else {
+    bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
+  }
+
+  return bmr;
+}

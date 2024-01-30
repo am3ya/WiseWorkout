@@ -10,10 +10,10 @@ import 'test_model.dart';
 export 'test_model.dart';
 
 class TestWidget extends StatefulWidget {
-  const TestWidget({Key? key}) : super(key: key);
+  const TestWidget({super.key});
 
   @override
-  _TestWidgetState createState() => _TestWidgetState();
+  State<TestWidget> createState() => _TestWidgetState();
 }
 
 class _TestWidgetState extends State<TestWidget> {

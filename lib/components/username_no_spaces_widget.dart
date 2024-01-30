@@ -11,10 +11,10 @@ import 'username_no_spaces_model.dart';
 export 'username_no_spaces_model.dart';
 
 class UsernameNoSpacesWidget extends StatefulWidget {
-  const UsernameNoSpacesWidget({Key? key}) : super(key: key);
+  const UsernameNoSpacesWidget({super.key});
 
   @override
-  _UsernameNoSpacesWidgetState createState() => _UsernameNoSpacesWidgetState();
+  State<UsernameNoSpacesWidget> createState() => _UsernameNoSpacesWidgetState();
 }
 
 class _UsernameNoSpacesWidgetState extends State<UsernameNoSpacesWidget> {

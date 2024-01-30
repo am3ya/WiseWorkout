@@ -58,6 +58,12 @@ class FFAppState extends ChangeNotifier {
     _showInfoCollection = _value;
     prefs.setBool('ff_showInfoCollection', _value);
   }
+
+  String _clubName = '';
+  String get clubName => _clubName;
+  set clubName(String _value) {
+    _clubName = _value;
+  }
 }
 
 LatLng? _latLngFromString(String? val) {

@@ -18,10 +18,10 @@ import 'friends_page_model.dart';
 export 'friends_page_model.dart';
 
 class FriendsPageWidget extends StatefulWidget {
-  const FriendsPageWidget({Key? key}) : super(key: key);
+  const FriendsPageWidget({super.key});
 
   @override
-  _FriendsPageWidgetState createState() => _FriendsPageWidgetState();
+  State<FriendsPageWidget> createState() => _FriendsPageWidgetState();
 }
 
 class _FriendsPageWidgetState extends State<FriendsPageWidget>

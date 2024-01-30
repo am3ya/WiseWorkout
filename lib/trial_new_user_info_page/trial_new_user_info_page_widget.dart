@@ -20,10 +20,10 @@ import 'trial_new_user_info_page_model.dart';
 export 'trial_new_user_info_page_model.dart';
 
 class TrialNewUserInfoPageWidget extends StatefulWidget {
-  const TrialNewUserInfoPageWidget({Key? key}) : super(key: key);
+  const TrialNewUserInfoPageWidget({super.key});
 
   @override
-  _TrialNewUserInfoPageWidgetState createState() =>
+  State<TrialNewUserInfoPageWidget> createState() =>
       _TrialNewUserInfoPageWidgetState();
 }
 
@@ -162,7 +162,7 @@ class _TrialNewUserInfoPageWidgetState extends State<TrialNewUserInfoPageWidget>
                           padding: EdgeInsetsDirectional.fromSTEB(
                               16.0, 12.0, 0.0, 0.0),
                           child: Text(
-                            'Question 1/3',
+                            'Question 1/2',
                             style: FlutterFlowTheme.of(context).labelMedium,
                           ),
                         ),
@@ -171,7 +171,7 @@ class _TrialNewUserInfoPageWidgetState extends State<TrialNewUserInfoPageWidget>
                         padding:
                             EdgeInsetsDirectional.fromSTEB(8.0, 12.0, 8.0, 0.0),
                         child: LinearPercentIndicator(
-                          percent: 0.33,
+                          percent: 0.5,
                           width: MediaQuery.sizeOf(context).width * 0.96,
                           lineHeight: 12.0,
                           animation: true,
@@ -220,7 +220,6 @@ class _TrialNewUserInfoPageWidgetState extends State<TrialNewUserInfoPageWidget>
                                   controller: _model.dropDownValueController ??=
                                       FormFieldController<String>(null),
                                   options: [
-                                    'Gaining muscle',
                                     'Losing weight',
                                     'Maintaining fitness',
                                     'Increasing stamina'

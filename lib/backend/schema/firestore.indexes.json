@@ -1,3 +1,22 @@
 {
-  "indexes": []
+  "indexes": [
+    {
+      "collectionGroup": "users",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "display_name",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "user_type",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "isActive",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ]
 }

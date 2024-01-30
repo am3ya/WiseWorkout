@@ -18,10 +18,10 @@ import 'admin_search_users_model.dart';
 export 'admin_search_users_model.dart';
 
 class AdminSearchUsersWidget extends StatefulWidget {
-  const AdminSearchUsersWidget({Key? key}) : super(key: key);
+  const AdminSearchUsersWidget({super.key});
 
   @override
-  _AdminSearchUsersWidgetState createState() => _AdminSearchUsersWidgetState();
+  State<AdminSearchUsersWidget> createState() => _AdminSearchUsersWidgetState();
 }
 
 class _AdminSearchUsersWidgetState extends State<AdminSearchUsersWidget>

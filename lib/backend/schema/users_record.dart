@@ -116,6 +116,31 @@ class UsersRecord extends FirestoreRecord {
   bool get isActive => _isActive ?? false;
   bool hasIsActive() => _isActive != null;
 
+  // "weeklyCalorieGoal" field.
+  int? _weeklyCalorieGoal;
+  int get weeklyCalorieGoal => _weeklyCalorieGoal ?? 0;
+  bool hasWeeklyCalorieGoal() => _weeklyCalorieGoal != null;
+
+  // "weeklyWorkouts" field.
+  int? _weeklyWorkouts;
+  int get weeklyWorkouts => _weeklyWorkouts ?? 0;
+  bool hasWeeklyWorkouts() => _weeklyWorkouts != null;
+
+  // "clubs" field.
+  List<DocumentReference>? _clubs;
+  List<DocumentReference> get clubs => _clubs ?? const [];
+  bool hasClubs() => _clubs != null;
+
+  // "BMR" field.
+  double? _bmr;
+  double get bmr => _bmr ?? 0.0;
+  bool hasBmr() => _bmr != null;
+
+  // "gender" field.
+  String? _gender;
+  String get gender => _gender ?? '';
+  bool hasGender() => _gender != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -137,6 +162,11 @@ class UsersRecord extends FirestoreRecord {
     _credentialDoc = snapshotData['credential_doc'] as String?;
     _brandName = snapshotData['brand_name'] as String?;
     _isActive = snapshotData['isActive'] as bool?;
+    _weeklyCalorieGoal = castToType<int>(snapshotData['weeklyCalorieGoal']);
+    _weeklyWorkouts = castToType<int>(snapshotData['weeklyWorkouts']);
+    _clubs = getDataList(snapshotData['clubs']);
+    _bmr = castToType<double>(snapshotData['BMR']);
+    _gender = snapshotData['gender'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -190,6 +220,10 @@ Map<String, dynamic> createUsersRecordData({
   String? credentialDoc,
   String? brandName,
   bool? isActive,
+  int? weeklyCalorieGoal,
+  int? weeklyWorkouts,
+  double? bmr,
+  String? gender,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -210,6 +244,10 @@ Map<String, dynamic> createUsersRecordData({
       'credential_doc': credentialDoc,
       'brand_name': brandName,
       'isActive': isActive,
+      'weeklyCalorieGoal': weeklyCalorieGoal,
+      'weeklyWorkouts': weeklyWorkouts,
+      'BMR': bmr,
+      'gender': gender,
     }.withoutNulls,
   );
 
@@ -241,7 +279,12 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.category == e2?.category &&
         e1?.credentialDoc == e2?.credentialDoc &&
         e1?.brandName == e2?.brandName &&
-        e1?.isActive == e2?.isActive;
+        e1?.isActive == e2?.isActive &&
+        e1?.weeklyCalorieGoal == e2?.weeklyCalorieGoal &&
+        e1?.weeklyWorkouts == e2?.weeklyWorkouts &&
+        listEquality.equals(e1?.clubs, e2?.clubs) &&
+        e1?.bmr == e2?.bmr &&
+        e1?.gender == e2?.gender;
   }
 
   @override
@@ -265,7 +308,12 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.category,
         e?.credentialDoc,
         e?.brandName,
-        e?.isActive
+        e?.isActive,
+        e?.weeklyCalorieGoal,
+        e?.weeklyWorkouts,
+        e?.clubs,
+        e?.bmr,
+        e?.gender
       ]);
 
   @override

@@ -12,10 +12,10 @@ import 'startworkout_model.dart';
 export 'startworkout_model.dart';
 
 class StartworkoutWidget extends StatefulWidget {
-  const StartworkoutWidget({Key? key}) : super(key: key);
+  const StartworkoutWidget({super.key});
 
   @override
-  _StartworkoutWidgetState createState() => _StartworkoutWidgetState();
+  State<StartworkoutWidget> createState() => _StartworkoutWidgetState();
 }
 
 class _StartworkoutWidgetState extends State<StartworkoutWidget> {

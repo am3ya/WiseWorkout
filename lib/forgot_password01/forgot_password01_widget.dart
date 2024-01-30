@@ -11,10 +11,10 @@ import 'forgot_password01_model.dart';
 export 'forgot_password01_model.dart';
 
 class ForgotPassword01Widget extends StatefulWidget {
-  const ForgotPassword01Widget({Key? key}) : super(key: key);
+  const ForgotPassword01Widget({super.key});
 
   @override
-  _ForgotPassword01WidgetState createState() => _ForgotPassword01WidgetState();
+  State<ForgotPassword01Widget> createState() => _ForgotPassword01WidgetState();
 }
 
 class _ForgotPassword01WidgetState extends State<ForgotPassword01Widget> {

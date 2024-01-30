@@ -11,10 +11,10 @@ import 'username_empty_model.dart';
 export 'username_empty_model.dart';
 
 class UsernameEmptyWidget extends StatefulWidget {
-  const UsernameEmptyWidget({Key? key}) : super(key: key);
+  const UsernameEmptyWidget({super.key});
 
   @override
-  _UsernameEmptyWidgetState createState() => _UsernameEmptyWidgetState();
+  State<UsernameEmptyWidget> createState() => _UsernameEmptyWidgetState();
 }
 
 class _UsernameEmptyWidgetState extends State<UsernameEmptyWidget> {

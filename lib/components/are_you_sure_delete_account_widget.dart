@@ -13,10 +13,10 @@ import 'are_you_sure_delete_account_model.dart';
 export 'are_you_sure_delete_account_model.dart';
 
 class AreYouSureDeleteAccountWidget extends StatefulWidget {
-  const AreYouSureDeleteAccountWidget({Key? key}) : super(key: key);
+  const AreYouSureDeleteAccountWidget({super.key});
 
   @override
-  _AreYouSureDeleteAccountWidgetState createState() =>
+  State<AreYouSureDeleteAccountWidget> createState() =>
       _AreYouSureDeleteAccountWidgetState();
 }
 

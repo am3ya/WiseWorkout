@@ -9,10 +9,10 @@ import 'new_test_page_model.dart';
 export 'new_test_page_model.dart';
 
 class NewTestPageWidget extends StatefulWidget {
-  const NewTestPageWidget({Key? key}) : super(key: key);
+  const NewTestPageWidget({super.key});
 
   @override
-  _NewTestPageWidgetState createState() => _NewTestPageWidgetState();
+  State<NewTestPageWidget> createState() => _NewTestPageWidgetState();
 }
 
 class _NewTestPageWidgetState extends State<NewTestPageWidget> {

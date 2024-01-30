@@ -10,10 +10,10 @@ import 'application_pending_model.dart';
 export 'application_pending_model.dart';
 
 class ApplicationPendingWidget extends StatefulWidget {
-  const ApplicationPendingWidget({Key? key}) : super(key: key);
+  const ApplicationPendingWidget({super.key});
 
   @override
-  _ApplicationPendingWidgetState createState() =>
+  State<ApplicationPendingWidget> createState() =>
       _ApplicationPendingWidgetState();
 }
 

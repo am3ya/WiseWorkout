@@ -140,11 +140,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => DeleteAccountWidget(),
         ),
         FFRoute(
-          name: 'searchUsers',
-          path: '/searchUsers',
+          name: 'searchPage',
+          path: '/searchPage',
           builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'searchUsers')
-              : SearchUsersWidget(),
+              ? NavBarPage(initialPage: 'searchPage')
+              : SearchPageWidget(),
         ),
         FFRoute(
           name: 'trialNewUserInfoPage',
@@ -204,16 +204,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => BusinessAccountViewExerciseWidget(),
         ),
         FFRoute(
-          name: 'userViewExercise',
-          path: '/userViewExercise',
-          builder: (context, params) => UserViewExerciseWidget(),
-        ),
-        FFRoute(
-          name: 'startWorkoutTimer',
-          path: '/startWorkoutTimer',
-          builder: (context, params) => StartWorkoutTimerWidget(),
-        ),
-        FFRoute(
           name: 'sendFeedback',
           path: '/sendFeedback',
           builder: (context, params) => SendFeedbackWidget(),
@@ -232,6 +222,26 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'adminSearchUsers',
           path: '/adminSearchUsers',
           builder: (context, params) => AdminSearchUsersWidget(),
+        ),
+        FFRoute(
+          name: 'startWorkoutTimer',
+          path: '/startWorkoutTimer',
+          builder: (context, params) => StartWorkoutTimerWidget(),
+        ),
+        FFRoute(
+          name: 'clubsPage',
+          path: '/clubsPage',
+          builder: (context, params) => ClubsPageWidget(),
+        ),
+        FFRoute(
+          name: 'createClubPage',
+          path: '/createClubPage',
+          builder: (context, params) => CreateClubPageWidget(),
+        ),
+        FFRoute(
+          name: 'clubMembersPage',
+          path: '/clubMembersPage',
+          builder: (context, params) => ClubMembersPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
