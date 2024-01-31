@@ -1,6 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
+import '/components/explain_daily_goal_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -27,18 +28,6 @@ class EditProfilePageModel extends FlutterFlowModel<EditProfilePageWidget> {
   FocusNode? yourNameFocusNode;
   TextEditingController? yourNameController;
   String? Function(BuildContext, String?)? yourNameControllerValidator;
-  // State field(s) for age widget.
-  FocusNode? ageFocusNode;
-  TextEditingController? ageController;
-  String? Function(BuildContext, String?)? ageControllerValidator;
-  // State field(s) for weight widget.
-  FocusNode? weightFocusNode;
-  TextEditingController? weightController;
-  String? Function(BuildContext, String?)? weightControllerValidator;
-  // State field(s) for height widget.
-  FocusNode? heightFocusNode;
-  TextEditingController? heightController;
-  String? Function(BuildContext, String?)? heightControllerValidator;
 
   /// Initialization and disposal methods.
 
@@ -47,15 +36,6 @@ class EditProfilePageModel extends FlutterFlowModel<EditProfilePageWidget> {
   void dispose() {
     yourNameFocusNode?.dispose();
     yourNameController?.dispose();
-
-    ageFocusNode?.dispose();
-    ageController?.dispose();
-
-    weightFocusNode?.dispose();
-    weightController?.dispose();
-
-    heightFocusNode?.dispose();
-    heightController?.dispose();
   }
 
   /// Action blocks are added here.

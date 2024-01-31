@@ -116,11 +116,6 @@ class UsersRecord extends FirestoreRecord {
   bool get isActive => _isActive ?? false;
   bool hasIsActive() => _isActive != null;
 
-  // "weeklyCalorieGoal" field.
-  int? _weeklyCalorieGoal;
-  int get weeklyCalorieGoal => _weeklyCalorieGoal ?? 0;
-  bool hasWeeklyCalorieGoal() => _weeklyCalorieGoal != null;
-
   // "weeklyWorkouts" field.
   int? _weeklyWorkouts;
   int get weeklyWorkouts => _weeklyWorkouts ?? 0;
@@ -140,6 +135,31 @@ class UsersRecord extends FirestoreRecord {
   String? _gender;
   String get gender => _gender ?? '';
   bool hasGender() => _gender != null;
+
+  // "howActive" field.
+  String? _howActive;
+  String get howActive => _howActive ?? '';
+  bool hasHowActive() => _howActive != null;
+
+  // "TDEE" field.
+  double? _tdee;
+  double get tdee => _tdee ?? 0.0;
+  bool hasTdee() => _tdee != null;
+
+  // "dailyCalorieIntake" field.
+  double? _dailyCalorieIntake;
+  double get dailyCalorieIntake => _dailyCalorieIntake ?? 0.0;
+  bool hasDailyCalorieIntake() => _dailyCalorieIntake != null;
+
+  // "dailyCalorieBurningGoal" field.
+  double? _dailyCalorieBurningGoal;
+  double get dailyCalorieBurningGoal => _dailyCalorieBurningGoal ?? 0.0;
+  bool hasDailyCalorieBurningGoal() => _dailyCalorieBurningGoal != null;
+
+  // "calorieDifference" field.
+  double? _calorieDifference;
+  double get calorieDifference => _calorieDifference ?? 0.0;
+  bool hasCalorieDifference() => _calorieDifference != null;
 
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
@@ -162,11 +182,17 @@ class UsersRecord extends FirestoreRecord {
     _credentialDoc = snapshotData['credential_doc'] as String?;
     _brandName = snapshotData['brand_name'] as String?;
     _isActive = snapshotData['isActive'] as bool?;
-    _weeklyCalorieGoal = castToType<int>(snapshotData['weeklyCalorieGoal']);
     _weeklyWorkouts = castToType<int>(snapshotData['weeklyWorkouts']);
     _clubs = getDataList(snapshotData['clubs']);
     _bmr = castToType<double>(snapshotData['BMR']);
     _gender = snapshotData['gender'] as String?;
+    _howActive = snapshotData['howActive'] as String?;
+    _tdee = castToType<double>(snapshotData['TDEE']);
+    _dailyCalorieIntake =
+        castToType<double>(snapshotData['dailyCalorieIntake']);
+    _dailyCalorieBurningGoal =
+        castToType<double>(snapshotData['dailyCalorieBurningGoal']);
+    _calorieDifference = castToType<double>(snapshotData['calorieDifference']);
   }
 
   static CollectionReference get collection =>
@@ -220,10 +246,14 @@ Map<String, dynamic> createUsersRecordData({
   String? credentialDoc,
   String? brandName,
   bool? isActive,
-  int? weeklyCalorieGoal,
   int? weeklyWorkouts,
   double? bmr,
   String? gender,
+  String? howActive,
+  double? tdee,
+  double? dailyCalorieIntake,
+  double? dailyCalorieBurningGoal,
+  double? calorieDifference,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -244,10 +274,14 @@ Map<String, dynamic> createUsersRecordData({
       'credential_doc': credentialDoc,
       'brand_name': brandName,
       'isActive': isActive,
-      'weeklyCalorieGoal': weeklyCalorieGoal,
       'weeklyWorkouts': weeklyWorkouts,
       'BMR': bmr,
       'gender': gender,
+      'howActive': howActive,
+      'TDEE': tdee,
+      'dailyCalorieIntake': dailyCalorieIntake,
+      'dailyCalorieBurningGoal': dailyCalorieBurningGoal,
+      'calorieDifference': calorieDifference,
     }.withoutNulls,
   );
 
@@ -280,11 +314,15 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.credentialDoc == e2?.credentialDoc &&
         e1?.brandName == e2?.brandName &&
         e1?.isActive == e2?.isActive &&
-        e1?.weeklyCalorieGoal == e2?.weeklyCalorieGoal &&
         e1?.weeklyWorkouts == e2?.weeklyWorkouts &&
         listEquality.equals(e1?.clubs, e2?.clubs) &&
         e1?.bmr == e2?.bmr &&
-        e1?.gender == e2?.gender;
+        e1?.gender == e2?.gender &&
+        e1?.howActive == e2?.howActive &&
+        e1?.tdee == e2?.tdee &&
+        e1?.dailyCalorieIntake == e2?.dailyCalorieIntake &&
+        e1?.dailyCalorieBurningGoal == e2?.dailyCalorieBurningGoal &&
+        e1?.calorieDifference == e2?.calorieDifference;
   }
 
   @override
@@ -309,11 +347,15 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.credentialDoc,
         e?.brandName,
         e?.isActive,
-        e?.weeklyCalorieGoal,
         e?.weeklyWorkouts,
         e?.clubs,
         e?.bmr,
-        e?.gender
+        e?.gender,
+        e?.howActive,
+        e?.tdee,
+        e?.dailyCalorieIntake,
+        e?.dailyCalorieBurningGoal,
+        e?.calorieDifference
       ]);
 
   @override

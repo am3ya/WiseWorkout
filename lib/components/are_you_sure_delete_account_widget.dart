@@ -110,7 +110,7 @@ class _AreYouSureDeleteAccountWidgetState
                         if (functions.deleteUser(buttonUsersRecord!)) {
                           await authManager.deleteUser(context);
 
-                          context.pushNamed('login');
+                          context.goNamed('login');
                         } else {
                           await showModalBottomSheet(
                             isScrollControlled: true,

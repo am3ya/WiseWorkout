@@ -27,8 +27,6 @@ export '/business_profile/business_profile_widget.dart'
     show BusinessProfileWidget;
 export '/business_exercises/business_exercises_widget.dart'
     show BusinessExercisesWidget;
-export '/business_account_view_exercise/business_account_view_exercise_widget.dart'
-    show BusinessAccountViewExerciseWidget;
 export '/send_feedback/send_feedback_widget.dart' show SendFeedbackWidget;
 export '/business_edit_profile/business_edit_profile_widget.dart'
     show BusinessEditProfileWidget;

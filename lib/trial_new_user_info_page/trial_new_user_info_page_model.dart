@@ -23,9 +23,12 @@ class TrialNewUserInfoPageModel
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // State field(s) for DropDown widget.
-  String? dropDownValue;
-  FormFieldController<String>? dropDownValueController;
+  // State field(s) for fitnessDropDown widget.
+  String? fitnessDropDownValue;
+  FormFieldController<String>? fitnessDropDownValueController;
+  // State field(s) for activityDropDown widget.
+  String? activityDropDownValue;
+  FormFieldController<String>? activityDropDownValueController;
 
   /// Initialization and disposal methods.
 

@@ -2,7 +2,6 @@ import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/error_occured_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_checkbox_group.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -25,12 +24,14 @@ class TrialNewUserInterestsModel
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();
-  // State field(s) for CheckboxGroup widget.
-  List<String>? checkboxGroupValues;
-  FormFieldController<List<String>>? checkboxGroupValueController;
   // State field(s) for DropDown widget.
   String? dropDownValue;
   FormFieldController<String>? dropDownValueController;
+  // State field(s) for calorieIntakeTextField widget.
+  FocusNode? calorieIntakeTextFieldFocusNode;
+  TextEditingController? calorieIntakeTextFieldController;
+  String? Function(BuildContext, String?)?
+      calorieIntakeTextFieldControllerValidator;
 
   /// Initialization and disposal methods.
 
@@ -38,6 +39,8 @@ class TrialNewUserInterestsModel
 
   void dispose() {
     unfocusNode.dispose();
+    calorieIntakeTextFieldFocusNode?.dispose();
+    calorieIntakeTextFieldController?.dispose();
   }
 
   /// Action blocks are added here.

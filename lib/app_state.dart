@@ -64,6 +64,12 @@ class FFAppState extends ChangeNotifier {
   set clubName(String _value) {
     _clubName = _value;
   }
+
+  double _dailyCalorieIntake = 0.0;
+  double get dailyCalorieIntake => _dailyCalorieIntake;
+  set dailyCalorieIntake(double _value) {
+    _dailyCalorieIntake = _value;
+  }
 }
 
 LatLng? _latLngFromString(String? val) {

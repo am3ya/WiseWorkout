@@ -199,11 +199,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => BusinessExercisesWidget(),
         ),
         FFRoute(
-          name: 'businessAccountViewExercise',
-          path: '/businessAccountViewExercise',
-          builder: (context, params) => BusinessAccountViewExerciseWidget(),
-        ),
-        FFRoute(
           name: 'sendFeedback',
           path: '/sendFeedback',
           builder: (context, params) => SendFeedbackWidget(),

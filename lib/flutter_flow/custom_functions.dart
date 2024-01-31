@@ -281,12 +281,14 @@ bool removeFriendRequest(
 int weeklyWorkouts(String selectedNum) {
   int weekly = 0;
 
-  if (selectedNum == "1") {
-    weekly = 1;
+  if (selectedNum == "2") {
+    weekly = 2;
   } else if (selectedNum == "3") {
     weekly = 3;
-  } else {
+  } else if (selectedNum == "5") {
     weekly = 5;
+  } else {
+    weekly = 7;
   }
 
   return weekly;
@@ -335,5 +337,73 @@ double calculateBMR(
     bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age);
   }
 
-  return bmr;
+  return double.parse(bmr.toStringAsFixed(3));
+}
+
+double calculateTDEE(
+  String userActivity,
+  double bmr,
+) {
+  double tdee = 2.0;
+
+  if (userActivity == "Sedentary (little to no exercise)") {
+    tdee = bmr * 1.2;
+  } else if (userActivity ==
+      "Lightly active (light exercise or sports 1-3 days per week)") {
+    tdee = bmr * 1.375;
+  } else if (userActivity ==
+      "Moderately active (moderate exercise or sports 3-5 days per week)") {
+    tdee = bmr * 1.55;
+  } else if (userActivity ==
+      "Very active (hard exercise or sports 6-7 days per week)") {
+    tdee = bmr * 1.725;
+  }
+
+  return double.parse(tdee.toStringAsFixed(3));
+}
+
+double setDailyCalorieIntake(double tdee) {
+  double calorieIntake = tdee + 300;
+
+  return calorieIntake;
+}
+
+double setDailyBurnGoal(
+  double dailyCalorieIntake,
+  double tdee,
+) {
+  double dailyBurnGoal = 0.0;
+
+  dailyBurnGoal = dailyCalorieIntake - tdee;
+
+  return double.parse(dailyBurnGoal.toStringAsFixed(3));
+  ;
+}
+
+String intakeMinusTdee(
+  double calorieIntake,
+  double tdee,
+) {
+  double difference = 0.0;
+  String toReturn = "0";
+  difference = calorieIntake - tdee;
+
+  if (difference >= 0.0 && difference <= 99.9) {
+    toReturn = "differenceTooLittle";
+  } else if (difference >= 100.0 && difference <= 600.0) {
+    toReturn = "good";
+  } else if (difference < 0.0) {
+    toReturn = "intakeTooLittle";
+  } else if (difference > 600.0) {
+    toReturn = "intakeTooMuch";
+  }
+
+  return toReturn;
+}
+
+double stringtoDouble(String str) {
+  double result = 0.0;
+  result = double.parse(str);
+
+  return double.parse(result.toStringAsFixed(3));
 }
