@@ -41,6 +41,16 @@ class WorkoutsRecord extends FirestoreRecord {
   DateTime? get dateUploaded => _dateUploaded;
   bool hasDateUploaded() => _dateUploaded != null;
 
+  // "stringDuration" field.
+  String? _stringDuration;
+  String get stringDuration => _stringDuration ?? '';
+  bool hasStringDuration() => _stringDuration != null;
+
+  // "unixDays" field.
+  int? _unixDays;
+  int get unixDays => _unixDays ?? 0;
+  bool hasUnixDays() => _unixDays != null;
+
   DocumentReference get parentReference => reference.parent.parent!;
 
   void _initializeFields() {
@@ -49,6 +59,8 @@ class WorkoutsRecord extends FirestoreRecord {
     _caloriesBurned = castToType<double>(snapshotData['caloriesBurned']);
     _distance = castToType<double>(snapshotData['distance']);
     _dateUploaded = snapshotData['dateUploaded'] as DateTime?;
+    _stringDuration = snapshotData['stringDuration'] as String?;
+    _unixDays = castToType<int>(snapshotData['unixDays']);
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -96,6 +108,8 @@ Map<String, dynamic> createWorkoutsRecordData({
   double? caloriesBurned,
   double? distance,
   DateTime? dateUploaded,
+  String? stringDuration,
+  int? unixDays,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -104,6 +118,8 @@ Map<String, dynamic> createWorkoutsRecordData({
       'caloriesBurned': caloriesBurned,
       'distance': distance,
       'dateUploaded': dateUploaded,
+      'stringDuration': stringDuration,
+      'unixDays': unixDays,
     }.withoutNulls,
   );
 
@@ -119,7 +135,9 @@ class WorkoutsRecordDocumentEquality implements Equality<WorkoutsRecord> {
         e1?.stepsTaken == e2?.stepsTaken &&
         e1?.caloriesBurned == e2?.caloriesBurned &&
         e1?.distance == e2?.distance &&
-        e1?.dateUploaded == e2?.dateUploaded;
+        e1?.dateUploaded == e2?.dateUploaded &&
+        e1?.stringDuration == e2?.stringDuration &&
+        e1?.unixDays == e2?.unixDays;
   }
 
   @override
@@ -128,7 +146,9 @@ class WorkoutsRecordDocumentEquality implements Equality<WorkoutsRecord> {
         e?.stepsTaken,
         e?.caloriesBurned,
         e?.distance,
-        e?.dateUploaded
+        e?.dateUploaded,
+        e?.stringDuration,
+        e?.unixDays
       ]);
 
   @override

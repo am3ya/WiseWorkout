@@ -445,7 +445,6 @@ class _CreateClubPageWidgetState extends State<CreateClubPageWidget> {
                             await ClubsRecord.collection.doc().set({
                               ...createClubsRecordData(
                                 clubName: _model.yourNameController.text,
-                                photoUrl: _model.uploadedFileUrl,
                                 creator: currentUserReference,
                                 numberOfMembers: 1,
                                 bio: _model.ageController.text,
@@ -457,6 +456,30 @@ class _CreateClubPageWidgetState extends State<CreateClubPageWidget> {
                                 },
                               ),
                             });
+                            if (_model.uploadedFileUrl == '') {
+                              await buttonClubsRecordList
+                                  .where((e) =>
+                                      e.clubName ==
+                                      _model.yourNameController.text)
+                                  .toList()
+                                  .first
+                                  .reference
+                                  .update(createClubsRecordData(
+                                    photoUrl: currentUserPhoto,
+                                  ));
+                            } else {
+                              await buttonClubsRecordList
+                                  .where((e) =>
+                                      e.clubName ==
+                                      _model.yourNameController.text)
+                                  .toList()
+                                  .first
+                                  .reference
+                                  .update(createClubsRecordData(
+                                    photoUrl: _model.uploadedFileUrl,
+                                  ));
+                            }
+
                             FFAppState().clubName =
                                 _model.yourNameController.text;
                             await showModalBottomSheet(

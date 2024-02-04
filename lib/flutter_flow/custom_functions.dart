@@ -418,3 +418,17 @@ int? durationDiff(
 
   return differenceInDays;
 }
+
+int daysSinceEpoch() {
+  int days = 0;
+
+  int millisecondsSinceEpoch = DateTime.now().millisecondsSinceEpoch;
+
+  // Convert milliseconds since epoch to seconds
+  int secondsSinceEpoch = (millisecondsSinceEpoch / 1000).round();
+
+  // Convert seconds to days
+  int daysSinceEpoch = (secondsSinceEpoch / (60 * 60 * 24)).floor();
+
+  return days;
+}

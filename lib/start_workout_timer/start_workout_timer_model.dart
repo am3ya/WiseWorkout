@@ -16,6 +16,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class StartWorkoutTimerModel extends FlutterFlowModel<StartWorkoutTimerWidget> {
+  ///  Local state fields for this page.
+
+  int indexZero = 0;
+
+  int indexSix = 6;
+
   ///  State fields for stateful widgets in this page.
 
   final unfocusNode = FocusNode();

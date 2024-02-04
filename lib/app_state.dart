@@ -106,6 +106,18 @@ class FFAppState extends ChangeNotifier {
   set caloriesBurned(double _value) {
     _caloriesBurned = _value;
   }
+
+  int _workoutTime = 0;
+  int get workoutTime => _workoutTime;
+  set workoutTime(int _value) {
+    _workoutTime = _value;
+  }
+
+  int _unixDays = 0;
+  int get unixDays => _unixDays;
+  set unixDays(int _value) {
+    _unixDays = _value;
+  }
 }
 
 LatLng? _latLngFromString(String? val) {
