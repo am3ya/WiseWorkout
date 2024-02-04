@@ -893,6 +893,7 @@ class _TrialNewUserMetricsWidgetState extends State<TrialNewUserMetricsWidget>
 
                                 setState(() {
                                   FFAppState().showInfoCollection = false;
+                                  FFAppState().weekStart = getCurrentTimestamp;
                                 });
 
                                 context.pushNamed(

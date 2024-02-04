@@ -150,25 +150,27 @@ class _HistoryWidgetState extends State<HistoryWidget> {
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 30.0, 0.0),
-                                  child: Text(
-                                    listViewWorkoutsRecord.name,
-                                    style:
-                                        FlutterFlowTheme.of(context).bodyMedium,
+                                  child: AuthUserStreamWidget(
+                                    builder: (context) => Text(
+                                      currentUserDisplayName,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium,
+                                    ),
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 20.0, 0.0),
                                   child: Text(
-                                    dateTimeFormat('yMMMd',
-                                        listViewWorkoutsRecord.timestamp!),
+                                    listViewWorkoutsRecord.stepsTaken
+                                        .toString(),
                                     style:
                                         FlutterFlowTheme.of(context).bodyMedium,
                                   ),
                                 ),
                                 Text(
                                   functions.formatDuration(
-                                      listViewWorkoutsRecord.duration),
+                                      listViewWorkoutsRecord.stepsTaken),
                                   style:
                                       FlutterFlowTheme.of(context).bodyMedium,
                                 ),

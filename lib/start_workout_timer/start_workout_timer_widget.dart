@@ -1,11 +1,14 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
 import '/components/explain_calorie_difference_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_timer.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:stop_watch_timer/stop_watch_timer.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -773,34 +776,327 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 24.0, 0.0, 44.0),
-                                child: FFButtonWidget(
-                                  onPressed: () async {
-                                    context.pushNamed('startworkout');
-                                  },
-                                  text: 'Complete Workout',
-                                  options: FFButtonOptions(
-                                    width: double.infinity,
-                                    height: 50.0,
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .override(
-                                          fontFamily: 'Readex Pro',
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryBackground,
-                                        ),
-                                    elevation: 2.0,
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1.0,
+                                child: StreamBuilder<List<WorkoutsRecord>>(
+                                  stream: queryWorkoutsRecord(
+                                    parent: currentUserReference,
+                                    queryBuilder: (workoutsRecord) =>
+                                        workoutsRecord.where(
+                                      'dateUploaded',
+                                      isEqualTo: getCurrentTimestamp,
                                     ),
-                                    borderRadius: BorderRadius.circular(12.0),
                                   ),
+                                  builder: (context, snapshot) {
+                                    // Customize what your widget looks like when it's loading.
+                                    if (!snapshot.hasData) {
+                                      return Center(
+                                        child: SizedBox(
+                                          width: 50.0,
+                                          height: 50.0,
+                                          child: CircularProgressIndicator(
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                              FlutterFlowTheme.of(context)
+                                                  .primary,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    List<WorkoutsRecord>
+                                        buttonWorkoutsRecordList =
+                                        snapshot.data!;
+                                    return InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onLongPress: () async {
+                                        FFAppState().todaysDate =
+                                            getCurrentTimestamp;
+
+                                        await currentUserReference!.update({
+                                          ...mapToFirestore(
+                                            {
+                                              'calorieDifference': FieldValue
+                                                  .increment(-(double.parse(_model
+                                                      .caloriesTextFieldController
+                                                      .text))),
+                                            },
+                                          ),
+                                        });
+                                        FFAppState().timerState = FFAppState()
+                                                .timerState +
+                                            _model.timerMilliseconds.toDouble();
+                                        FFAppState().stepCount =
+                                            FFAppState().stepCount +
+                                                int.parse(_model
+                                                    .stepsTextFieldController
+                                                    .text);
+                                        FFAppState().distance =
+                                            FFAppState().distance +
+                                                double.parse(_model
+                                                    .distanceTextFieldController
+                                                    .text);
+                                        FFAppState().caloriesBurned =
+                                            FFAppState().caloriesBurned +
+                                                double.parse(_model
+                                                    .caloriesTextFieldController
+                                                    .text);
+                                        if (buttonWorkoutsRecordList.first
+                                            .hasDateUploaded()) {
+                                          await buttonWorkoutsRecordList
+                                              .first.reference
+                                              .update({
+                                            ...createWorkoutsRecordData(
+                                              duration: FFAppState().timerState,
+                                              stepsTaken:
+                                                  FFAppState().stepCount,
+                                              caloriesBurned:
+                                                  FFAppState().caloriesBurned,
+                                              distance: FFAppState().distance,
+                                            ),
+                                            ...mapToFirestore(
+                                              {
+                                                'dateUploaded': FieldValue
+                                                    .serverTimestamp(),
+                                              },
+                                            ),
+                                          });
+                                        } else {
+                                          await WorkoutsRecord.createDoc(
+                                                  currentUserReference!)
+                                              .set({
+                                            ...createWorkoutsRecordData(
+                                              duration: FFAppState().timerState,
+                                              stepsTaken:
+                                                  FFAppState().stepCount,
+                                              caloriesBurned:
+                                                  FFAppState().caloriesBurned,
+                                              distance: FFAppState().distance,
+                                            ),
+                                            ...mapToFirestore(
+                                              {
+                                                'dateUploaded': FieldValue
+                                                    .serverTimestamp(),
+                                              },
+                                            ),
+                                          });
+                                        }
+
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                              'Your workout has been completed.',
+                                              style: TextStyle(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                              ),
+                                            ),
+                                            duration:
+                                                Duration(milliseconds: 4000),
+                                            backgroundColor:
+                                                FlutterFlowTheme.of(context)
+                                                    .secondary,
+                                          ),
+                                        );
+                                        await Future.delayed(
+                                            const Duration(milliseconds: 1000));
+
+                                        context.pushNamed('startworkout');
+                                      },
+                                      child: FFButtonWidget(
+                                        onPressed: () async {
+                                          FFAppState().todaysDate =
+                                              getCurrentTimestamp;
+
+                                          await currentUserReference!.update({
+                                            ...mapToFirestore(
+                                              {
+                                                'calorieDifference':
+                                                    FieldValue.increment(
+                                                        -(double.parse(_model
+                                                            .caloriesTextFieldController
+                                                            .text))),
+                                              },
+                                            ),
+                                          });
+                                          if (functions.durationDiff(
+                                                  FFAppState().weekStart!,
+                                                  FFAppState().todaysDate!)! <
+                                              6) {
+                                            FFAppState().timerState =
+                                                FFAppState().timerState +
+                                                    _model.timerMilliseconds
+                                                        .toDouble();
+                                            FFAppState()
+                                                .stepCount = FFAppState()
+                                                    .stepCount +
+                                                int.parse(_model
+                                                    .stepsTextFieldController
+                                                    .text);
+                                            FFAppState().distance = FFAppState()
+                                                    .distance +
+                                                double.parse(_model
+                                                    .distanceTextFieldController
+                                                    .text);
+                                            FFAppState()
+                                                .caloriesBurned = FFAppState()
+                                                    .caloriesBurned +
+                                                double.parse(_model
+                                                    .caloriesTextFieldController
+                                                    .text);
+                                          }
+                                          if (functions.durationDiff(
+                                                  FFAppState().weekStart!,
+                                                  FFAppState().todaysDate!) ==
+                                              6) {
+                                            FFAppState().timerState =
+                                                FFAppState().timerState +
+                                                    _model.timerMilliseconds
+                                                        .toDouble();
+                                            FFAppState()
+                                                .stepCount = FFAppState()
+                                                    .stepCount +
+                                                int.parse(_model
+                                                    .stepsTextFieldController
+                                                    .text);
+                                            FFAppState().distance = FFAppState()
+                                                    .distance +
+                                                double.parse(_model
+                                                    .distanceTextFieldController
+                                                    .text);
+                                            FFAppState()
+                                                .caloriesBurned = FFAppState()
+                                                    .caloriesBurned +
+                                                double.parse(_model
+                                                    .caloriesTextFieldController
+                                                    .text);
+                                            if (buttonWorkoutsRecordList.first
+                                                .hasDateUploaded()) {
+                                              await buttonWorkoutsRecordList
+                                                  .first.reference
+                                                  .update({
+                                                ...createWorkoutsRecordData(
+                                                  duration:
+                                                      FFAppState().timerState,
+                                                  stepsTaken:
+                                                      FFAppState().stepCount,
+                                                  caloriesBurned: FFAppState()
+                                                      .caloriesBurned,
+                                                  distance:
+                                                      FFAppState().distance,
+                                                ),
+                                                ...mapToFirestore(
+                                                  {
+                                                    'dateUploaded': FieldValue
+                                                        .serverTimestamp(),
+                                                  },
+                                                ),
+                                              });
+                                            } else {
+                                              await WorkoutsRecord.createDoc(
+                                                      currentUserReference!)
+                                                  .set({
+                                                ...createWorkoutsRecordData(
+                                                  duration:
+                                                      FFAppState().timerState,
+                                                  stepsTaken:
+                                                      FFAppState().stepCount,
+                                                  caloriesBurned: FFAppState()
+                                                      .caloriesBurned,
+                                                  distance:
+                                                      FFAppState().distance,
+                                                ),
+                                                ...mapToFirestore(
+                                                  {
+                                                    'dateUploaded': FieldValue
+                                                        .serverTimestamp(),
+                                                  },
+                                                ),
+                                              });
+                                            }
+                                          } else {
+                                            if (functions.durationDiff(
+                                                    FFAppState().weekStart!,
+                                                    FFAppState().todaysDate!)! >
+                                                6) {
+                                              FFAppState().timerState = _model
+                                                  .timerMilliseconds
+                                                  .toDouble();
+                                              FFAppState().stepCount =
+                                                  int.parse(_model
+                                                      .stepsTextFieldController
+                                                      .text);
+                                              FFAppState().distance =
+                                                  double.parse(_model
+                                                      .distanceTextFieldController
+                                                      .text);
+                                              FFAppState().caloriesBurned =
+                                                  double.parse(_model
+                                                      .caloriesTextFieldController
+                                                      .text);
+                                              FFAppState().weekStart =
+                                                  getCurrentTimestamp;
+                                            }
+                                          }
+
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                              content: Text(
+                                                'Your workout has been completed.',
+                                                style: TextStyle(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                ),
+                                              ),
+                                              duration:
+                                                  Duration(milliseconds: 4000),
+                                              backgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondary,
+                                            ),
+                                          );
+                                          await Future.delayed(const Duration(
+                                              milliseconds: 1000));
+
+                                          context.pushNamed('startworkout');
+                                        },
+                                        text: 'Complete Workout',
+                                        options: FFButtonOptions(
+                                          width: double.infinity,
+                                          height: 50.0,
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
+                                          iconPadding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          textStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .titleSmall
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryBackground,
+                                              ),
+                                          elevation: 2.0,
+                                          borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                        ),
+                                      ),
+                                    );
+                                  },
                                 ),
                               ),
                             ],

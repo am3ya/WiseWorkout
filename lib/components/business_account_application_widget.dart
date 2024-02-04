@@ -334,7 +334,7 @@ class _BusinessAccountApplicationWidgetState
                                                             .fromSTEB(0.0, 4.0,
                                                                 0.0, 0.0),
                                                     child: Text(
-                                                      'Upload credential document here (PDF)',
+                                                      'Upload credential document here (PNG)',
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -576,7 +576,7 @@ class _BusinessAccountApplicationWidgetState
                                               .showSnackBar(
                                             SnackBar(
                                               content: Text(
-                                                'Application sent.',
+                                                'Application sent. Logout of the applicaton and log back in after your application has been accepted/rejected.',
                                                 style: TextStyle(
                                                   color: FlutterFlowTheme.of(
                                                           context)

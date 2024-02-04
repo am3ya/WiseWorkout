@@ -407,3 +407,14 @@ double stringtoDouble(String str) {
 
   return double.parse(result.toStringAsFixed(3));
 }
+
+int? durationDiff(
+  DateTime weekStart,
+  DateTime todaysDate,
+) {
+  Duration difference = todaysDate.difference(weekStart);
+
+  int differenceInDays = difference.inDays;
+
+  return differenceInDays;
+}

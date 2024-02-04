@@ -473,20 +473,9 @@ class _StartWorkoutCompWidgetState extends State<StartWorkoutCompWidget> {
                   FFButtonWidget(
                     onPressed: () async {
                       await WorkoutsRecord.createDoc(currentUserReference!)
-                          .set({
-                        ...createWorkoutsRecordData(
-                          name: FFAppState().workout.name,
-                          timestamp: getCurrentTimestamp,
-                          duration: _model.timerMilliseconds,
-                        ),
-                        ...mapToFirestore(
-                          {
-                            'exercises': getExerciseListFirestoreData(
-                              FFAppState().workout.exercises,
-                            ),
-                          },
-                        ),
-                      });
+                          .set(createWorkoutsRecordData(
+                        duration: _model.timerMilliseconds.toDouble(),
+                      ));
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text(

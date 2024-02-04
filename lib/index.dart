@@ -40,3 +40,5 @@ export '/create_club_page/create_club_page_widget.dart'
     show CreateClubPageWidget;
 export '/club_members_page/club_members_page_widget.dart'
     show ClubMembersPageWidget;
+export '/applications_page/applications_page_widget.dart'
+    show ApplicationsPageWidget;
