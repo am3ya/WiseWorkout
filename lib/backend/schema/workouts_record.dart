@@ -16,36 +16,57 @@ class WorkoutsRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "name" field.
-  String? _name;
-  String get name => _name ?? '';
-  bool hasName() => _name != null;
-
-  // "timestamp" field.
-  DateTime? _timestamp;
-  DateTime? get timestamp => _timestamp;
-  bool hasTimestamp() => _timestamp != null;
-
-  // "exercises" field.
-  List<ExerciseStruct>? _exercises;
-  List<ExerciseStruct> get exercises => _exercises ?? const [];
-  bool hasExercises() => _exercises != null;
-
   // "duration" field.
-  int? _duration;
-  int get duration => _duration ?? 0;
+  double? _duration;
+  double get duration => _duration ?? 0.0;
   bool hasDuration() => _duration != null;
+
+  // "stepsTaken" field.
+  int? _stepsTaken;
+  int get stepsTaken => _stepsTaken ?? 0;
+  bool hasStepsTaken() => _stepsTaken != null;
+
+  // "caloriesBurned" field.
+  double? _caloriesBurned;
+  double get caloriesBurned => _caloriesBurned ?? 0.0;
+  bool hasCaloriesBurned() => _caloriesBurned != null;
+
+  // "distance" field.
+  double? _distance;
+  double get distance => _distance ?? 0.0;
+  bool hasDistance() => _distance != null;
+
+  // "dateUploaded" field.
+  DateTime? _dateUploaded;
+  DateTime? get dateUploaded => _dateUploaded;
+  bool hasDateUploaded() => _dateUploaded != null;
+
+  // "stringDuration" field.
+  String? _stringDuration;
+  String get stringDuration => _stringDuration ?? '';
+  bool hasStringDuration() => _stringDuration != null;
+
+  // "unixDays" field.
+  int? _unixDays;
+  int get unixDays => _unixDays ?? 0;
+  bool hasUnixDays() => _unixDays != null;
+
+  //"date" field
+  DateTime? _last_updated;
+  DateTime? get lastUpdated => _last_updated;
+  bool hasLastUpdated() => _last_updated != null;
 
   DocumentReference get parentReference => reference.parent.parent!;
 
   void _initializeFields() {
-    _name = snapshotData['name'] as String?;
-    _timestamp = snapshotData['timestamp'] as DateTime?;
-    _exercises = getStructList(
-      snapshotData['exercises'],
-      ExerciseStruct.fromMap,
-    );
-    _duration = castToType<int>(snapshotData['duration']);
+    _duration = castToType<double>(snapshotData['duration']);
+    _stepsTaken = castToType<int>(snapshotData['stepsTaken']);
+    _caloriesBurned = castToType<double>(snapshotData['caloriesBurned']);
+    _distance = castToType<double>(snapshotData['distance']);
+    _dateUploaded = snapshotData['dateUploaded'] as DateTime?;
+    _stringDuration = snapshotData['stringDuration'] as String?;
+    _unixDays = castToType<int>(snapshotData['unixDays']);
+    _last_updated = snapshotData['last_updated'] as DateTime?;
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -88,15 +109,25 @@ class WorkoutsRecord extends FirestoreRecord {
 }
 
 Map<String, dynamic> createWorkoutsRecordData({
-  String? name,
-  DateTime? timestamp,
-  int? duration,
+  double? duration,
+  int? stepsTaken,
+  double? caloriesBurned,
+  double? distance,
+  DateTime? dateUploaded,
+  String? stringDuration,
+  int? unixDays,
+  DateTime? last_updated,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
-      'name': name,
-      'timestamp': timestamp,
       'duration': duration,
+      'stepsTaken': stepsTaken,
+      'caloriesBurned': caloriesBurned,
+      'distance': distance,
+      'dateUploaded': dateUploaded,
+      'stringDuration': stringDuration,
+      'unixDays': unixDays,
+      'last_updated' : last_updated,
     }.withoutNulls,
   );
 
@@ -108,16 +139,27 @@ class WorkoutsRecordDocumentEquality implements Equality<WorkoutsRecord> {
 
   @override
   bool equals(WorkoutsRecord? e1, WorkoutsRecord? e2) {
-    const listEquality = ListEquality();
-    return e1?.name == e2?.name &&
-        e1?.timestamp == e2?.timestamp &&
-        listEquality.equals(e1?.exercises, e2?.exercises) &&
-        e1?.duration == e2?.duration;
+    return e1?.duration == e2?.duration &&
+        e1?.stepsTaken == e2?.stepsTaken &&
+        e1?.caloriesBurned == e2?.caloriesBurned &&
+        e1?.distance == e2?.distance &&
+        e1?.dateUploaded == e2?.dateUploaded &&
+        e1?.stringDuration == e2?.stringDuration &&
+        e1?.unixDays == e2?.unixDays &&
+        e1?.lastUpdated == e2?.lastUpdated;
   }
 
   @override
-  int hash(WorkoutsRecord? e) => const ListEquality()
-      .hash([e?.name, e?.timestamp, e?.exercises, e?.duration]);
+  int hash(WorkoutsRecord? e) => const ListEquality().hash([
+        e?.duration,
+        e?.stepsTaken,
+        e?.caloriesBurned,
+        e?.distance,
+        e?.dateUploaded,
+        e?.stringDuration,
+        e?.unixDays,
+        e?.lastUpdated
+      ]);
 
   @override
   bool isValidKey(Object? o) => o is WorkoutsRecord;
