@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
 import 'exercises_model.dart';
 export 'exercises_model.dart';
 
@@ -64,12 +65,12 @@ class _ExercisesWidgetState extends State<ExercisesWidget> {
               style: FlutterFlowTheme.of(context).headlineMedium.override(
                     fontFamily: 'Outfit',
                     color: Colors.white,
-                    fontSize: 22.0,
+                    fontSize: 22,
                   ),
             ),
             actions: [],
             centerTitle: false,
-            elevation: 2.0,
+            elevation: 2,
           ),
           body: SafeArea(
             top: true,
@@ -80,8 +81,8 @@ class _ExercisesWidgetState extends State<ExercisesWidget> {
                 if (!snapshot.hasData) {
                   return Center(
                     child: SizedBox(
-                      width: 50.0,
-                      height: 50.0,
+                      width: 50,
+                      height: 50,
                       child: CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(
                           FlutterFlowTheme.of(context).primary,
@@ -111,7 +112,7 @@ class _ExercisesWidgetState extends State<ExercisesWidget> {
                       trailing: Icon(
                         Icons.arrow_forward_ios,
                         color: FlutterFlowTheme.of(context).secondaryText,
-                        size: 20.0,
+                        size: 20,
                       ),
                       tileColor:
                           FlutterFlowTheme.of(context).secondaryBackground,
