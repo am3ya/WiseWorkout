@@ -21,10 +21,11 @@ import 'package:geolocator/geolocator.dart';
 import 'dart:async';
 import 'start_workout_timer_model.dart';
 export 'start_workout_timer_model.dart';
+import 'package:intl/intl.dart';
 
 class StartWorkoutTimerWidget extends StatefulWidget {
   const StartWorkoutTimerWidget({super.key});
-
+  
   @override
   State<StartWorkoutTimerWidget> createState() =>
       _StartWorkoutTimerWidgetState();
@@ -48,6 +49,9 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
   bool isTrackingDistance = false;
   double paceInMinPerKm = 0.0;
   double totalTimeInMinutes = 0.0;
+  int livesteps = 0;
+  final CollectionReference usersCollection =
+      FirebaseFirestore.instance.collection('users');
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -74,6 +78,7 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
     _model.targetTextFieldFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+
     // Add distance
     _distanceTracker = DistanceTracker(
       onUpdateLiveDistance: (distance) {
@@ -116,6 +121,8 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
     // Implement zero-crossing or peak detection for step counting
     if (isStep(filteredMagnitude)) {
       steps++;
+      String livesteps = steps.toString();
+      _model.stepsTextFieldController.text = livesteps;
     }
 
     return modDistance;
@@ -372,7 +379,7 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                                                 borderRadius:
                                                     BorderRadius.circular(8.0),
                                               ),
-                                              hintText: steps.toString(),
+                                              hintText: livesteps.toString()
                                             ),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium,
@@ -959,7 +966,7 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          '[tip]-[by business]',
+                                          'Hold complete workout to save your session.',
                                           style: FlutterFlowTheme.of(context)
                                               .labelMedium,
                                         ),
@@ -1007,6 +1014,8 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                                           onLongPress: () async {
                                             FFAppState().workoutTime =
                                                 _model.timerMilliseconds;
+                                                DateTime now = DateTime.now();
+                                                DateTime today = DateTime(now.year, now.month,now.day);
                                             /*FFAppState().caloriesBurned =
                                                 functions.stringtoDouble(_model
                                                     .caloriesTextFieldController
@@ -1015,9 +1024,9 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                                                 functions.stringtoDouble(_model
                                                     .distanceTextFieldController
                                                     .text);
-                                            /*FFAppState().stepCount = int.parse(
+                                            FFAppState().stepCount = int.parse(
                                                 _model.stepsTextFieldController
-                                                    .text);*/
+                                                    .text);
                                             FFAppState().todaysDate =
                                                 getCurrentTimestamp;
                                             FFAppState().unixDays =
@@ -1026,8 +1035,8 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                                                     .length >
                                                 0) {
                                               if (startWorkoutTimerWorkoutsRecordList
-                                                      .last.unixDays ==
-                                                  FFAppState().unixDays) {
+                                                      .last.dateUploaded ==
+                                                  today) {
                                                 await startWorkoutTimerWorkoutsRecordList
                                                     .last.reference
                                                     .update({
@@ -1050,6 +1059,7 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                                                           FieldValue.increment(
                                                               FFAppState()
                                                                   .distance),
+                                                      'last_updated':DateTime.now(),
                                                     },
                                                   ),
                                                 });
@@ -1069,6 +1079,7 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                                                       FFAppState().distance,
                                                   unixDays: functions
                                                       .daysSinceEpoch(),
+                                                  dateUploaded: today,
                                                 ));
                                               }
                                             } else {
@@ -1085,6 +1096,7 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                                                 distance: FFAppState().distance,
                                                 unixDays:
                                                     functions.daysSinceEpoch(),
+                                                dateUploaded: today,
                                               ));
                                             }
 
