@@ -1,7 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/backend/firebase_storage/storage.dart';
-import '/components/error_occured_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -9,9 +7,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
-import '/flutter_flow/upload_data.dart';
 import 'dart:ui';
-import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -19,21 +15,20 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'business_account_application_model.dart';
-export 'business_account_application_model.dart';
+import 'viewing_application_model.dart';
+export 'viewing_application_model.dart';
 
-class BusinessAccountApplicationWidget extends StatefulWidget {
-  const BusinessAccountApplicationWidget({super.key});
+class ViewingApplicationWidget extends StatefulWidget {
+  const ViewingApplicationWidget({super.key});
 
   @override
-  State<BusinessAccountApplicationWidget> createState() =>
-      _BusinessAccountApplicationWidgetState();
+  State<ViewingApplicationWidget> createState() =>
+      _ViewingApplicationWidgetState();
 }
 
-class _BusinessAccountApplicationWidgetState
-    extends State<BusinessAccountApplicationWidget>
+class _ViewingApplicationWidgetState extends State<ViewingApplicationWidget>
     with TickerProviderStateMixin {
-  late BusinessAccountApplicationModel _model;
+  late ViewingApplicationModel _model;
 
   final animationsMap = {
     'containerOnPageLoadAnimation1': AnimationInfo(
@@ -73,12 +68,10 @@ class _BusinessAccountApplicationWidgetState
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => BusinessAccountApplicationModel());
+    _model = createModel(context, () => ViewingApplicationModel());
 
-    _model.brandNameController ??= TextEditingController();
     _model.brandNameFocusNode ??= FocusNode();
 
-    _model.bioController ??= TextEditingController();
     _model.bioFocusNode ??= FocusNode();
 
     setupAnimations(
@@ -142,11 +135,12 @@ class _BusinessAccountApplicationWidgetState
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      StreamBuilder<List<UsersRecord>>(
-                        stream: queryUsersRecord(
-                          queryBuilder: (usersRecord) => usersRecord.where(
-                            'brand_name',
-                            isEqualTo: _model.brandNameController.text,
+                      StreamBuilder<List<ApplicationsRecord>>(
+                        stream: queryApplicationsRecord(
+                          queryBuilder: (applicationsRecord) =>
+                              applicationsRecord.where(
+                            'display_name',
+                            isEqualTo: FFAppState().clubName,
                           ),
                           singleRecord: true,
                         ),
@@ -165,11 +159,16 @@ class _BusinessAccountApplicationWidgetState
                               ),
                             );
                           }
-                          List<UsersRecord> formUsersRecordList =
+                          List<ApplicationsRecord> formApplicationsRecordList =
                               snapshot.data!;
-                          final formUsersRecord = formUsersRecordList.isNotEmpty
-                              ? formUsersRecordList.first
-                              : null;
+                          // Return an empty Container when the item does not exist.
+                          if (snapshot.data!.isEmpty) {
+                            return Container();
+                          }
+                          final formApplicationsRecord =
+                              formApplicationsRecordList.isNotEmpty
+                                  ? formApplicationsRecordList.first
+                                  : null;
                           return Form(
                             key: _model.formKey,
                             autovalidateMode: AutovalidateMode.always,
@@ -210,7 +209,7 @@ class _BusinessAccountApplicationWidgetState
                                                       .fromSTEB(
                                                           0.0, 0.0, 0.0, 8.0),
                                                   child: Text(
-                                                    'Please enter the information below to apply to be a business account.',
+                                                    'Approve or reject the following application.',
                                                     style: FlutterFlowTheme.of(
                                                             context)
                                                         .labelMedium,
@@ -243,182 +242,19 @@ class _BusinessAccountApplicationWidgetState
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Expanded(
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 16.0),
-                                            child: InkWell(
-                                              splashColor: Colors.transparent,
-                                              focusColor: Colors.transparent,
-                                              hoverColor: Colors.transparent,
-                                              highlightColor:
-                                                  Colors.transparent,
-                                              onTap: () async {
-                                                final selectedFiles =
-                                                    await selectFiles(
-                                                  multiFile: false,
-                                                );
-                                                if (selectedFiles != null) {
-                                                  setState(() => _model
-                                                      .isDataUploading = true);
-                                                  var selectedUploadedFiles =
-                                                      <FFUploadedFile>[];
-
-                                                  var downloadUrls = <String>[];
-                                                  try {
-                                                    showUploadMessage(
-                                                      context,
-                                                      'Uploading file...',
-                                                      showLoading: true,
-                                                    );
-                                                    selectedUploadedFiles =
-                                                        selectedFiles
-                                                            .map((m) =>
-                                                                FFUploadedFile(
-                                                                  name: m
-                                                                      .storagePath
-                                                                      .split(
-                                                                          '/')
-                                                                      .last,
-                                                                  bytes:
-                                                                      m.bytes,
-                                                                ))
-                                                            .toList();
-
-                                                    downloadUrls = (await Future
-                                                            .wait(
-                                                      selectedFiles.map(
-                                                        (f) async =>
-                                                            await uploadData(
-                                                                f.storagePath,
-                                                                f.bytes),
-                                                      ),
-                                                    ))
-                                                        .where((u) => u != null)
-                                                        .map((u) => u!)
-                                                        .toList();
-                                                  } finally {
-                                                    ScaffoldMessenger.of(
-                                                            context)
-                                                        .hideCurrentSnackBar();
-                                                    _model.isDataUploading =
-                                                        false;
-                                                  }
-                                                  if (selectedUploadedFiles
-                                                              .length ==
-                                                          selectedFiles
-                                                              .length &&
-                                                      downloadUrls.length ==
-                                                          selectedFiles
-                                                              .length) {
-                                                    setState(() {
-                                                      _model.uploadedLocalFile =
-                                                          selectedUploadedFiles
-                                                              .first;
-                                                      _model.uploadedFileUrl =
-                                                          downloadUrls.first;
-                                                    });
-                                                    showUploadMessage(
-                                                      context,
-                                                      'Success!',
-                                                    );
-                                                  } else {
-                                                    setState(() {});
-                                                    showUploadMessage(
-                                                      context,
-                                                      'Failed to upload file',
-                                                    );
-                                                    return;
-                                                  }
-                                                }
-
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(
-                                                  SnackBar(
-                                                    content: Text(
-                                                      'Your document has been uploaded.',
-                                                      style: TextStyle(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                      ),
-                                                    ),
-                                                    duration: Duration(
-                                                        milliseconds: 4000),
-                                                    backgroundColor:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .secondary,
-                                                  ),
-                                                );
-                                              },
-                                              child: Container(
-                                                width: 120.0,
-                                                height: 250.0,
-                                                decoration: BoxDecoration(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .alternate,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          16.0),
-                                                ),
-                                                child: Stack(
-                                                  alignment:
-                                                      AlignmentDirectional(
-                                                          0.0, 0.0),
-                                                  children: [
-                                                    Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Icon(
-                                                          Icons.file_upload,
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondaryText,
-                                                          size: 72.0,
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      12.0,
-                                                                      0.0,
-                                                                      0.0),
-                                                          child: Text(
-                                                            'Credentials',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .titleLarge,
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      4.0,
-                                                                      0.0,
-                                                                      0.0),
-                                                          child: Text(
-                                                            'Upload credential document here (PNG)',
-                                                            style: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .labelMedium,
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 5.0),
+                                          child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                            child: Image.network(
+                                              formApplicationsRecord!
+                                                  .credentialDoc,
+                                              width: 300.0,
+                                              height: 200.0,
+                                              fit: BoxFit.cover,
                                             ),
                                           ),
                                         ),
@@ -428,9 +264,15 @@ class _BusinessAccountApplicationWidgetState
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 8.0, 0.0, 0.0),
                                       child: TextFormField(
-                                        controller: _model.brandNameController,
+                                        controller:
+                                            _model.brandNameController ??=
+                                                TextEditingController(
+                                          text: formApplicationsRecord
+                                              ?.displayName,
+                                        ),
                                         focusNode: _model.brandNameFocusNode,
                                         autofocus: true,
+                                        readOnly: true,
                                         obscureText: false,
                                         decoration: InputDecoration(
                                           hintText: 'Brand name',
@@ -512,9 +354,13 @@ class _BusinessAccountApplicationWidgetState
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 0.0, 12.0),
                                       child: TextFormField(
-                                        controller: _model.bioController,
+                                        controller: _model.bioController ??=
+                                            TextEditingController(
+                                          text: formApplicationsRecord?.bio,
+                                        ),
                                         focusNode: _model.bioFocusNode,
                                         autofocus: true,
+                                        readOnly: true,
                                         obscureText: false,
                                         decoration: InputDecoration(
                                           labelStyle:
@@ -588,7 +434,10 @@ class _BusinessAccountApplicationWidgetState
                                     FlutterFlowDropDown<String>(
                                       controller:
                                           _model.dropDownValueController ??=
-                                              FormFieldController<String>(null),
+                                              FormFieldController<String>(
+                                        _model.dropDownValue ??=
+                                            formApplicationsRecord?.category,
+                                      ),
                                       options: [
                                         'Equipment seller',
                                         'Influencer',
@@ -617,6 +466,7 @@ class _BusinessAccountApplicationWidgetState
                                       margin: EdgeInsetsDirectional.fromSTEB(
                                           16.0, 4.0, 16.0, 4.0),
                                       hidesUnderline: true,
+                                      disabled: true,
                                       isOverButton: true,
                                       isSearchable: false,
                                       isMultiSelect: false,
@@ -632,114 +482,85 @@ class _BusinessAccountApplicationWidgetState
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 4.0, 0.0),
+                                                    0.0, 0.0, 190.0, 0.0),
                                             child: FFButtonWidget(
                                               onPressed: () async {
-                                                if (functions.isEmpty(_model
-                                                        .brandNameController
-                                                        .text) ||
-                                                    functions.isEmpty(_model
-                                                        .dropDownValue!)) {
-                                                  await showModalBottomSheet(
-                                                    isScrollControlled: true,
-                                                    backgroundColor:
-                                                        Colors.transparent,
-                                                    enableDrag: false,
-                                                    context: context,
-                                                    builder: (context) {
-                                                      return Padding(
-                                                        padding: MediaQuery
-                                                            .viewInsetsOf(
-                                                                context),
-                                                        child:
-                                                            ErrorOccuredWidget(),
-                                                      );
-                                                    },
-                                                  ).then((value) =>
-                                                      safeSetState(() {}));
-
-                                                  return;
-                                                } else {
-                                                  if (formUsersRecord
-                                                          ?.userType ==
-                                                      'business') {
-                                                    await showModalBottomSheet(
-                                                      isScrollControlled: true,
-                                                      backgroundColor:
-                                                          Colors.transparent,
-                                                      enableDrag: false,
-                                                      context: context,
-                                                      builder: (context) {
-                                                        return Padding(
-                                                          padding: MediaQuery
-                                                              .viewInsetsOf(
-                                                                  context),
-                                                          child:
-                                                              ErrorOccuredWidget(),
-                                                        );
-                                                      },
-                                                    ).then((value) =>
-                                                        safeSetState(() {}));
-                                                  }
-                                                }
-
-                                                await ApplicationsRecord
-                                                    .collection
-                                                    .doc()
-                                                    .set(
-                                                        createApplicationsRecordData(
-                                                      email: currentUserEmail,
-                                                      displayName: _model
-                                                          .brandNameController
-                                                          .text,
-                                                      bio: _model
-                                                          .bioController.text,
-                                                      category:
-                                                          _model.dropDownValue,
-                                                      user:
-                                                          currentUserReference,
-                                                      credentialDoc: _model
-                                                          .uploadedFileUrl,
-                                                      credentialDoc2: _model
-                                                          .uploadedFileUrl,
-                                                      photoUrl:
-                                                          currentUserPhoto,
-                                                    ));
+                                                await formApplicationsRecord!
+                                                    .reference
+                                                    .delete();
                                                 Navigator.pop(context);
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(
-                                                  SnackBar(
-                                                    content: Text(
-                                                      'Application sent. Logout of the applicaton and log back in after your application has been accepted/rejected.',
-                                                      style: TextStyle(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primaryText,
-                                                      ),
-                                                    ),
-                                                    duration: Duration(
-                                                        milliseconds: 4000),
-                                                    backgroundColor:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .secondary,
-                                                  ),
-                                                );
                                               },
-                                              text: 'Apply',
+                                              text: '',
+                                              icon: Icon(
+                                                Icons.close,
+                                                size: 15.0,
+                                              ),
                                               options: FFButtonOptions(
                                                 height: 50.0,
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(
-                                                        32.0, 0.0, 32.0, 0.0),
+                                                        9.0, 0.0, 0.0, 0.0),
                                                 iconPadding:
                                                     EdgeInsetsDirectional
                                                         .fromSTEB(
                                                             0.0, 0.0, 0.0, 0.0),
-                                                color:
+                                                color: Color(0xFFA90E18),
+                                                textStyle:
                                                     FlutterFlowTheme.of(context)
-                                                        .primary,
+                                                        .titleSmall
+                                                        .override(
+                                                          fontFamily:
+                                                              'Readex Pro',
+                                                          color: Colors.white,
+                                                        ),
+                                                elevation: 2.0,
+                                                borderSide: BorderSide(
+                                                  color: Colors.transparent,
+                                                  width: 1.0,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(40.0),
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 4.0, 0.0),
+                                            child: FFButtonWidget(
+                                              onPressed: () async {
+                                                await formApplicationsRecord!
+                                                    .user!
+                                                    .update(
+                                                        createUsersRecordData(
+                                                  userType: 'business',
+                                                  bio:
+                                                      _model.bioController.text,
+                                                  brandName: _model
+                                                      .brandNameController.text,
+                                                  category:
+                                                      _model.dropDownValue,
+                                                ));
+                                                await formApplicationsRecord!
+                                                    .reference
+                                                    .delete();
+                                                Navigator.pop(context);
+                                              },
+                                              text: '',
+                                              icon: Icon(
+                                                Icons.check,
+                                                size: 15.0,
+                                              ),
+                                              options: FFButtonOptions(
+                                                height: 50.0,
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        7.0, 0.0, 0.0, 0.0),
+                                                iconPadding:
+                                                    EdgeInsetsDirectional
+                                                        .fromSTEB(
+                                                            0.0, 0.0, 0.0, 0.0),
+                                                color: Color(0xFF169E08),
                                                 textStyle:
                                                     FlutterFlowTheme.of(context)
                                                         .titleSmall

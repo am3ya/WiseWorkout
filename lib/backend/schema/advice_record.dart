@@ -16,22 +16,6 @@ class AdviceRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "maintainingRefs" field.
-  List<DocumentReference>? _maintainingRefs;
-  List<DocumentReference> get maintainingRefs => _maintainingRefs ?? const [];
-  bool hasMaintainingRefs() => _maintainingRefs != null;
-
-  // "losingWeightRefs" field.
-  List<DocumentReference>? _losingWeightRefs;
-  List<DocumentReference> get losingWeightRefs => _losingWeightRefs ?? const [];
-  bool hasLosingWeightRefs() => _losingWeightRefs != null;
-
-  // "increasingStaminaRefs" field.
-  List<DocumentReference>? _increasingStaminaRefs;
-  List<DocumentReference> get increasingStaminaRefs =>
-      _increasingStaminaRefs ?? const [];
-  bool hasIncreasingStaminaRefs() => _increasingStaminaRefs != null;
-
   // "fitnessGoal" field.
   String? _fitnessGoal;
   String get fitnessGoal => _fitnessGoal ?? '';
@@ -63,9 +47,6 @@ class AdviceRecord extends FirestoreRecord {
   bool hasCreatorName() => _creatorName != null;
 
   void _initializeFields() {
-    _maintainingRefs = getDataList(snapshotData['maintainingRefs']);
-    _losingWeightRefs = getDataList(snapshotData['losingWeightRefs']);
-    _increasingStaminaRefs = getDataList(snapshotData['increasingStaminaRefs']);
     _fitnessGoal = snapshotData['fitnessGoal'] as String?;
     _adviceString = snapshotData['adviceString'] as String?;
     _creatorRef = snapshotData['creatorRef'] as DocumentReference?;
@@ -134,12 +115,7 @@ class AdviceRecordDocumentEquality implements Equality<AdviceRecord> {
 
   @override
   bool equals(AdviceRecord? e1, AdviceRecord? e2) {
-    const listEquality = ListEquality();
-    return listEquality.equals(e1?.maintainingRefs, e2?.maintainingRefs) &&
-        listEquality.equals(e1?.losingWeightRefs, e2?.losingWeightRefs) &&
-        listEquality.equals(
-            e1?.increasingStaminaRefs, e2?.increasingStaminaRefs) &&
-        e1?.fitnessGoal == e2?.fitnessGoal &&
+    return e1?.fitnessGoal == e2?.fitnessGoal &&
         e1?.adviceString == e2?.adviceString &&
         e1?.creatorRef == e2?.creatorRef &&
         e1?.creatorPFP == e2?.creatorPFP &&
@@ -149,9 +125,6 @@ class AdviceRecordDocumentEquality implements Equality<AdviceRecord> {
 
   @override
   int hash(AdviceRecord? e) => const ListEquality().hash([
-        e?.maintainingRefs,
-        e?.losingWeightRefs,
-        e?.increasingStaminaRefs,
         e?.fitnessGoal,
         e?.adviceString,
         e?.creatorRef,

@@ -51,6 +51,11 @@ class WorkoutsRecord extends FirestoreRecord {
   int get unixDays => _unixDays ?? 0;
   bool hasUnixDays() => _unixDays != null;
 
+  // "last_updated" field.
+  DateTime? _lastUpdated;
+  DateTime? get lastUpdated => _lastUpdated;
+  bool hasLastUpdated() => _lastUpdated != null;
+
   DocumentReference get parentReference => reference.parent.parent!;
 
   void _initializeFields() {
@@ -61,6 +66,7 @@ class WorkoutsRecord extends FirestoreRecord {
     _dateUploaded = snapshotData['dateUploaded'] as DateTime?;
     _stringDuration = snapshotData['stringDuration'] as String?;
     _unixDays = castToType<int>(snapshotData['unixDays']);
+    _lastUpdated = snapshotData['last_updated'] as DateTime?;
   }
 
   static Query<Map<String, dynamic>> collection([DocumentReference? parent]) =>
@@ -110,6 +116,7 @@ Map<String, dynamic> createWorkoutsRecordData({
   DateTime? dateUploaded,
   String? stringDuration,
   int? unixDays,
+  DateTime? lastUpdated,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -120,6 +127,7 @@ Map<String, dynamic> createWorkoutsRecordData({
       'dateUploaded': dateUploaded,
       'stringDuration': stringDuration,
       'unixDays': unixDays,
+      'last_updated': lastUpdated,
     }.withoutNulls,
   );
 
@@ -137,7 +145,8 @@ class WorkoutsRecordDocumentEquality implements Equality<WorkoutsRecord> {
         e1?.distance == e2?.distance &&
         e1?.dateUploaded == e2?.dateUploaded &&
         e1?.stringDuration == e2?.stringDuration &&
-        e1?.unixDays == e2?.unixDays;
+        e1?.unixDays == e2?.unixDays &&
+        e1?.lastUpdated == e2?.lastUpdated;
   }
 
   @override
@@ -148,7 +157,8 @@ class WorkoutsRecordDocumentEquality implements Equality<WorkoutsRecord> {
         e?.distance,
         e?.dateUploaded,
         e?.stringDuration,
-        e?.unixDays
+        e?.unixDays,
+        e?.lastUpdated
       ]);
 
   @override

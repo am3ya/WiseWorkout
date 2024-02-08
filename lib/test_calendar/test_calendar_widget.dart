@@ -7,8 +7,11 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:badges/badges.dart' as badges;
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -32,6 +35,19 @@ class _TestCalendarWidgetState extends State<TestCalendarWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => TestCalendarModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (valueOrDefault(currentUserDocument?.fitnessGoal2, '') != null &&
+          valueOrDefault(currentUserDocument?.fitnessGoal2, '') != '') {
+        await queryAdviceRecordOnce(
+          queryBuilder: (adviceRecord) => adviceRecord.where(
+            'fitnessGoal',
+            isEqualTo: valueOrDefault(currentUserDocument?.fitnessGoal2, ''),
+          ),
+        );
+      }
+    });
 
     _model.tabBarController = TabController(
       vsync: this,

@@ -822,7 +822,7 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          '[tip]-[by business]',
+                                          'Hold complete workout to save your session.',
                                           style: FlutterFlowTheme.of(context)
                                               .labelMedium,
                                         ),

@@ -1,7 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/schema/structs/index.dart';
-import '/components/exercises_comp_widget.dart';
 import '/components/input_reps_widget.dart';
 import '/components/input_weight_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';

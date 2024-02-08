@@ -12,9 +12,6 @@ import 'schema/templates_record.dart';
 import 'schema/applications_record.dart';
 import 'schema/clubs_record.dart';
 import 'schema/advice_record.dart';
-import 'schema/maintaining_fitness_record.dart';
-import 'schema/losing_weight_record.dart';
-import 'schema/increasing_stamina_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart';
@@ -29,9 +26,6 @@ export 'schema/templates_record.dart';
 export 'schema/applications_record.dart';
 export 'schema/clubs_record.dart';
 export 'schema/advice_record.dart';
-export 'schema/maintaining_fitness_record.dart';
-export 'schema/losing_weight_record.dart';
-export 'schema/increasing_stamina_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -290,126 +284,6 @@ Future<List<AdviceRecord>> queryAdviceRecordOnce({
     queryCollectionOnce(
       AdviceRecord.collection,
       AdviceRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-/// Functions to query MaintainingFitnessRecords (as a Stream and as a Future).
-Future<int> queryMaintainingFitnessRecordCount({
-  DocumentReference? parent,
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-}) =>
-    queryCollectionCount(
-      MaintainingFitnessRecord.collection(parent),
-      queryBuilder: queryBuilder,
-      limit: limit,
-    );
-
-Stream<List<MaintainingFitnessRecord>> queryMaintainingFitnessRecord({
-  DocumentReference? parent,
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollection(
-      MaintainingFitnessRecord.collection(parent),
-      MaintainingFitnessRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<List<MaintainingFitnessRecord>> queryMaintainingFitnessRecordOnce({
-  DocumentReference? parent,
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      MaintainingFitnessRecord.collection(parent),
-      MaintainingFitnessRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-/// Functions to query LosingWeightRecords (as a Stream and as a Future).
-Future<int> queryLosingWeightRecordCount({
-  DocumentReference? parent,
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-}) =>
-    queryCollectionCount(
-      LosingWeightRecord.collection(parent),
-      queryBuilder: queryBuilder,
-      limit: limit,
-    );
-
-Stream<List<LosingWeightRecord>> queryLosingWeightRecord({
-  DocumentReference? parent,
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollection(
-      LosingWeightRecord.collection(parent),
-      LosingWeightRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<List<LosingWeightRecord>> queryLosingWeightRecordOnce({
-  DocumentReference? parent,
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      LosingWeightRecord.collection(parent),
-      LosingWeightRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-/// Functions to query IncreasingStaminaRecords (as a Stream and as a Future).
-Future<int> queryIncreasingStaminaRecordCount({
-  DocumentReference? parent,
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-}) =>
-    queryCollectionCount(
-      IncreasingStaminaRecord.collection(parent),
-      queryBuilder: queryBuilder,
-      limit: limit,
-    );
-
-Stream<List<IncreasingStaminaRecord>> queryIncreasingStaminaRecord({
-  DocumentReference? parent,
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollection(
-      IncreasingStaminaRecord.collection(parent),
-      IncreasingStaminaRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
-
-Future<List<IncreasingStaminaRecord>> queryIncreasingStaminaRecordOnce({
-  DocumentReference? parent,
-  Query Function(Query)? queryBuilder,
-  int limit = -1,
-  bool singleRecord = false,
-}) =>
-    queryCollectionOnce(
-      IncreasingStaminaRecord.collection(parent),
-      IncreasingStaminaRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

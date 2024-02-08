@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/components/error_occured_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -130,6 +131,24 @@ class _BusinessProfileWidgetState extends State<BusinessProfileWidget> {
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
+                    if (valueOrDefault(currentUserDocument?.userType, '') !=
+                        'business') {
+                      await showModalBottomSheet(
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        enableDrag: false,
+                        context: context,
+                        builder: (context) {
+                          return Padding(
+                            padding: MediaQuery.viewInsetsOf(context),
+                            child: ErrorOccuredWidget(),
+                          );
+                        },
+                      ).then((value) => safeSetState(() {}));
+
+                      context.pushNamed('userProfile');
+                    }
+
                     context.pushNamed('businessEditProfile');
                   },
                   child: Material(

@@ -242,6 +242,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'applicationsPage',
           path: '/applicationsPage',
           builder: (context, params) => ApplicationsPageWidget(),
+        ),
+        FFRoute(
+          name: 'adminViewApplications',
+          path: '/adminViewApplications',
+          builder: (context, params) => AdminViewApplicationsWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
