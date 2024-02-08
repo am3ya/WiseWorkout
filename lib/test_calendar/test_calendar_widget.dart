@@ -1,5 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/components/rest_day_are_you_sure_widget.dart';
 import '/flutter_flow/flutter_flow_button_tabbar.dart';
 import '/flutter_flow/flutter_flow_calendar.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -352,7 +353,18 @@ class _TestCalendarWidgetState extends State<TestCalendarWidget>
                                                                             0.0,
                                                                             0.0),
                                                                     child: Text(
-                                                                      'Session',
+                                                                      () {
+                                                                        if (valueOrDefault(currentUserDocument?.calorieDifference, 0.0) >
+                                                                            0.0) {
+                                                                          return 'Session';
+                                                                        } else if (valueOrDefault(currentUserDocument?.calorieDifference,
+                                                                                0.0) ==
+                                                                            null) {
+                                                                          return 'Welcome!';
+                                                                        } else {
+                                                                          return 'Rest day';
+                                                                        }
+                                                                      }(),
                                                                       style: FlutterFlowTheme.of(
                                                                               context)
                                                                           .headlineSmall,
@@ -371,7 +383,9 @@ class _TestCalendarWidgetState extends State<TestCalendarWidget>
                                                                               .max,
                                                                       children: [
                                                                         Text(
-                                                                          'Sat, 23/12/2023',
+                                                                          dateTimeFormat(
+                                                                              'd/M/y',
+                                                                              _model.calendarSelectedDay1!.start),
                                                                           style:
                                                                               FlutterFlowTheme.of(context).bodySmall,
                                                                         ),
@@ -403,8 +417,39 @@ class _TestCalendarWidgetState extends State<TestCalendarWidget>
 
                                                                     return;
                                                                   } else {
-                                                                    context.pushNamed(
-                                                                        'startWorkoutTimer');
+                                                                    if (valueOrDefault(
+                                                                            currentUserDocument?.calorieDifference,
+                                                                            0.0) >
+                                                                        0.0) {
+                                                                      context.pushNamed(
+                                                                          'startWorkoutTimer');
+                                                                    } else {
+                                                                      await showModalBottomSheet(
+                                                                        isScrollControlled:
+                                                                            true,
+                                                                        backgroundColor:
+                                                                            Colors.transparent,
+                                                                        enableDrag:
+                                                                            false,
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (context) {
+                                                                          return GestureDetector(
+                                                                            onTap: () => _model.unfocusNode.canRequestFocus
+                                                                                ? FocusScope.of(context).requestFocus(_model.unfocusNode)
+                                                                                : FocusScope.of(context).unfocus(),
+                                                                            child:
+                                                                                Padding(
+                                                                              padding: MediaQuery.viewInsetsOf(context),
+                                                                              child: RestDayAreYouSureWidget(),
+                                                                            ),
+                                                                          );
+                                                                        },
+                                                                      ).then((value) =>
+                                                                          safeSetState(
+                                                                              () {}));
+                                                                    }
                                                                   }
                                                                 },
                                                                 child:
@@ -819,126 +864,6 @@ class _TestCalendarWidgetState extends State<TestCalendarWidget>
                                                                           0.0),
                                                                   child: Text(
                                                                     'Squats',
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .headlineSmall,
-                                                                  ),
-                                                                ),
-                                                                Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0.0,
-                                                                          4.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                                  child: Row(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .max,
-                                                                    children: [
-                                                                      Text(
-                                                                        'Sat, 23/12/2023',
-                                                                        style: FlutterFlowTheme.of(context)
-                                                                            .bodySmall,
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            Container(
-                                                              width: 50.0,
-                                                              height: 50.0,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryBackground,
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8.0),
-                                                                shape: BoxShape
-                                                                    .rectangle,
-                                                                border:
-                                                                    Border.all(
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .alternate,
-                                                                  width: 1.0,
-                                                                ),
-                                                              ),
-                                                              alignment:
-                                                                  AlignmentDirectional(
-                                                                      0.0, 0.0),
-                                                              child: Icon(
-                                                                Icons
-                                                                    .add_photo_alternate_outlined,
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText,
-                                                                size: 24.0,
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(16.0, 0.0,
-                                                                16.0, 12.0),
-                                                    child: Container(
-                                                      width: 100.0,
-                                                      decoration: BoxDecoration(
-                                                        color: FlutterFlowTheme
-                                                                .of(context)
-                                                            .secondaryBackground,
-                                                        boxShadow: [
-                                                          BoxShadow(
-                                                            blurRadius: 3.0,
-                                                            color: Color(
-                                                                0x33000000),
-                                                            offset: Offset(
-                                                                0.0, 1.0),
-                                                          )
-                                                        ],
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
-                                                      ),
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsets.all(8.0),
-                                                        child: Row(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Column(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .center,
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                Padding(
-                                                                  padding: EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          4.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                                  child: Text(
-                                                                    'Bench press',
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
                                                                         .headlineSmall,

@@ -161,6 +161,21 @@ class UsersRecord extends FirestoreRecord {
   double get calorieDifference => _calorieDifference ?? 0.0;
   bool hasCalorieDifference() => _calorieDifference != null;
 
+  // "BMI" field.
+  double? _bmi;
+  double get bmi => _bmi ?? 0.0;
+  bool hasBmi() => _bmi != null;
+
+  // "ageGroup" field.
+  String? _ageGroup;
+  String get ageGroup => _ageGroup ?? '';
+  bool hasAgeGroup() => _ageGroup != null;
+
+  // "bmiGroup" field.
+  String? _bmiGroup;
+  String get bmiGroup => _bmiGroup ?? '';
+  bool hasBmiGroup() => _bmiGroup != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -193,6 +208,9 @@ class UsersRecord extends FirestoreRecord {
     _dailyCalorieBurningGoal =
         castToType<double>(snapshotData['dailyCalorieBurningGoal']);
     _calorieDifference = castToType<double>(snapshotData['calorieDifference']);
+    _bmi = castToType<double>(snapshotData['BMI']);
+    _ageGroup = snapshotData['ageGroup'] as String?;
+    _bmiGroup = snapshotData['bmiGroup'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -254,6 +272,9 @@ Map<String, dynamic> createUsersRecordData({
   double? dailyCalorieIntake,
   double? dailyCalorieBurningGoal,
   double? calorieDifference,
+  double? bmi,
+  String? ageGroup,
+  String? bmiGroup,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -282,6 +303,9 @@ Map<String, dynamic> createUsersRecordData({
       'dailyCalorieIntake': dailyCalorieIntake,
       'dailyCalorieBurningGoal': dailyCalorieBurningGoal,
       'calorieDifference': calorieDifference,
+      'BMI': bmi,
+      'ageGroup': ageGroup,
+      'bmiGroup': bmiGroup,
     }.withoutNulls,
   );
 
@@ -322,7 +346,10 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.tdee == e2?.tdee &&
         e1?.dailyCalorieIntake == e2?.dailyCalorieIntake &&
         e1?.dailyCalorieBurningGoal == e2?.dailyCalorieBurningGoal &&
-        e1?.calorieDifference == e2?.calorieDifference;
+        e1?.calorieDifference == e2?.calorieDifference &&
+        e1?.bmi == e2?.bmi &&
+        e1?.ageGroup == e2?.ageGroup &&
+        e1?.bmiGroup == e2?.bmiGroup;
   }
 
   @override
@@ -355,7 +382,10 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.tdee,
         e?.dailyCalorieIntake,
         e?.dailyCalorieBurningGoal,
-        e?.calorieDifference
+        e?.calorieDifference,
+        e?.bmi,
+        e?.ageGroup,
+        e?.bmiGroup
       ]);
 
   @override

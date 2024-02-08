@@ -99,7 +99,12 @@ class _TrialNewUserInterestsWidgetState
     super.initState();
     _model = createModel(context, () => TrialNewUserInterestsModel());
 
-    _model.calorieIntakeTextFieldController ??= TextEditingController();
+    _model.calorieIntakeTextFieldController ??= TextEditingController(
+        text:
+            valueOrDefault(currentUserDocument?.dailyCalorieIntake, 0.0) != null
+                ? valueOrDefault(currentUserDocument?.dailyCalorieIntake, 0.0)
+                    .toString()
+                : null);
     _model.calorieIntakeTextFieldFocusNode ??= FocusNode();
 
     setupAnimations(
@@ -241,36 +246,52 @@ class _TrialNewUserInterestsWidgetState
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     16.0, 8.0, 0.0, 0.0),
-                                child: FlutterFlowDropDown<String>(
-                                  controller: _model.dropDownValueController ??=
-                                      FormFieldController<String>(null),
-                                  options: ['2', '3', '5', '7'],
-                                  onChanged: (val) => setState(
-                                      () => _model.dropDownValue = val),
-                                  width: 300.0,
-                                  height: 50.0,
-                                  textStyle:
-                                      FlutterFlowTheme.of(context).bodyMedium,
-                                  hintText: 'Please select...',
-                                  icon: Icon(
-                                    Icons.keyboard_arrow_down_rounded,
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    size: 24.0,
+                                child: AuthUserStreamWidget(
+                                  builder: (context) =>
+                                      FlutterFlowDropDown<String>(
+                                    controller:
+                                        _model.dropDownValueController ??=
+                                            FormFieldController<String>(
+                                      _model.dropDownValue ??= valueOrDefault(
+                                                  currentUserDocument
+                                                      ?.weeklyWorkouts,
+                                                  0) !=
+                                              null
+                                          ? valueOrDefault(
+                                                  currentUserDocument
+                                                      ?.weeklyWorkouts,
+                                                  0)
+                                              .toString()
+                                          : null,
+                                    ),
+                                    options: ['2', '3', '5', '7'],
+                                    onChanged: (val) => setState(
+                                        () => _model.dropDownValue = val),
+                                    width: 300.0,
+                                    height: 50.0,
+                                    textStyle:
+                                        FlutterFlowTheme.of(context).bodyMedium,
+                                    hintText: 'Please select...',
+                                    icon: Icon(
+                                      Icons.keyboard_arrow_down_rounded,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      size: 24.0,
+                                    ),
+                                    fillColor: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    elevation: 2.0,
+                                    borderColor:
+                                        FlutterFlowTheme.of(context).alternate,
+                                    borderWidth: 2.0,
+                                    borderRadius: 8.0,
+                                    margin: EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 4.0, 16.0, 4.0),
+                                    hidesUnderline: true,
+                                    isOverButton: true,
+                                    isSearchable: false,
+                                    isMultiSelect: false,
                                   ),
-                                  fillColor: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                  elevation: 2.0,
-                                  borderColor:
-                                      FlutterFlowTheme.of(context).alternate,
-                                  borderWidth: 2.0,
-                                  borderRadius: 8.0,
-                                  margin: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 4.0, 16.0, 4.0),
-                                  hidesUnderline: true,
-                                  isOverButton: true,
-                                  isSearchable: false,
-                                  isMultiSelect: false,
                                 ),
                               ),
                             ],
@@ -288,52 +309,57 @@ class _TrialNewUserInterestsWidgetState
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               16.0, 0.0, 16.0, 0.0),
-                          child: TextFormField(
-                            controller: _model.calorieIntakeTextFieldController,
-                            focusNode: _model.calorieIntakeTextFieldFocusNode,
-                            autofocus: true,
-                            obscureText: false,
-                            decoration: InputDecoration(
-                              labelText: 'Please enter (kcal)...',
-                              labelStyle:
-                                  FlutterFlowTheme.of(context).labelMedium,
-                              hintStyle:
-                                  FlutterFlowTheme.of(context).labelMedium,
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  width: 2.0,
+                          child: AuthUserStreamWidget(
+                            builder: (context) => TextFormField(
+                              controller:
+                                  _model.calorieIntakeTextFieldController,
+                              focusNode: _model.calorieIntakeTextFieldFocusNode,
+                              autofocus: true,
+                              obscureText: false,
+                              decoration: InputDecoration(
+                                labelText: 'Please enter (kcal)...',
+                                labelStyle:
+                                    FlutterFlowTheme.of(context).labelMedium,
+                                hintStyle:
+                                    FlutterFlowTheme.of(context).labelMedium,
+                                enabledBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color:
+                                        FlutterFlowTheme.of(context).alternate,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
                                 ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  width: 2.0,
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).primary,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
                                 ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              errorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).error,
-                                  width: 2.0,
+                                errorBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
                                 ),
-                                borderRadius: BorderRadius.circular(8.0),
-                              ),
-                              focusedErrorBorder: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: FlutterFlowTheme.of(context).error,
-                                  width: 2.0,
+                                focusedErrorBorder: UnderlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: FlutterFlowTheme.of(context).error,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(8.0),
                                 ),
-                                borderRadius: BorderRadius.circular(8.0),
                               ),
+                              style: FlutterFlowTheme.of(context).bodyMedium,
+                              keyboardType:
+                                  const TextInputType.numberWithOptions(
+                                      decimal: true),
+                              validator: _model
+                                  .calorieIntakeTextFieldControllerValidator
+                                  .asValidator(context),
                             ),
-                            style: FlutterFlowTheme.of(context).bodyMedium,
-                            keyboardType: const TextInputType.numberWithOptions(
-                                decimal: true),
-                            validator: _model
-                                .calorieIntakeTextFieldControllerValidator
-                                .asValidator(context),
                           ),
                         ),
                       ],

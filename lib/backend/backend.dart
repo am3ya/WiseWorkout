@@ -12,6 +12,7 @@ import 'schema/templates_record.dart';
 import 'schema/applications_record.dart';
 import 'schema/clubs_record.dart';
 import 'schema/advice_record.dart';
+import 'schema/global_properties_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart';
@@ -26,6 +27,7 @@ export 'schema/templates_record.dart';
 export 'schema/applications_record.dart';
 export 'schema/clubs_record.dart';
 export 'schema/advice_record.dart';
+export 'schema/global_properties_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -284,6 +286,43 @@ Future<List<AdviceRecord>> queryAdviceRecordOnce({
     queryCollectionOnce(
       AdviceRecord.collection,
       AdviceRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query GlobalPropertiesRecords (as a Stream and as a Future).
+Future<int> queryGlobalPropertiesRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      GlobalPropertiesRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<GlobalPropertiesRecord>> queryGlobalPropertiesRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      GlobalPropertiesRecord.collection,
+      GlobalPropertiesRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<GlobalPropertiesRecord>> queryGlobalPropertiesRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      GlobalPropertiesRecord.collection,
+      GlobalPropertiesRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

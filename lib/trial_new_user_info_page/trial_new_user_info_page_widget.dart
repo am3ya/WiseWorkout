@@ -237,41 +237,61 @@ class _TrialNewUserInfoPageWidgetState extends State<TrialNewUserInfoPageWidget>
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  FlutterFlowDropDown<String>(
-                                    controller: _model
-                                            .fitnessDropDownValueController ??=
-                                        FormFieldController<String>(null),
-                                    options: [
-                                      'Losing weight',
-                                      'Maintaining fitness',
-                                      'Increasing stamina'
-                                    ],
-                                    onChanged: (val) => setState(() =>
-                                        _model.fitnessDropDownValue = val),
-                                    width: 300.0,
-                                    height: 50.0,
-                                    textStyle:
-                                        FlutterFlowTheme.of(context).bodyMedium,
-                                    hintText: 'Please select...',
-                                    icon: Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      size: 24.0,
+                                  AuthUserStreamWidget(
+                                    builder: (context) =>
+                                        FlutterFlowDropDown<String>(
+                                      controller: _model
+                                              .fitnessDropDownValueController ??=
+                                          FormFieldController<String>(
+                                        _model.fitnessDropDownValue ??=
+                                            valueOrDefault(
+                                                            currentUserDocument
+                                                                ?.fitnessGoal2,
+                                                            '') !=
+                                                        null &&
+                                                    valueOrDefault(
+                                                            currentUserDocument
+                                                                ?.fitnessGoal2,
+                                                            '') !=
+                                                        ''
+                                                ? valueOrDefault(
+                                                    currentUserDocument
+                                                        ?.fitnessGoal2,
+                                                    '')
+                                                : null,
+                                      ),
+                                      options: [
+                                        'Losing weight',
+                                        'Maintaining fitness',
+                                        'Increasing stamina'
+                                      ],
+                                      onChanged: (val) => setState(() =>
+                                          _model.fitnessDropDownValue = val),
+                                      width: 300.0,
+                                      height: 50.0,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium,
+                                      hintText: 'Please select...',
+                                      icon: Icon(
+                                        Icons.keyboard_arrow_down_rounded,
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                        size: 24.0,
+                                      ),
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                      elevation: 2.0,
+                                      borderColor: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      borderWidth: 2.0,
+                                      borderRadius: 8.0,
+                                      margin: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 4.0, 16.0, 4.0),
+                                      hidesUnderline: true,
+                                      isOverButton: true,
+                                      isSearchable: false,
+                                      isMultiSelect: false,
                                     ),
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    elevation: 2.0,
-                                    borderColor:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    borderWidth: 2.0,
-                                    borderRadius: 8.0,
-                                    margin: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 4.0, 16.0, 4.0),
-                                    hidesUnderline: true,
-                                    isOverButton: true,
-                                    isSearchable: false,
-                                    isMultiSelect: false,
                                   ),
                                 ],
                               ),

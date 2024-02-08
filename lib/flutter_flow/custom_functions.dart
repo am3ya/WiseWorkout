@@ -446,3 +446,14 @@ String historyToString(
       " steps. Come join me on wise workout!";
   return returnStr;
 }
+
+double calculateBMI(
+  double weight,
+  double height,
+) {
+  double heightInMetres = height / 100;
+
+  double bmi = weight / (heightInMetres * heightInMetres);
+
+  return bmi;
+}

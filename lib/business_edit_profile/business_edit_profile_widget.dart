@@ -361,35 +361,69 @@ class _BusinessEditProfileWidgetState extends State<BusinessEditProfileWidget> {
                   ),
                 ),
                 AuthUserStreamWidget(
-                  builder: (context) => FlutterFlowDropDown<String>(
-                    controller: _model.dropDownValueController ??=
-                        FormFieldController<String>(
-                      _model.dropDownValue ??=
-                          valueOrDefault(currentUserDocument?.category, ''),
+                  builder: (context) =>
+                      StreamBuilder<List<GlobalPropertiesRecord>>(
+                    stream: queryGlobalPropertiesRecord(
+                      singleRecord: true,
                     ),
-                    options: ['Equipment seller', 'Influencer', 'Gym'],
-                    onChanged: (val) =>
-                        setState(() => _model.dropDownValue = val),
-                    width: 300.0,
-                    height: 50.0,
-                    textStyle: FlutterFlowTheme.of(context).bodyMedium,
-                    hintText: 'Please select...',
-                    icon: Icon(
-                      Icons.keyboard_arrow_down_rounded,
-                      color: FlutterFlowTheme.of(context).secondaryText,
-                      size: 24.0,
-                    ),
-                    fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                    elevation: 2.0,
-                    borderColor: FlutterFlowTheme.of(context).alternate,
-                    borderWidth: 2.0,
-                    borderRadius: 8.0,
-                    margin:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 16.0, 4.0),
-                    hidesUnderline: true,
-                    isOverButton: true,
-                    isSearchable: false,
-                    isMultiSelect: false,
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 50.0,
+                            height: 50.0,
+                            child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                FlutterFlowTheme.of(context).primary,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                      List<GlobalPropertiesRecord>
+                          dropDownGlobalPropertiesRecordList = snapshot.data!;
+                      // Return an empty Container when the item does not exist.
+                      if (snapshot.data!.isEmpty) {
+                        return Container();
+                      }
+                      final dropDownGlobalPropertiesRecord =
+                          dropDownGlobalPropertiesRecordList.isNotEmpty
+                              ? dropDownGlobalPropertiesRecordList.first
+                              : null;
+                      return FlutterFlowDropDown<String>(
+                        controller: _model.dropDownValueController ??=
+                            FormFieldController<String>(
+                          _model.dropDownValue ??=
+                              valueOrDefault(currentUserDocument?.category, ''),
+                        ),
+                        options:
+                            dropDownGlobalPropertiesRecord!.businessCategories,
+                        onChanged: (val) =>
+                            setState(() => _model.dropDownValue = val),
+                        width: 300.0,
+                        height: 50.0,
+                        textStyle: FlutterFlowTheme.of(context).bodyMedium,
+                        hintText: 'Please select...',
+                        icon: Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          color: FlutterFlowTheme.of(context).secondaryText,
+                          size: 24.0,
+                        ),
+                        fillColor:
+                            FlutterFlowTheme.of(context).secondaryBackground,
+                        elevation: 2.0,
+                        borderColor: FlutterFlowTheme.of(context).alternate,
+                        borderWidth: 2.0,
+                        borderRadius: 8.0,
+                        margin: EdgeInsetsDirectional.fromSTEB(
+                            16.0, 4.0, 16.0, 4.0),
+                        hidesUnderline: true,
+                        isOverButton: true,
+                        isSearchable: false,
+                        isMultiSelect: false,
+                      );
+                    },
                   ),
                 ),
                 Align(
