@@ -11,6 +11,7 @@ import '/flutter_flow/upload_data.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -137,6 +138,15 @@ class _CreateClubPageWidgetState extends State<CreateClubPageWidget> {
                                     size: 30.0,
                                   ),
                                   onPressed: () async {
+                                    if (iconButtonClubsRecord != null) {
+                                      if (iconButtonClubsRecord!.membersRefs
+                                          .contains(currentUserReference)) {
+                                        context.pushNamed('clubsPage');
+                                      }
+                                    } else {
+                                      context.pushNamed('clubsPage');
+                                    }
+
                                     await iconButtonClubsRecord!.reference
                                         .update({
                                       ...mapToFirestore(
@@ -459,6 +469,13 @@ class _CreateClubPageWidgetState extends State<CreateClubPageWidget> {
                                 },
                               ),
                             });
+                            await queryClubsRecordOnce(
+                              queryBuilder: (clubsRecord) => clubsRecord.where(
+                                'club_name',
+                                isEqualTo: _model.yourNameController.text,
+                              ),
+                              singleRecord: true,
+                            ).then((s) => s.firstOrNull);
                             if (_model.uploadedFileUrl == '') {
                               await buttonClubsRecordList
                                   .where((e) =>
@@ -483,6 +500,20 @@ class _CreateClubPageWidgetState extends State<CreateClubPageWidget> {
                                   ));
                             }
 
+                            await currentUserReference!.update({
+                              ...mapToFirestore(
+                                {
+                                  'clubs': FieldValue.arrayUnion([
+                                    buttonClubsRecordList
+                                        .where((e) =>
+                                            e.creator == currentUserReference)
+                                        .toList()
+                                        .last
+                                        .reference
+                                  ]),
+                                },
+                              ),
+                            });
                             FFAppState().clubName =
                                 _model.yourNameController.text;
                             await showModalBottomSheet(
@@ -535,7 +566,7 @@ class _CreateClubPageWidgetState extends State<CreateClubPageWidget> {
 
                     context.pushNamed('clubsPage');
                   },
-                  text: 'Exit without saving',
+                  text: 'Exit',
                   options: FFButtonOptions(
                     height: 40.0,
                     padding:

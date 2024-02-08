@@ -12,6 +12,7 @@ import '/flutter_flow/custom_functions.dart' as functions;
 import 'create_club_page_widget.dart' show CreateClubPageWidget;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
