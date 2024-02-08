@@ -291,7 +291,10 @@ class _CreateClubPageWidgetState extends State<CreateClubPageWidget> {
                               child: CachedNetworkImage(
                                 fadeInDuration: Duration(milliseconds: 500),
                                 fadeOutDuration: Duration(milliseconds: 500),
-                                imageUrl: currentUserPhoto,
+                                imageUrl: _model.uploadedFileUrl != null &&
+                                        _model.uploadedFileUrl != ''
+                                    ? _model.uploadedFileUrl
+                                    : currentUserPhoto,
                                 fit: BoxFit.fitWidth,
                               ),
                             ),
