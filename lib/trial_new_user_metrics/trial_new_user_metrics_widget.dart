@@ -81,13 +81,22 @@ class _TrialNewUserMetricsWidgetState extends State<TrialNewUserMetricsWidget>
     super.initState();
     _model = createModel(context, () => TrialNewUserMetricsModel());
 
-    _model.textController1 ??= TextEditingController();
+    _model.textController1 ??= TextEditingController(
+        text: valueOrDefault(currentUserDocument?.age, 0) != null
+            ? valueOrDefault(currentUserDocument?.age, 0).toString()
+            : null);
     _model.textFieldFocusNode1 ??= FocusNode();
 
-    _model.textController2 ??= TextEditingController();
+    _model.textController2 ??= TextEditingController(
+        text: valueOrDefault(currentUserDocument?.height, 0.0) != null
+            ? valueOrDefault(currentUserDocument?.height, 0.0).toString()
+            : null);
     _model.textFieldFocusNode2 ??= FocusNode();
 
-    _model.textController3 ??= TextEditingController();
+    _model.textController3 ??= TextEditingController(
+        text: valueOrDefault(currentUserDocument?.weight, 0.0) != null
+            ? valueOrDefault(currentUserDocument?.weight, 0.0).toString()
+            : null);
     _model.textFieldFocusNode3 ??= FocusNode();
 
     setupAnimations(
@@ -219,67 +228,69 @@ class _TrialNewUserMetricsWidgetState extends State<TrialNewUserMetricsWidget>
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           8.0, 0.0, 8.0, 0.0),
-                                      child: TextFormField(
-                                        controller: _model.textController1,
-                                        focusNode: _model.textFieldFocusNode1,
-                                        autofocus: true,
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          labelText: 'Label here...',
-                                          labelStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium,
-                                          hintStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium,
-                                          enabledBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              width: 2.0,
+                                      child: AuthUserStreamWidget(
+                                        builder: (context) => TextFormField(
+                                          controller: _model.textController1,
+                                          focusNode: _model.textFieldFocusNode1,
+                                          autofocus: true,
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            labelText: 'Enter age...',
+                                            labelStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium,
+                                            hintStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium,
+                                            enabledBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                                width: 2.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          focusedBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              width: 2.0,
+                                            focusedBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                width: 2.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          errorBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .error,
-                                              width: 2.0,
+                                            errorBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                width: 2.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          focusedErrorBorder:
-                                              UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .error,
-                                              width: 2.0,
+                                            focusedErrorBorder:
+                                                UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                width: 2.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
                                           ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium,
+                                          keyboardType: TextInputType.number,
+                                          validator: _model
+                                              .textController1Validator
+                                              .asValidator(context),
                                         ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium,
-                                        keyboardType: TextInputType.number,
-                                        validator: _model
-                                            .textController1Validator
-                                            .asValidator(context),
                                       ),
                                     ),
                                   ),
@@ -301,68 +312,70 @@ class _TrialNewUserMetricsWidgetState extends State<TrialNewUserMetricsWidget>
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           8.0, 0.0, 8.0, 0.0),
-                                      child: TextFormField(
-                                        controller: _model.textController2,
-                                        focusNode: _model.textFieldFocusNode2,
-                                        autofocus: true,
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          labelText: 'Label here...',
-                                          labelStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium,
-                                          hintStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium,
-                                          enabledBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              width: 2.0,
+                                      child: AuthUserStreamWidget(
+                                        builder: (context) => TextFormField(
+                                          controller: _model.textController2,
+                                          focusNode: _model.textFieldFocusNode2,
+                                          autofocus: true,
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            labelText: 'Enter height (cm)...',
+                                            labelStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium,
+                                            hintStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium,
+                                            enabledBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                                width: 2.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          focusedBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              width: 2.0,
+                                            focusedBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                width: 2.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          errorBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .error,
-                                              width: 2.0,
+                                            errorBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                width: 2.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          focusedErrorBorder:
-                                              UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .error,
-                                              width: 2.0,
+                                            focusedErrorBorder:
+                                                UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                width: 2.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
                                           ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium,
+                                          keyboardType: const TextInputType
+                                              .numberWithOptions(decimal: true),
+                                          validator: _model
+                                              .textController2Validator
+                                              .asValidator(context),
                                         ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium,
-                                        keyboardType: const TextInputType
-                                            .numberWithOptions(decimal: true),
-                                        validator: _model
-                                            .textController2Validator
-                                            .asValidator(context),
                                       ),
                                     ),
                                   ),
@@ -384,68 +397,70 @@ class _TrialNewUserMetricsWidgetState extends State<TrialNewUserMetricsWidget>
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           8.0, 0.0, 8.0, 0.0),
-                                      child: TextFormField(
-                                        controller: _model.textController3,
-                                        focusNode: _model.textFieldFocusNode3,
-                                        autofocus: true,
-                                        obscureText: false,
-                                        decoration: InputDecoration(
-                                          labelText: 'Label here...',
-                                          labelStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium,
-                                          hintStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .labelMedium,
-                                          enabledBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .alternate,
-                                              width: 2.0,
+                                      child: AuthUserStreamWidget(
+                                        builder: (context) => TextFormField(
+                                          controller: _model.textController3,
+                                          focusNode: _model.textFieldFocusNode3,
+                                          autofocus: true,
+                                          obscureText: false,
+                                          decoration: InputDecoration(
+                                            labelText: 'Enter weight (kg)...',
+                                            labelStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium,
+                                            hintStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .labelMedium,
+                                            enabledBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                                width: 2.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          focusedBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              width: 2.0,
+                                            focusedBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                width: 2.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          errorBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .error,
-                                              width: 2.0,
+                                            errorBorder: UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                width: 2.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                          ),
-                                          focusedErrorBorder:
-                                              UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .error,
-                                              width: 2.0,
+                                            focusedErrorBorder:
+                                                UnderlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .error,
+                                                width: 2.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
                                             ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
                                           ),
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodyMedium,
+                                          keyboardType: const TextInputType
+                                              .numberWithOptions(decimal: true),
+                                          validator: _model
+                                              .textController3Validator
+                                              .asValidator(context),
                                         ),
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium,
-                                        keyboardType: const TextInputType
-                                            .numberWithOptions(decimal: true),
-                                        validator: _model
-                                            .textController3Validator
-                                            .asValidator(context),
                                       ),
                                     ),
                                   ),
@@ -463,37 +478,54 @@ class _TrialNewUserMetricsWidgetState extends State<TrialNewUserMetricsWidget>
                                     style:
                                         FlutterFlowTheme.of(context).bodyMedium,
                                   ),
-                                  FlutterFlowDropDown<String>(
-                                    controller:
-                                        _model.dropDownValueController ??=
-                                            FormFieldController<String>(null),
-                                    options: ['Male', 'Female'],
-                                    onChanged: (val) => setState(
-                                        () => _model.dropDownValue = val),
-                                    width: 300.0,
-                                    height: 50.0,
-                                    textStyle:
-                                        FlutterFlowTheme.of(context).bodyMedium,
-                                    hintText: 'Please select...',
-                                    icon: Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      size: 24.0,
+                                  AuthUserStreamWidget(
+                                    builder: (context) =>
+                                        FlutterFlowDropDown<String>(
+                                      controller:
+                                          _model.dropDownValueController ??=
+                                              FormFieldController<String>(
+                                        _model.dropDownValue ??= valueOrDefault(
+                                                        currentUserDocument
+                                                            ?.gender,
+                                                        '') !=
+                                                    null &&
+                                                valueOrDefault(
+                                                        currentUserDocument
+                                                            ?.gender,
+                                                        '') !=
+                                                    ''
+                                            ? valueOrDefault(
+                                                currentUserDocument?.gender, '')
+                                            : null,
+                                      ),
+                                      options: ['Male', 'Female'],
+                                      onChanged: (val) => setState(
+                                          () => _model.dropDownValue = val),
+                                      width: 300.0,
+                                      height: 50.0,
+                                      textStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium,
+                                      hintText: 'Please select...',
+                                      icon: Icon(
+                                        Icons.keyboard_arrow_down_rounded,
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                        size: 24.0,
+                                      ),
+                                      fillColor: FlutterFlowTheme.of(context)
+                                          .secondaryBackground,
+                                      elevation: 2.0,
+                                      borderColor: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      borderWidth: 2.0,
+                                      borderRadius: 8.0,
+                                      margin: EdgeInsetsDirectional.fromSTEB(
+                                          16.0, 4.0, 16.0, 4.0),
+                                      hidesUnderline: true,
+                                      isOverButton: true,
+                                      isSearchable: false,
+                                      isMultiSelect: false,
                                     ),
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    elevation: 2.0,
-                                    borderColor:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    borderWidth: 2.0,
-                                    borderRadius: 8.0,
-                                    margin: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 4.0, 16.0, 4.0),
-                                    hidesUnderline: true,
-                                    isOverButton: true,
-                                    isSearchable: false,
-                                    isMultiSelect: false,
                                   ),
                                 ],
                               ),
@@ -668,6 +700,76 @@ class _TrialNewUserMetricsWidgetState extends State<TrialNewUserMetricsWidget>
                                         infoCollectionComplete: true,
                                         gender: _model.dropDownValue,
                                       ));
+                                      if ((valueOrDefault(
+                                                  currentUserDocument?.age,
+                                                  0) >=
+                                              5) &&
+                                          (valueOrDefault(
+                                                  currentUserDocument?.age,
+                                                  0) <=
+                                              12)) {
+                                        await currentUserReference!
+                                            .update(createUsersRecordData(
+                                          ageGroup: 'Children (Ages 5-12)',
+                                        ));
+                                      } else {
+                                        if ((valueOrDefault(
+                                                    currentUserDocument?.age,
+                                                    0) >=
+                                                13) &&
+                                            (valueOrDefault(
+                                                    currentUserDocument?.age,
+                                                    0) <=
+                                                18)) {
+                                          await currentUserReference!
+                                              .update(createUsersRecordData(
+                                            ageGroup: 'Teenagers (Ages 13-18)',
+                                          ));
+                                        } else {
+                                          if ((valueOrDefault(
+                                                      currentUserDocument?.age,
+                                                      0) >=
+                                                  19) &&
+                                              (valueOrDefault(
+                                                      currentUserDocument?.age,
+                                                      0) <=
+                                                  30)) {
+                                            await currentUserReference!
+                                                .update(createUsersRecordData(
+                                              ageGroup:
+                                                  'Young Adults (Ages 19-30)',
+                                            ));
+                                          } else {
+                                            if ((valueOrDefault(
+                                                        currentUserDocument
+                                                            ?.age,
+                                                        0) >=
+                                                    31) &&
+                                                (valueOrDefault(
+                                                        currentUserDocument
+                                                            ?.age,
+                                                        0) <=
+                                                    60)) {
+                                              await currentUserReference!
+                                                  .update(createUsersRecordData(
+                                                ageGroup: 'Adults (Ages 31-60)',
+                                              ));
+                                            } else {
+                                              if (valueOrDefault(
+                                                      currentUserDocument?.age,
+                                                      0) >=
+                                                  61) {
+                                                await currentUserReference!
+                                                    .update(
+                                                        createUsersRecordData(
+                                                  ageGroup:
+                                                      'Older Adults (Ages 61 and above)',
+                                                ));
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
 
                                       await currentUserReference!
                                           .update(createUsersRecordData(
@@ -683,7 +785,62 @@ class _TrialNewUserMetricsWidgetState extends State<TrialNewUserMetricsWidget>
                                                 0.0),
                                             valueOrDefault(
                                                 currentUserDocument?.age, 0)),
+                                        bmi: functions.calculateBMI(
+                                            valueOrDefault(
+                                                currentUserDocument?.weight,
+                                                0.0),
+                                            valueOrDefault(
+                                                currentUserDocument?.height,
+                                                0.0)),
                                       ));
+                                      if (valueOrDefault(
+                                              currentUserDocument?.bmi, 0.0) <
+                                          18.5) {
+                                        await currentUserReference!
+                                            .update(createUsersRecordData(
+                                          bmiGroup: 'Underweight (<18.5)',
+                                        ));
+                                      } else {
+                                        if ((valueOrDefault(
+                                                    currentUserDocument?.bmi,
+                                                    0.0) >=
+                                                18.5) &&
+                                            (valueOrDefault(
+                                                    currentUserDocument?.bmi,
+                                                    0.0) <=
+                                                24.9)) {
+                                          await currentUserReference!
+                                              .update(createUsersRecordData(
+                                            bmiGroup:
+                                                'Normal weight (18.5-24.9)',
+                                          ));
+                                        } else {
+                                          if ((valueOrDefault(
+                                                      currentUserDocument?.bmi,
+                                                      0.0) >=
+                                                  25.0) &&
+                                              (valueOrDefault(
+                                                      currentUserDocument?.bmi,
+                                                      0.0) <=
+                                                  29.9)) {
+                                            await currentUserReference!
+                                                .update(createUsersRecordData(
+                                              bmiGroup:
+                                                  'Overweight (25.0-29.9)',
+                                            ));
+                                          } else {
+                                            if (valueOrDefault(
+                                                    currentUserDocument?.bmi,
+                                                    0.0) >=
+                                                30.0) {
+                                              await currentUserReference!
+                                                  .update(createUsersRecordData(
+                                                bmiGroup: 'Obesity (30+)',
+                                              ));
+                                            }
+                                          }
+                                        }
+                                      }
 
                                       await currentUserReference!
                                           .update(createUsersRecordData(
@@ -893,6 +1050,7 @@ class _TrialNewUserMetricsWidgetState extends State<TrialNewUserMetricsWidget>
 
                                 setState(() {
                                   FFAppState().showInfoCollection = false;
+                                  FFAppState().weekStart = getCurrentTimestamp;
                                 });
 
                                 context.pushNamed(

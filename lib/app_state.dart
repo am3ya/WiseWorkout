@@ -70,6 +70,54 @@ class FFAppState extends ChangeNotifier {
   set dailyCalorieIntake(double _value) {
     _dailyCalorieIntake = _value;
   }
+
+  double _timerState = 0.0;
+  double get timerState => _timerState;
+  set timerState(double _value) {
+    _timerState = _value;
+  }
+
+  DateTime? _weekStart;
+  DateTime? get weekStart => _weekStart;
+  set weekStart(DateTime? _value) {
+    _weekStart = _value;
+  }
+
+  DateTime? _todaysDate;
+  DateTime? get todaysDate => _todaysDate;
+  set todaysDate(DateTime? _value) {
+    _todaysDate = _value;
+  }
+
+  int _stepCount = 0;
+  int get stepCount => _stepCount;
+  set stepCount(int _value) {
+    _stepCount = _value;
+  }
+
+  double _distance = 0.0;
+  double get distance => _distance;
+  set distance(double _value) {
+    _distance = _value;
+  }
+
+  double _caloriesBurned = 0.0;
+  double get caloriesBurned => _caloriesBurned;
+  set caloriesBurned(double _value) {
+    _caloriesBurned = _value;
+  }
+
+  int _workoutTime = 0;
+  int get workoutTime => _workoutTime;
+  set workoutTime(int _value) {
+    _workoutTime = _value;
+  }
+
+  int _unixDays = 0;
+  int get unixDays => _unixDays;
+  set unixDays(int _value) {
+    _unixDays = _value;
+  }
 }
 
 LatLng? _latLngFromString(String? val) {
