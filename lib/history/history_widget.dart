@@ -67,7 +67,7 @@ class _HistoryWidgetState extends State<HistoryWidget> {
             automaticallyImplyLeading: false,
             leading: FFButtonWidget(
               onPressed: () async {
-                context.safePop();
+                context.pushNamed('userProfile');
               },
               text: '',
               icon: Icon(

@@ -143,6 +143,7 @@ final parametersBuilderMap =
   'adminViewApplications': ParameterData.none(),
   'manageTips': ParameterData.none(),
   'editClubPage': ParameterData.none(),
+  'createTipsPage': ParameterData.none(),
 };
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {

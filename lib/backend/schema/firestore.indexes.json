@@ -17,6 +17,20 @@
           "order": "ASCENDING"
         }
       ]
+    },
+    {
+      "collectionGroup": "advice",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "creatorRef",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "created_time",
+          "order": "ASCENDING"
+        }
+      ]
     }
   ],
   "fieldOverrides": [

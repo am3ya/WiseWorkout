@@ -26,9 +26,27 @@ class GlobalPropertiesRecord extends FirestoreRecord {
   List<String> get howActive => _howActive ?? const [];
   bool hasHowActive() => _howActive != null;
 
+  // "ageGroup" field.
+  List<String>? _ageGroup;
+  List<String> get ageGroup => _ageGroup ?? const [];
+  bool hasAgeGroup() => _ageGroup != null;
+
+  // "bmiGroup" field.
+  List<String>? _bmiGroup;
+  List<String> get bmiGroup => _bmiGroup ?? const [];
+  bool hasBmiGroup() => _bmiGroup != null;
+
+  // "fitnessGoal" field.
+  List<String>? _fitnessGoal;
+  List<String> get fitnessGoal => _fitnessGoal ?? const [];
+  bool hasFitnessGoal() => _fitnessGoal != null;
+
   void _initializeFields() {
     _businessCategories = getDataList(snapshotData['businessCategories']);
     _howActive = getDataList(snapshotData['howActive']);
+    _ageGroup = getDataList(snapshotData['ageGroup']);
+    _bmiGroup = getDataList(snapshotData['bmiGroup']);
+    _fitnessGoal = getDataList(snapshotData['fitnessGoal']);
   }
 
   static CollectionReference get collection =>
@@ -83,12 +101,20 @@ class GlobalPropertiesRecordDocumentEquality
     const listEquality = ListEquality();
     return listEquality.equals(
             e1?.businessCategories, e2?.businessCategories) &&
-        listEquality.equals(e1?.howActive, e2?.howActive);
+        listEquality.equals(e1?.howActive, e2?.howActive) &&
+        listEquality.equals(e1?.ageGroup, e2?.ageGroup) &&
+        listEquality.equals(e1?.bmiGroup, e2?.bmiGroup) &&
+        listEquality.equals(e1?.fitnessGoal, e2?.fitnessGoal);
   }
 
   @override
-  int hash(GlobalPropertiesRecord? e) =>
-      const ListEquality().hash([e?.businessCategories, e?.howActive]);
+  int hash(GlobalPropertiesRecord? e) => const ListEquality().hash([
+        e?.businessCategories,
+        e?.howActive,
+        e?.ageGroup,
+        e?.bmiGroup,
+        e?.fitnessGoal
+      ]);
 
   @override
   bool isValidKey(Object? o) => o is GlobalPropertiesRecord;

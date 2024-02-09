@@ -44,3 +44,5 @@ export '/admin_view_applications/admin_view_applications_widget.dart'
     show AdminViewApplicationsWidget;
 export '/manage_tips/manage_tips_widget.dart' show ManageTipsWidget;
 export '/edit_club_page/edit_club_page_widget.dart' show EditClubPageWidget;
+export '/create_tips_page/create_tips_page_widget.dart'
+    show CreateTipsPageWidget;

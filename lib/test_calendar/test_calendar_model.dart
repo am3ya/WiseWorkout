@@ -6,7 +6,6 @@ import '/flutter_flow/flutter_flow_calendar.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/random_data_util.dart' as random_data;
 import 'package:badges/badges.dart' as badges;
 import 'test_calendar_widget.dart' show TestCalendarWidget;
 import 'package:cloud_firestore/cloud_firestore.dart';

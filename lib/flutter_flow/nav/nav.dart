@@ -254,6 +254,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'editClubPage',
           path: '/editClubPage',
           builder: (context, params) => EditClubPageWidget(),
+        ),
+        FFRoute(
+          name: 'createTipsPage',
+          path: '/createTipsPage',
+          builder: (context, params) => CreateTipsPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
