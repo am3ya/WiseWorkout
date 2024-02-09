@@ -210,11 +210,6 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                               return;
                             }
                           }
-
-                          await currentUserReference!
-                              .update(createUsersRecordData(
-                            photoUrl: _model.uploadedFileUrl,
-                          ));
                         },
                         child: Container(
                           width: 100.0,
@@ -236,7 +231,9 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                                 child: CachedNetworkImage(
                                   fadeInDuration: Duration(milliseconds: 500),
                                   fadeOutDuration: Duration(milliseconds: 500),
-                                  imageUrl: currentUserPhoto,
+                                  imageUrl: _model.uploadedFileUrl == ''
+                                      ? currentUserPhoto
+                                      : _model.uploadedFileUrl,
                                   fit: BoxFit.fitWidth,
                                 ),
                               ),
@@ -430,7 +427,9 @@ class _EditProfilePageWidgetState extends State<EditProfilePageWidget> {
                               await currentUserReference!
                                   .update(createUsersRecordData(
                                 displayName: _model.yourNameController.text,
-                                photoUrl: _model.uploadedFileUrl,
+                                photoUrl: _model.uploadedFileUrl == ''
+                                    ? currentUserPhoto
+                                    : _model.uploadedFileUrl,
                               ));
                             }
                           },
