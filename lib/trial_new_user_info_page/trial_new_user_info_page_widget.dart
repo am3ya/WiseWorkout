@@ -310,39 +310,56 @@ class _TrialNewUserInfoPageWidgetState extends State<TrialNewUserInfoPageWidget>
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               16.0, 6.0, 0.0, 0.0),
-                          child: FlutterFlowDropDown<String>(
-                            controller:
-                                _model.activityDropDownValueController ??=
-                                    FormFieldController<String>(null),
-                            options: [
-                              'Sedentary (little to no exercise)',
-                              'Lightly active (light exercise or sports 1-3 days per week)',
-                              'Moderately active (moderate exercise or sports 3-5 days per week)',
-                              'Very active (hard exercise or sports 6-7 days per week)'
-                            ],
-                            onChanged: (val) => setState(
-                                () => _model.activityDropDownValue = val),
-                            width: 300.0,
-                            height: 50.0,
-                            textStyle: FlutterFlowTheme.of(context).bodyMedium,
-                            hintText: 'Please select...',
-                            icon: Icon(
-                              Icons.keyboard_arrow_down_rounded,
-                              color: FlutterFlowTheme.of(context).secondaryText,
-                              size: 24.0,
+                          child: AuthUserStreamWidget(
+                            builder: (context) => FlutterFlowDropDown<String>(
+                              controller:
+                                  _model.activityDropDownValueController ??=
+                                      FormFieldController<String>(
+                                _model.activityDropDownValue ??= valueOrDefault(
+                                                currentUserDocument?.howActive,
+                                                '') !=
+                                            null &&
+                                        valueOrDefault(
+                                                currentUserDocument?.howActive,
+                                                '') !=
+                                            ''
+                                    ? valueOrDefault(
+                                        currentUserDocument?.howActive, '')
+                                    : null,
+                              ),
+                              options: [
+                                'Sedentary (little to no exercise)',
+                                'Lightly active (light exercise or sports 1-3 days per week)',
+                                'Moderately active (moderate exercise or sports 3-5 days per week)',
+                                'Very active (hard exercise or sports 6-7 days per week)'
+                              ],
+                              onChanged: (val) => setState(
+                                  () => _model.activityDropDownValue = val),
+                              width: 300.0,
+                              height: 50.0,
+                              textStyle:
+                                  FlutterFlowTheme.of(context).bodyMedium,
+                              hintText: 'Please select...',
+                              icon: Icon(
+                                Icons.keyboard_arrow_down_rounded,
+                                color:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                                size: 24.0,
+                              ),
+                              fillColor: FlutterFlowTheme.of(context)
+                                  .secondaryBackground,
+                              elevation: 2.0,
+                              borderColor:
+                                  FlutterFlowTheme.of(context).alternate,
+                              borderWidth: 2.0,
+                              borderRadius: 8.0,
+                              margin: EdgeInsetsDirectional.fromSTEB(
+                                  16.0, 4.0, 16.0, 4.0),
+                              hidesUnderline: true,
+                              isOverButton: true,
+                              isSearchable: false,
+                              isMultiSelect: false,
                             ),
-                            fillColor: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            elevation: 2.0,
-                            borderColor: FlutterFlowTheme.of(context).alternate,
-                            borderWidth: 2.0,
-                            borderRadius: 8.0,
-                            margin: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 4.0, 16.0, 4.0),
-                            hidesUnderline: true,
-                            isOverButton: true,
-                            isSearchable: false,
-                            isMultiSelect: false,
                           ),
                         ),
                       ],

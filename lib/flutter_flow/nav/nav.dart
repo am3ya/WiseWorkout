@@ -239,11 +239,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => ClubMembersPageWidget(),
         ),
         FFRoute(
-          name: 'applicationsPage',
-          path: '/applicationsPage',
-          builder: (context, params) => ApplicationsPageWidget(),
-        ),
-        FFRoute(
           name: 'adminViewApplications',
           path: '/adminViewApplications',
           builder: (context, params) => AdminViewApplicationsWidget(),
@@ -252,6 +247,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'manageTips',
           path: '/manageTips',
           builder: (context, params) => ManageTipsWidget(),
+        ),
+        FFRoute(
+          name: 'editClubPage',
+          path: '/editClubPage',
+          builder: (context, params) => EditClubPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

@@ -1,9 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
-import '/components/friend_request_sent_widget.dart';
 import '/components/friend_request_unsuccessful_widget.dart';
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -11,7 +9,6 @@ import '/flutter_flow/upload_data.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -82,116 +79,14 @@ class _CreateClubPageWidgetState extends State<CreateClubPageWidget> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 8.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                12.0, 0.0, 0.0, 0.0),
-                            child: StreamBuilder<List<ClubsRecord>>(
-                              stream: queryClubsRecord(
-                                queryBuilder: (clubsRecord) =>
-                                    clubsRecord.where(
-                                  'club_name',
-                                  isEqualTo: FFAppState().clubName,
-                                ),
-                                singleRecord: true,
+                    Text(
+                      'Create a club',
+                      style:
+                          FlutterFlowTheme.of(context).headlineMedium.override(
+                                fontFamily: 'Outfit',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                fontSize: 22.0,
                               ),
-                              builder: (context, snapshot) {
-                                // Customize what your widget looks like when it's loading.
-                                if (!snapshot.hasData) {
-                                  return Center(
-                                    child: SizedBox(
-                                      width: 50.0,
-                                      height: 50.0,
-                                      child: CircularProgressIndicator(
-                                        valueColor:
-                                            AlwaysStoppedAnimation<Color>(
-                                          FlutterFlowTheme.of(context).primary,
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }
-                                List<ClubsRecord> iconButtonClubsRecordList =
-                                    snapshot.data!;
-                                // Return an empty Container when the item does not exist.
-                                if (snapshot.data!.isEmpty) {
-                                  return Container();
-                                }
-                                final iconButtonClubsRecord =
-                                    iconButtonClubsRecordList.isNotEmpty
-                                        ? iconButtonClubsRecordList.first
-                                        : null;
-                                return FlutterFlowIconButton(
-                                  borderColor: Colors.transparent,
-                                  borderRadius: 30.0,
-                                  borderWidth: 1.0,
-                                  buttonSize: 50.0,
-                                  icon: Icon(
-                                    Icons.arrow_back_rounded,
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryText,
-                                    size: 30.0,
-                                  ),
-                                  onPressed: () async {
-                                    if (iconButtonClubsRecord != null) {
-                                      if (iconButtonClubsRecord!.membersRefs
-                                          .contains(currentUserReference)) {
-                                        context.pushNamed('clubsPage');
-                                      }
-                                    } else {
-                                      context.pushNamed('clubsPage');
-                                    }
-
-                                    await iconButtonClubsRecord!.reference
-                                        .update({
-                                      ...mapToFirestore(
-                                        {
-                                          'membersRefs': FieldValue.arrayUnion(
-                                              [currentUserReference]),
-                                        },
-                                      ),
-                                    });
-
-                                    await currentUserReference!.update({
-                                      ...mapToFirestore(
-                                        {
-                                          'clubs': FieldValue.arrayUnion([
-                                            iconButtonClubsRecord?.reference
-                                          ]),
-                                        },
-                                      ),
-                                    });
-                                    setState(() {
-                                      FFAppState().clubName = '';
-                                    });
-
-                                    context.pushNamed('clubsPage');
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 0.0, 0.0),
-                      child: Text(
-                        'Create a club',
-                        style: FlutterFlowTheme.of(context)
-                            .headlineMedium
-                            .override(
-                              fontFamily: 'Outfit',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              fontSize: 22.0,
-                            ),
-                      ),
                     ),
                   ],
                 ),
@@ -437,9 +332,8 @@ class _CreateClubPageWidgetState extends State<CreateClubPageWidget> {
                       List<ClubsRecord> buttonClubsRecordList = snapshot.data!;
                       return FFButtonWidget(
                         onPressed: () async {
-                          if (functions.doesClubExist(
-                              buttonClubsRecordList.toList(),
-                              _model.yourNameController.text)) {
+                          if (functions
+                              .isEmpty(_model.yourNameController.text)) {
                             await showModalBottomSheet(
                               isScrollControlled: true,
                               backgroundColor: Colors.transparent,
@@ -455,79 +349,58 @@ class _CreateClubPageWidgetState extends State<CreateClubPageWidget> {
 
                             return;
                           } else {
-                            await ClubsRecord.collection.doc().set({
-                              ...createClubsRecordData(
-                                clubName: _model.yourNameController.text,
-                                creator: currentUserReference,
-                                numberOfMembers: 1,
-                                bio: _model.ageController.text,
-                              ),
-                              ...mapToFirestore(
-                                {
-                                  'membersRefs': [currentUserReference],
-                                  'created_time': FieldValue.serverTimestamp(),
+                            if (functions.doesClubExist(
+                                buttonClubsRecordList.toList(),
+                                _model.yourNameController.text)) {
+                              await showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                enableDrag: false,
+                                context: context,
+                                builder: (context) {
+                                  return Padding(
+                                    padding: MediaQuery.viewInsetsOf(context),
+                                    child: FriendRequestUnsuccessfulWidget(),
+                                  );
                                 },
-                              ),
-                            });
-                            await queryClubsRecordOnce(
-                              queryBuilder: (clubsRecord) => clubsRecord.where(
-                                'club_name',
-                                isEqualTo: _model.yourNameController.text,
-                              ),
-                              singleRecord: true,
-                            ).then((s) => s.firstOrNull);
-                            if (_model.uploadedFileUrl == '') {
-                              await buttonClubsRecordList
-                                  .where((e) =>
-                                      e.clubName ==
-                                      _model.yourNameController.text)
-                                  .toList()
-                                  .first
-                                  .reference
-                                  .update(createClubsRecordData(
-                                    photoUrl: currentUserPhoto,
-                                  ));
+                              ).then((value) => safeSetState(() {}));
+
+                              return;
                             } else {
-                              await buttonClubsRecordList
-                                  .where((e) =>
-                                      e.clubName ==
-                                      _model.yourNameController.text)
-                                  .toList()
-                                  .first
-                                  .reference
-                                  .update(createClubsRecordData(
-                                    photoUrl: _model.uploadedFileUrl,
-                                  ));
+                              await ClubsRecord.collection.doc().set({
+                                ...createClubsRecordData(
+                                  clubName: _model.yourNameController.text,
+                                  creator: currentUserReference,
+                                  numberOfMembers: 1,
+                                  bio: _model.ageController.text,
+                                  photoUrl: _model.uploadedFileUrl == ''
+                                      ? currentUserPhoto
+                                      : _model.uploadedFileUrl,
+                                ),
+                                ...mapToFirestore(
+                                  {
+                                    'membersRefs': [currentUserReference],
+                                    'created_time':
+                                        FieldValue.serverTimestamp(),
+                                  },
+                                ),
+                              });
                             }
 
-                            await currentUserReference!.update({
-                              ...mapToFirestore(
-                                {
-                                  'clubs': FieldValue.arrayUnion([
-                                    buttonClubsRecordList
-                                        .where((e) =>
-                                            e.creator == currentUserReference)
-                                        .toList()
-                                        .last
-                                        .reference
-                                  ]),
-                                },
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(
+                                  'Your club has been created.',
+                                  style: TextStyle(
+                                    color: FlutterFlowTheme.of(context)
+                                        .primaryText,
+                                  ),
+                                ),
+                                duration: Duration(milliseconds: 4000),
+                                backgroundColor:
+                                    FlutterFlowTheme.of(context).secondary,
                               ),
-                            });
-                            FFAppState().clubName =
-                                _model.yourNameController.text;
-                            await showModalBottomSheet(
-                              isScrollControlled: true,
-                              backgroundColor: Colors.transparent,
-                              enableDrag: false,
-                              context: context,
-                              builder: (context) {
-                                return Padding(
-                                  padding: MediaQuery.viewInsetsOf(context),
-                                  child: FriendRequestSentWidget(),
-                                );
-                              },
-                            ).then((value) => safeSetState(() {}));
+                            );
                           }
                         },
                         text: 'Create',

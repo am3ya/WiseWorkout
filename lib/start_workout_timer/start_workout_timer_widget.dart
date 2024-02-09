@@ -700,6 +700,41 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                             ),
                           ],
                         ),
+                        Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  110.0, 0.0, 0.0, 0.0),
+                              child: Text(
+                                'Walking',
+                                style: FlutterFlowTheme.of(context).bodyMedium,
+                              ),
+                            ),
+                            Align(
+                              alignment: AlignmentDirectional(0.0, 0.0),
+                              child: Switch.adaptive(
+                                value: _model.walkingSwitchValue ??= true,
+                                onChanged: (newValue) async {
+                                  setState(() =>
+                                      _model.walkingSwitchValue = newValue!);
+                                },
+                                activeColor:
+                                    FlutterFlowTheme.of(context).primary,
+                                activeTrackColor:
+                                    FlutterFlowTheme.of(context).accent1,
+                                inactiveTrackColor:
+                                    FlutterFlowTheme.of(context).alternate,
+                                inactiveThumbColor:
+                                    FlutterFlowTheme.of(context).secondaryText,
+                              ),
+                            ),
+                            Text(
+                              'Running',
+                              style: FlutterFlowTheme.of(context).bodyMedium,
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   ),

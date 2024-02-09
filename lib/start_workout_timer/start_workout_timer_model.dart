@@ -45,6 +45,8 @@ class StartWorkoutTimerModel extends FlutterFlowModel<StartWorkoutTimerWidget> {
   FocusNode? targetTextFieldFocusNode;
   TextEditingController? targetTextFieldController;
   String? Function(BuildContext, String?)? targetTextFieldControllerValidator;
+  // State field(s) for walkingSwitch widget.
+  bool? walkingSwitchValue;
   // State field(s) for Timer widget.
   int timerMilliseconds = 0;
   String timerValue = StopWatchTimer.getDisplayTime(
