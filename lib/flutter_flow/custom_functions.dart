@@ -13,13 +13,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '/backend/schema/structs/index.dart';
 import '/auth/firebase_auth/auth_util.dart';
 
-List<SetStruct> createSets() {
-  SetStruct set1 = SetStruct(reps: 10, weight: 145, number: 1);
-  return [set1];
-}
-
-String formatDuration(int milliseconds) {
-  Duration duration = Duration(milliseconds: milliseconds);
+String formatDuration(double milliseconds) {
+  Duration duration = Duration(milliseconds: milliseconds.toInt());
   int twoDigitMinutes = duration.inMinutes.remainder(60);
   int twoDigitSeconds = duration.inSeconds.remainder(60);
   String twoDigitMinutesStr = twoDigitMinutes.toString().padLeft(2, '0');
@@ -406,4 +401,59 @@ double stringtoDouble(String str) {
   result = double.parse(str);
 
   return double.parse(result.toStringAsFixed(3));
+}
+
+int? durationDiff(
+  DateTime weekStart,
+  DateTime todaysDate,
+) {
+  Duration difference = todaysDate.difference(weekStart);
+
+  int differenceInDays = difference.inDays;
+
+  return differenceInDays;
+}
+
+int daysSinceEpoch() {
+  int days = 0;
+
+  int millisecondsSinceEpoch = DateTime.now().millisecondsSinceEpoch;
+
+  // Convert milliseconds since epoch to seconds
+  int secondsSinceEpoch = (millisecondsSinceEpoch / 1000).round();
+
+  // Convert seconds to days
+  int daysSinceEpoch = (secondsSinceEpoch / (60 * 60 * 24)).floor();
+
+  return days;
+}
+
+String historyToString(
+  String steps,
+  String distance,
+  String calories,
+  String duration,
+) {
+  String returnStr = "I just burned ";
+  returnStr = returnStr +
+      calories +
+      " calories and covered " +
+      distance +
+      " km all in " +
+      duration +
+      ". And I did it all in " +
+      steps +
+      " steps. Come join me on wise workout!";
+  return returnStr;
+}
+
+double calculateBMI(
+  double weight,
+  double height,
+) {
+  double heightInMetres = height / 100;
+
+  double bmi = weight / (heightInMetres * heightInMetres);
+
+  return bmi;
 }
