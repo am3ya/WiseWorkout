@@ -7,18 +7,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'intake_too_high_model.dart';
-export 'intake_too_high_model.dart';
+import 'rest_day_are_you_sure_model.dart';
+export 'rest_day_are_you_sure_model.dart';
 
-class IntakeTooHighWidget extends StatefulWidget {
-  const IntakeTooHighWidget({super.key});
+class RestDayAreYouSureWidget extends StatefulWidget {
+  const RestDayAreYouSureWidget({super.key});
 
   @override
-  State<IntakeTooHighWidget> createState() => _IntakeTooHighWidgetState();
+  State<RestDayAreYouSureWidget> createState() =>
+      _RestDayAreYouSureWidgetState();
 }
 
-class _IntakeTooHighWidgetState extends State<IntakeTooHighWidget> {
-  late IntakeTooHighModel _model;
+class _RestDayAreYouSureWidgetState extends State<RestDayAreYouSureWidget> {
+  late RestDayAreYouSureModel _model;
 
   @override
   void setState(VoidCallback callback) {
@@ -29,7 +30,7 @@ class _IntakeTooHighWidgetState extends State<IntakeTooHighWidget> {
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => IntakeTooHighModel());
+    _model = createModel(context, () => RestDayAreYouSureModel());
   }
 
   @override
@@ -97,7 +98,7 @@ class _IntakeTooHighWidgetState extends State<IntakeTooHighWidget> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Calorie intake entered too high',
+                                      'Rest day',
                                       style: FlutterFlowTheme.of(context)
                                           .headlineLarge,
                                     ),
@@ -116,7 +117,7 @@ class _IntakeTooHighWidgetState extends State<IntakeTooHighWidget> {
                                   size: 24.0,
                                 ),
                                 onPressed: () async {
-                                  context.pushNamed('trialNewUserInterests');
+                                  Navigator.pop(context);
                                 },
                               ),
                             ],
@@ -126,7 +127,7 @@ class _IntakeTooHighWidgetState extends State<IntakeTooHighWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 8.0, 0.0, 0.0),
                           child: Text(
-                            'Based on our calculations, the calorie intake that you have entered may be too high for your fitness goals, consider decreasing your calorie intake or leave the text field blank for an approximation.',
+                            'Based on your fitness goals and activity, we recommend you take a rest day today.\n\n',
                             style: FlutterFlowTheme.of(context).labelLarge,
                           ),
                         ),
@@ -139,9 +140,9 @@ class _IntakeTooHighWidgetState extends State<IntakeTooHighWidget> {
                             children: [
                               FFButtonWidget(
                                 onPressed: () async {
-                                  context.pushNamed('trialNewUserInterests');
+                                  context.pushNamed('startWorkoutTimer');
                                 },
-                                text: 'OK',
+                                text: 'Continue to workout',
                                 options: FFButtonOptions(
                                   padding: EdgeInsets.all(24.0),
                                   iconPadding: EdgeInsetsDirectional.fromSTEB(
