@@ -63,6 +63,11 @@
     <string>We need access to location services to track distance covered.</string>
 	<key>PermissionGroupNotification</key>
     <string>Allow notifications to be notified of important information regarding your workouts.</string>
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>fetch</string>
+        <string>remote-notification</string>
+    </array>
 
 
 	<key>UILaunchStoryboardName</key>

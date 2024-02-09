@@ -234,7 +234,9 @@ class _EditClubPageWidgetState extends State<EditClubPageWidget> {
                                 child: CachedNetworkImage(
                                   fadeInDuration: Duration(milliseconds: 500),
                                   fadeOutDuration: Duration(milliseconds: 500),
-                                  imageUrl: editClubPageClubsRecord!.photoUrl,
+                                  imageUrl: _model.uploadedFileUrl == ''
+                                      ? editClubPageClubsRecord!.photoUrl
+                                      : _model.uploadedFileUrl,
                                   fit: BoxFit.fitWidth,
                                 ),
                               ),

@@ -216,11 +216,6 @@ class _BusinessEditProfileWidgetState extends State<BusinessEditProfileWidget> {
                               return;
                             }
                           }
-
-                          await currentUserReference!
-                              .update(createUsersRecordData(
-                            photoUrl: _model.uploadedFileUrl,
-                          ));
                         },
                         child: Container(
                           width: 100.0,
