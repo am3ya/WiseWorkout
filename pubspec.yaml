@@ -105,6 +105,8 @@ dependencies:
   cupertino_icons: ^1.0.0
   sensors_plus: ^4.0.2
   geolocator: ^10.1.0
+  permission_handler: ^11.2.1
+  share_plus: ^7.2.2
 
 dev_dependencies:
   flutter_lints: ^3.0.1
