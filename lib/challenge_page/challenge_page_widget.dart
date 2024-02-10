@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -265,6 +266,23 @@ class _ChallengePageWidgetState extends State<ChallengePageWidget>
                                                                     FontWeight
                                                                         .bold,
                                                               ),
+                                                            ),
+                                                            TextSpan(
+                                                              text: '\n',
+                                                              style: TextStyle(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                                fontSize: 14.0,
+                                                              ),
+                                                            ),
+                                                            TextSpan(
+                                                              text: dateTimeFormat(
+                                                                  'd/M/y',
+                                                                  listViewChallengesRecord
+                                                                      .createdTime!),
+                                                              style:
+                                                                  TextStyle(),
                                                             )
                                                           ],
                                                           style: FlutterFlowTheme
@@ -336,8 +354,10 @@ class _ChallengePageWidgetState extends State<ChallengePageWidget>
                                                   ),
                                                 ),
                                                 FFButtonWidget(
-                                                  onPressed: () {
-                                                    print('Button pressed ...');
+                                                  onPressed: () async {
+                                                    await listViewChallengesRecord
+                                                        .reference
+                                                        .delete();
                                                   },
                                                   text: '',
                                                   icon: Icon(
@@ -548,12 +568,35 @@ class _ChallengePageWidgetState extends State<ChallengePageWidget>
                                                       ],
                                                     ),
                                                   ),
-                                                  Icon(
-                                                    Icons.delete,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryText,
-                                                    size: 24.0,
+                                                  InkWell(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    focusColor:
+                                                        Colors.transparent,
+                                                    hoverColor:
+                                                        Colors.transparent,
+                                                    highlightColor:
+                                                        Colors.transparent,
+                                                    onTap: () async {
+                                                      await listViewChallengesRecord
+                                                          .reference
+                                                          .update({
+                                                        ...mapToFirestore(
+                                                          {
+                                                            'winner': FieldValue
+                                                                .delete(),
+                                                          },
+                                                        ),
+                                                      });
+                                                    },
+                                                    child: Icon(
+                                                      Icons.delete,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryText,
+                                                      size: 24.0,
+                                                    ),
                                                   ),
                                                 ],
                                               ),
@@ -610,111 +653,156 @@ class _ChallengePageWidgetState extends State<ChallengePageWidget>
                                       return Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 0.0, 0.0, 1.0),
-                                        child: Container(
-                                          width: 100.0,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                blurRadius: 0.0,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                                offset: Offset(0.0, 1.0),
-                                              )
-                                            ],
-                                          ),
-                                          child: Padding(
-                                            padding: EdgeInsets.all(8.0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          40.0),
-                                                  child: Image.network(
-                                                    listViewChallengesRecord
-                                                        .winnerPFP,
-                                                    width: 60.0,
-                                                    height: 60.0,
-                                                    fit: BoxFit.cover,
+                                        child: InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            FFAppState().challengeRef =
+                                                listViewChallengesRecord
+                                                    .reference;
+                                            FFAppState().friendName =
+                                                listViewChallengesRecord
+                                                    .winnerName;
+                                            FFAppState().friendRef =
+                                                listViewChallengesRecord.winner;
+
+                                            context.pushNamed(
+                                                'challengeResultPage');
+                                          },
+                                          child: Container(
+                                            width: 100.0,
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryBackground,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  blurRadius: 0.0,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .alternate,
+                                                  offset: Offset(0.0, 1.0),
+                                                )
+                                              ],
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.all(8.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  ClipRRect(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            40.0),
+                                                    child: Image.network(
+                                                      listViewChallengesRecord
+                                                          .winnerPFP,
+                                                      width: 60.0,
+                                                      height: 60.0,
+                                                      fit: BoxFit.cover,
+                                                    ),
                                                   ),
-                                                ),
-                                                Expanded(
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      RichText(
-                                                        textScaleFactor:
-                                                            MediaQuery.of(
-                                                                    context)
-                                                                .textScaleFactor,
-                                                        text: TextSpan(
-                                                          children: [
-                                                            TextSpan(
-                                                              text:
-                                                                  'You lost against ',
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Readex Pro',
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primaryText,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal,
-                                                                  ),
-                                                            ),
-                                                            TextSpan(
-                                                              text: listViewChallengesRecord
-                                                                  .winnerName,
-                                                              style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
+                                                  Expanded(
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        RichText(
+                                                          textScaleFactor:
+                                                              MediaQuery.of(
+                                                                      context)
+                                                                  .textScaleFactor,
+                                                          text: TextSpan(
+                                                            children: [
+                                                              TextSpan(
+                                                                text:
+                                                                    'You lost against ',
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Readex Pro',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryText,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                    ),
                                                               ),
-                                                            )
-                                                          ],
+                                                              TextSpan(
+                                                                text: listViewChallengesRecord
+                                                                    .winnerName,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                              )
+                                                            ],
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium,
+                                                          ),
+                                                        ),
+                                                        Text(
+                                                          dateTimeFormat(
+                                                              'd/M/y',
+                                                              listViewChallengesRecord
+                                                                  .createdTime!),
                                                           style: FlutterFlowTheme
                                                                   .of(context)
                                                               .bodyMedium,
                                                         ),
-                                                      ),
-                                                      Text(
-                                                        dateTimeFormat(
-                                                            'd/M/y',
-                                                            listViewChallengesRecord
-                                                                .createdTime!),
-                                                        style:
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(8.0, 0.0,
+                                                                0.0, 0.0),
+                                                    child: InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        await listViewChallengesRecord
+                                                            .reference
+                                                            .update({
+                                                          ...mapToFirestore(
+                                                            {
+                                                              'loser':
+                                                                  FieldValue
+                                                                      .delete(),
+                                                            },
+                                                          ),
+                                                        });
+                                                      },
+                                                      child: Icon(
+                                                        Icons.delete,
+                                                        color:
                                                             FlutterFlowTheme.of(
                                                                     context)
-                                                                .bodyMedium,
+                                                                .secondaryText,
+                                                        size: 24.0,
                                                       ),
-                                                    ],
+                                                    ),
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          8.0, 0.0, 0.0, 0.0),
-                                                  child: Icon(
-                                                    Icons.delete,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryText,
-                                                    size: 24.0,
-                                                  ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -768,117 +856,187 @@ class _ChallengePageWidgetState extends State<ChallengePageWidget>
                                       return Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 0.0, 0.0, 1.0),
-                                        child: Container(
-                                          width: 100.0,
-                                          decoration: BoxDecoration(
-                                            color: FlutterFlowTheme.of(context)
-                                                .secondaryBackground,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                blurRadius: 0.0,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .alternate,
-                                                offset: Offset(0.0, 1.0),
-                                              )
-                                            ],
-                                          ),
-                                          child: Padding(
-                                            padding: EdgeInsets.all(8.0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                AuthUserStreamWidget(
-                                                  builder: (context) =>
-                                                      ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            40.0),
-                                                    child: Image.network(
-                                                      listViewChallengesRecord
-                                                                  .challengerPFP ==
-                                                              currentUserPhoto
-                                                          ? listViewChallengesRecord
-                                                              .gettingChallengedPFP
-                                                          : listViewChallengesRecord
-                                                              .challengerPFP,
-                                                      width: 60.0,
-                                                      height: 60.0,
-                                                      fit: BoxFit.cover,
+                                        child: InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            FFAppState().challengeRef =
+                                                listViewChallengesRecord
+                                                    .reference;
+                                            FFAppState().friendName =
+                                                listViewChallengesRecord
+                                                            .drawNames.first ==
+                                                        currentUserDisplayName
+                                                    ? listViewChallengesRecord
+                                                        .drawNames.last
+                                                    : listViewChallengesRecord
+                                                        .drawNames.first;
+                                            FFAppState().friendRef =
+                                                listViewChallengesRecord
+                                                            .draw.first ==
+                                                        currentUserReference
+                                                    ? listViewChallengesRecord
+                                                        .draw.last
+                                                    : listViewChallengesRecord
+                                                        .draw.first;
+
+                                            context.pushNamed(
+                                                'challengeResultPage');
+                                          },
+                                          child: Container(
+                                            width: 100.0,
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryBackground,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  blurRadius: 0.0,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .alternate,
+                                                  offset: Offset(0.0, 1.0),
+                                                )
+                                              ],
+                                            ),
+                                            child: Padding(
+                                              padding: EdgeInsets.all(8.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  AuthUserStreamWidget(
+                                                    builder: (context) =>
+                                                        ClipRRect(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              40.0),
+                                                      child: Image.network(
+                                                        listViewChallengesRecord
+                                                                    .challengerPFP ==
+                                                                currentUserPhoto
+                                                            ? listViewChallengesRecord
+                                                                .gettingChallengedPFP
+                                                            : listViewChallengesRecord
+                                                                .challengerPFP,
+                                                        width: 60.0,
+                                                        height: 60.0,
+                                                        fit: BoxFit.cover,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                                Expanded(
-                                                  child: Column(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      RichText(
-                                                        textScaleFactor:
-                                                            MediaQuery.of(
-                                                                    context)
-                                                                .textScaleFactor,
-                                                        text: TextSpan(
-                                                          children: [
-                                                            TextSpan(
-                                                              text:
-                                                                  'You drew against ',
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Readex Pro',
-                                                                    color: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .primaryText,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .normal,
-                                                                  ),
-                                                            ),
-                                                            TextSpan(
-                                                              text: listViewChallengesRecord
-                                                                          .drawNames
-                                                                          .first ==
-                                                                      currentUserDisplayName
-                                                                  ? listViewChallengesRecord
-                                                                      .drawNames
-                                                                      .last
-                                                                  : listViewChallengesRecord
-                                                                      .drawNames
-                                                                      .first,
-                                                              style: TextStyle(
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
+                                                  Expanded(
+                                                    child: Column(
+                                                      mainAxisSize:
+                                                          MainAxisSize.max,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        RichText(
+                                                          textScaleFactor:
+                                                              MediaQuery.of(
+                                                                      context)
+                                                                  .textScaleFactor,
+                                                          text: TextSpan(
+                                                            children: [
+                                                              TextSpan(
+                                                                text:
+                                                                    'You drew against ',
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMedium
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Readex Pro',
+                                                                      color: FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .primaryText,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .normal,
+                                                                    ),
                                                               ),
-                                                            )
-                                                          ],
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodyMedium,
+                                                              TextSpan(
+                                                                text: listViewChallengesRecord
+                                                                            .drawNames.first ==
+                                                                        currentUserDisplayName
+                                                                    ? listViewChallengesRecord
+                                                                        .drawNames
+                                                                        .last
+                                                                    : listViewChallengesRecord
+                                                                        .drawNames
+                                                                        .first,
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                              ),
+                                                              TextSpan(
+                                                                text: '\n',
+                                                                style:
+                                                                    TextStyle(),
+                                                              ),
+                                                              TextSpan(
+                                                                text: dateTimeFormat(
+                                                                    'd/M/y',
+                                                                    listViewChallengesRecord
+                                                                        .createdTime!),
+                                                                style:
+                                                                    TextStyle(),
+                                                              )
+                                                            ],
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium,
+                                                          ),
                                                         ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(8.0, 0.0,
+                                                                0.0, 0.0),
+                                                    child: InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        await listViewChallengesRecord
+                                                            .reference
+                                                            .update({
+                                                          ...mapToFirestore(
+                                                            {
+                                                              'draw': FieldValue
+                                                                  .arrayRemove([
+                                                                currentUserReference
+                                                              ]),
+                                                            },
+                                                          ),
+                                                        });
+                                                      },
+                                                      child: Icon(
+                                                        Icons.delete,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .secondaryText,
+                                                        size: 24.0,
                                                       ),
-                                                    ],
+                                                    ),
                                                   ),
-                                                ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          8.0, 0.0, 0.0, 0.0),
-                                                  child: Icon(
-                                                    Icons.delete,
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .secondaryText,
-                                                    size: 24.0,
-                                                  ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
