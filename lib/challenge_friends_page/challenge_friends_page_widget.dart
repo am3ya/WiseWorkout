@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/viewing_application_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
@@ -11,27 +12,27 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'admin_view_applications_model.dart';
-export 'admin_view_applications_model.dart';
+import 'challenge_friends_page_model.dart';
+export 'challenge_friends_page_model.dart';
 
-class AdminViewApplicationsWidget extends StatefulWidget {
-  const AdminViewApplicationsWidget({super.key});
+class ChallengeFriendsPageWidget extends StatefulWidget {
+  const ChallengeFriendsPageWidget({super.key});
 
   @override
-  State<AdminViewApplicationsWidget> createState() =>
-      _AdminViewApplicationsWidgetState();
+  State<ChallengeFriendsPageWidget> createState() =>
+      _ChallengeFriendsPageWidgetState();
 }
 
-class _AdminViewApplicationsWidgetState
-    extends State<AdminViewApplicationsWidget> with TickerProviderStateMixin {
-  late AdminViewApplicationsModel _model;
+class _ChallengeFriendsPageWidgetState extends State<ChallengeFriendsPageWidget>
+    with TickerProviderStateMixin {
+  late ChallengeFriendsPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => AdminViewApplicationsModel());
+    _model = createModel(context, () => ChallengeFriendsPageModel());
   }
 
   @override
@@ -77,11 +78,11 @@ class _AdminViewApplicationsWidgetState
                 size: 30.0,
               ),
               onPressed: () async {
-                context.pushNamed('adminProfile');
+                context.pushNamed('startworkout');
               },
             ),
             title: Text(
-              'Applications',
+              'Challenge',
               style: FlutterFlowTheme.of(context).headlineSmall,
             ),
             actions: [],
@@ -94,11 +95,23 @@ class _AdminViewApplicationsWidgetState
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Align(
+                  alignment: AlignmentDirectional(0.0, 0.0),
+                  child: Text(
+                    'Most steps in 30 minutes',
+                    style: FlutterFlowTheme.of(context).bodyMedium,
+                  ),
+                ),
                 Expanded(
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 0.0),
-                    child: StreamBuilder<List<ApplicationsRecord>>(
-                      stream: queryApplicationsRecord(),
+                    child: StreamBuilder<List<UsersRecord>>(
+                      stream: queryUsersRecord(
+                        queryBuilder: (usersRecord) => usersRecord.where(
+                          'friends_list',
+                          arrayContains: currentUserReference,
+                        ),
+                      ),
                       builder: (context, snapshot) {
                         // Customize what your widget looks like when it's loading.
                         if (!snapshot.hasData) {
@@ -114,15 +127,15 @@ class _AdminViewApplicationsWidgetState
                             ),
                           );
                         }
-                        List<ApplicationsRecord>
-                            listViewApplicationsRecordList = snapshot.data!;
+                        List<UsersRecord> listViewUsersRecordList =
+                            snapshot.data!;
                         return ListView.builder(
                           padding: EdgeInsets.zero,
                           scrollDirection: Axis.vertical,
-                          itemCount: listViewApplicationsRecordList.length,
+                          itemCount: listViewUsersRecordList.length,
                           itemBuilder: (context, listViewIndex) {
-                            final listViewApplicationsRecord =
-                                listViewApplicationsRecordList[listViewIndex];
+                            final listViewUsersRecord =
+                                listViewUsersRecordList[listViewIndex];
                             return Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 1.0),
@@ -133,7 +146,7 @@ class _AdminViewApplicationsWidgetState
                                 highlightColor: Colors.transparent,
                                 onTap: () async {
                                   FFAppState().clubName =
-                                      listViewApplicationsRecord.displayName;
+                                      listViewUsersRecord.displayName;
                                   await showModalBottomSheet(
                                     isScrollControlled: true,
                                     backgroundColor: Colors.transparent,
@@ -179,7 +192,7 @@ class _AdminViewApplicationsWidgetState
                                           borderRadius:
                                               BorderRadius.circular(40.0),
                                           child: Image.network(
-                                            listViewApplicationsRecord.photoUrl,
+                                            listViewUsersRecord.photoUrl,
                                             width: 60.0,
                                             height: 60.0,
                                             fit: BoxFit.cover,
@@ -196,7 +209,7 @@ class _AdminViewApplicationsWidgetState
                                                     .fromSTEB(
                                                         12.0, 0.0, 0.0, 0.0),
                                                 child: Text(
-                                                  listViewApplicationsRecord
+                                                  listViewUsersRecord
                                                       .displayName,
                                                   style: FlutterFlowTheme.of(
                                                           context)
@@ -204,6 +217,29 @@ class _AdminViewApplicationsWidgetState
                                                 ),
                                               ),
                                             ],
+                                          ),
+                                        ),
+                                        InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            setState(() {
+                                              FFAppState().friendName =
+                                                  listViewUsersRecord
+                                                      .displayName;
+                                              FFAppState().friendRef =
+                                                  listViewUsersRecord.reference;
+                                            });
+
+                                            context.pushNamed('challengeTimer');
+                                          },
+                                          child: Icon(
+                                            Icons.arrow_right,
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            size: 24.0,
                                           ),
                                         ),
                                       ],

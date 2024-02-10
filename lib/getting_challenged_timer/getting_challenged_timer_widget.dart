@@ -13,26 +13,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'start_workout_timer_model.dart';
-export 'start_workout_timer_model.dart';
+import 'getting_challenged_timer_model.dart';
+export 'getting_challenged_timer_model.dart';
 
-class StartWorkoutTimerWidget extends StatefulWidget {
-  const StartWorkoutTimerWidget({super.key});
+class GettingChallengedTimerWidget extends StatefulWidget {
+  const GettingChallengedTimerWidget({super.key});
 
   @override
-  State<StartWorkoutTimerWidget> createState() =>
-      _StartWorkoutTimerWidgetState();
+  State<GettingChallengedTimerWidget> createState() =>
+      _GettingChallengedTimerWidgetState();
 }
 
-class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
-  late StartWorkoutTimerModel _model;
+class _GettingChallengedTimerWidgetState
+    extends State<GettingChallengedTimerWidget> {
+  late GettingChallengedTimerModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
     super.initState();
-    _model = createModel(context, () => StartWorkoutTimerModel());
+    _model = createModel(context, () => GettingChallengedTimerModel());
 
     _model.stepsTextFieldController ??= TextEditingController();
     _model.stepsTextFieldFocusNode ??= FocusNode();
@@ -74,10 +75,8 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
 
     context.watch<FFAppState>();
 
-    return StreamBuilder<List<WorkoutsRecord>>(
-      stream: queryWorkoutsRecord(
-        parent: currentUserReference,
-      ),
+    return StreamBuilder<ChallengesRecord>(
+      stream: ChallengesRecord.getDocument(FFAppState().challengeRef!),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
@@ -96,8 +95,7 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
             ),
           );
         }
-        List<WorkoutsRecord> startWorkoutTimerWorkoutsRecordList =
-            snapshot.data!;
+        final gettingChallengedTimerChallengesRecord = snapshot.data!;
         return GestureDetector(
           onTap: () => _model.unfocusNode.canRequestFocus
               ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -121,10 +119,13 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                     color: FlutterFlowTheme.of(context).primaryText,
                     size: 30.0,
                   ),
-                  onPressed: (_model.timerMilliseconds > 60000)
+                  onPressed: (_model.timerMilliseconds < 1740000)
                       ? null
                       : () async {
-                          context.pushNamed('startworkout');
+                          FFAppState().friendName = '';
+                          FFAppState().friendRef = null;
+
+                          context.pushNamed('challengeFriendsPage');
                         },
                 ),
                 actions: [],
@@ -859,7 +860,7 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'Hold complete workout to save your session.',
+                                          'Hold end challenge to see your results.',
                                           style: FlutterFlowTheme.of(context)
                                               .labelMedium,
                                         ),
@@ -869,180 +870,430 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 24.0, 0.0, 44.0),
-                                    child: InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onLongPress: () async {
-                                        FFAppState().workoutTime =
-                                            _model.timerMilliseconds;
-                                        FFAppState().caloriesBurned =
-                                            functions.stringtoDouble(_model
-                                                .caloriesTextFieldController
-                                                .text);
-                                        FFAppState().distance =
-                                            functions.stringtoDouble(_model
-                                                .distanceTextFieldController
-                                                .text);
-                                        FFAppState().stepCount = int.parse(
-                                            _model
-                                                .stepsTextFieldController.text);
-                                        FFAppState().todaysDate =
-                                            getCurrentTimestamp;
-                                        if (startWorkoutTimerWorkoutsRecordList
-                                                .length >
-                                            0) {
-                                          if (startWorkoutTimerWorkoutsRecordList
-                                                  .last.dateUploaded ==
-                                              getCurrentTimestamp) {
-                                            await startWorkoutTimerWorkoutsRecordList
-                                                .last.reference
-                                                .update({
-                                              ...mapToFirestore(
-                                                {
-                                                  'duration':
-                                                      FieldValue.increment(
-                                                          FFAppState()
-                                                              .workoutTime
-                                                              .toDouble()),
-                                                  'stepsTaken':
-                                                      FieldValue.increment(
-                                                          FFAppState()
-                                                              .stepCount),
-                                                  'caloriesBurned':
-                                                      FieldValue.increment(
-                                                          FFAppState()
-                                                              .caloriesBurned),
-                                                  'distance':
-                                                      FieldValue.increment(
-                                                          FFAppState()
-                                                              .distance),
-                                                },
+                                    child: StreamBuilder<List<WorkoutsRecord>>(
+                                      stream: queryWorkoutsRecord(
+                                        parent: currentUserReference,
+                                        singleRecord: true,
+                                      ),
+                                      builder: (context, snapshot) {
+                                        // Customize what your widget looks like when it's loading.
+                                        if (!snapshot.hasData) {
+                                          return Center(
+                                            child: SizedBox(
+                                              width: 50.0,
+                                              height: 50.0,
+                                              child: CircularProgressIndicator(
+                                                valueColor:
+                                                    AlwaysStoppedAnimation<
+                                                        Color>(
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                                ),
                                               ),
-                                            });
-
-                                            await currentUserReference!.update({
-                                              ...mapToFirestore(
-                                                {
-                                                  'calorieDifference':
-                                                      FieldValue.increment(
-                                                          -(FFAppState()
-                                                              .caloriesBurned)),
-                                                },
-                                              ),
-                                            });
-                                          } else {
-                                            await WorkoutsRecord.createDoc(
-                                                    currentUserReference!)
-                                                .set(createWorkoutsRecordData(
-                                              duration: FFAppState()
-                                                  .workoutTime
-                                                  .toDouble(),
-                                              stepsTaken:
-                                                  FFAppState().stepCount,
-                                              caloriesBurned:
-                                                  FFAppState().caloriesBurned,
-                                              distance: FFAppState().distance,
-                                              unixDays:
-                                                  functions.daysSinceEpoch(),
-                                            ));
-
-                                            await currentUserReference!.update({
-                                              ...mapToFirestore(
-                                                {
-                                                  'calorieDifference':
-                                                      FieldValue.increment(
-                                                          -(FFAppState()
-                                                              .caloriesBurned)),
-                                                },
-                                              ),
-                                            });
-                                          }
-                                        } else {
-                                          await WorkoutsRecord.createDoc(
-                                                  currentUserReference!)
-                                              .set(createWorkoutsRecordData(
-                                            duration: FFAppState()
-                                                .workoutTime
-                                                .toDouble(),
-                                            stepsTaken: FFAppState().stepCount,
-                                            caloriesBurned:
-                                                FFAppState().caloriesBurned,
-                                            distance: FFAppState().distance,
-                                            unixDays:
-                                                functions.daysSinceEpoch(),
-                                          ));
-
-                                          await currentUserReference!.update({
-                                            ...mapToFirestore(
-                                              {
-                                                'calorieDifference':
-                                                    FieldValue.increment(
-                                                        -(FFAppState()
-                                                            .caloriesBurned)),
-                                              },
                                             ),
-                                          });
+                                          );
                                         }
+                                        List<WorkoutsRecord>
+                                            buttonWorkoutsRecordList =
+                                            snapshot.data!;
+                                        final buttonWorkoutsRecord =
+                                            buttonWorkoutsRecordList.isNotEmpty
+                                                ? buttonWorkoutsRecordList.first
+                                                : null;
+                                        return InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onLongPress: () async {
+                                            FFAppState().stepCount = int.parse(
+                                                _model.stepsTextFieldController
+                                                    .text);
+                                            FFAppState().todaysDate =
+                                                getCurrentTimestamp;
+                                            FFAppState().distance =
+                                                double.parse(_model
+                                                    .distanceTextFieldController
+                                                    .text);
+                                            FFAppState().caloriesBurned =
+                                                double.parse(_model
+                                                    .caloriesTextFieldController
+                                                    .text);
+                                            FFAppState().workoutTime =
+                                                _model.timerMilliseconds;
+                                            if (FFAppState().stepCount >
+                                                gettingChallengedTimerChallengesRecord
+                                                    .challengerSteps) {
+                                              await gettingChallengedTimerChallengesRecord
+                                                  .reference
+                                                  .update(
+                                                      createChallengesRecordData(
+                                                winner: currentUserReference,
+                                                loser: FFAppState().friendRef,
+                                                gettingChallengedSteps:
+                                                    FFAppState().stepCount,
+                                                loserName:
+                                                    FFAppState().friendName,
+                                                winnerName:
+                                                    currentUserDisplayName,
+                                                status: 'closed',
+                                                winnerPFP: currentUserPhoto,
+                                                loserPFP:
+                                                    gettingChallengedTimerChallengesRecord
+                                                        .challengerPFP,
+                                              ));
 
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content: Text(
-                                              'Your workout has been completed.',
-                                              style: TextStyle(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
+                                              await currentUserReference!
+                                                  .update({
+                                                ...createUsersRecordData(
+                                                  winPercentage: functions
+                                                      .calculateWinPercentage(
+                                                          valueOrDefault(
+                                                              currentUserDocument
+                                                                  ?.wins,
+                                                              0),
+                                                          valueOrDefault(
+                                                              currentUserDocument
+                                                                  ?.draws,
+                                                              0),
+                                                          valueOrDefault(
+                                                              currentUserDocument
+                                                                  ?.losses,
+                                                              0)),
+                                                ),
+                                                ...mapToFirestore(
+                                                  {
+                                                    'wins':
+                                                        FieldValue.increment(
+                                                            -(1)),
+                                                    'credits':
+                                                        FieldValue.increment(2),
+                                                  },
+                                                ),
+                                              });
+
+                                              await gettingChallengedTimerChallengesRecord
+                                                  .challengerRef!
+                                                  .update({
+                                                ...mapToFirestore(
+                                                  {
+                                                    'losses':
+                                                        FieldValue.increment(1),
+                                                  },
+                                                ),
+                                              });
+                                            } else {
+                                              if (FFAppState().stepCount <
+                                                  gettingChallengedTimerChallengesRecord
+                                                      .challengerSteps) {
+                                                await gettingChallengedTimerChallengesRecord
+                                                    .reference
+                                                    .update(
+                                                        createChallengesRecordData(
+                                                  winner:
+                                                      FFAppState().friendRef,
+                                                  loser: currentUserReference,
+                                                  gettingChallengedSteps:
+                                                      FFAppState().stepCount,
+                                                  loserName:
+                                                      currentUserDisplayName,
+                                                  winnerName:
+                                                      FFAppState().friendName,
+                                                  status: 'closed',
+                                                  winnerPFP:
+                                                      gettingChallengedTimerChallengesRecord
+                                                          .challengerPFP,
+                                                  loserPFP: currentUserPhoto,
+                                                ));
+
+                                                await currentUserReference!
+                                                    .update({
+                                                  ...createUsersRecordData(
+                                                    winPercentage: functions
+                                                        .calculateWinPercentage(
+                                                            valueOrDefault(
+                                                                currentUserDocument
+                                                                    ?.wins,
+                                                                0),
+                                                            valueOrDefault(
+                                                                currentUserDocument
+                                                                    ?.draws,
+                                                                0),
+                                                            valueOrDefault(
+                                                                currentUserDocument
+                                                                    ?.losses,
+                                                                0)),
+                                                  ),
+                                                  ...mapToFirestore(
+                                                    {
+                                                      'losses':
+                                                          FieldValue.increment(
+                                                              1),
+                                                    },
+                                                  ),
+                                                });
+
+                                                await gettingChallengedTimerChallengesRecord
+                                                    .challengerRef!
+                                                    .update({
+                                                  ...mapToFirestore(
+                                                    {
+                                                      'wins':
+                                                          FieldValue.increment(
+                                                              1),
+                                                      'credits':
+                                                          FieldValue.increment(
+                                                              2),
+                                                    },
+                                                  ),
+                                                });
+                                              } else {
+                                                if (FFAppState().stepCount ==
+                                                    gettingChallengedTimerChallengesRecord
+                                                        .challengerSteps) {
+                                                  await gettingChallengedTimerChallengesRecord
+                                                      .reference
+                                                      .update({
+                                                    ...createChallengesRecordData(
+                                                      gettingChallengedSteps:
+                                                          FFAppState()
+                                                              .stepCount,
+                                                      status: 'closed',
+                                                    ),
+                                                    ...mapToFirestore(
+                                                      {
+                                                        'draw': FieldValue
+                                                            .arrayUnion([
+                                                          currentUserReference
+                                                        ]),
+                                                        'drawNames': FieldValue
+                                                            .arrayUnion([
+                                                          currentUserDisplayName
+                                                        ]),
+                                                      },
+                                                    ),
+                                                  });
+
+                                                  await gettingChallengedTimerChallengesRecord
+                                                      .reference
+                                                      .update({
+                                                    ...mapToFirestore(
+                                                      {
+                                                        'draw': FieldValue
+                                                            .arrayUnion([
+                                                          currentUserReference
+                                                        ]),
+                                                        'drawNames': FieldValue
+                                                            .arrayUnion([
+                                                          FFAppState()
+                                                              .friendName
+                                                        ]),
+                                                      },
+                                                    ),
+                                                  });
+
+                                                  await currentUserReference!
+                                                      .update({
+                                                    ...createUsersRecordData(
+                                                      winPercentage: functions
+                                                          .calculateWinPercentage(
+                                                              valueOrDefault(
+                                                                  currentUserDocument
+                                                                      ?.wins,
+                                                                  0),
+                                                              valueOrDefault(
+                                                                  currentUserDocument
+                                                                      ?.draws,
+                                                                  0),
+                                                              valueOrDefault(
+                                                                  currentUserDocument
+                                                                      ?.losses,
+                                                                  0)),
+                                                    ),
+                                                    ...mapToFirestore(
+                                                      {
+                                                        'draws': FieldValue
+                                                            .increment(1),
+                                                        'credits': FieldValue
+                                                            .increment(1),
+                                                      },
+                                                    ),
+                                                  });
+
+                                                  await gettingChallengedTimerChallengesRecord
+                                                      .challengerRef!
+                                                      .update({
+                                                    ...mapToFirestore(
+                                                      {
+                                                        'draws': FieldValue
+                                                            .increment(1),
+                                                        'credits': FieldValue
+                                                            .increment(1),
+                                                      },
+                                                    ),
+                                                  });
+                                                }
+                                              }
+                                            }
+
+                                            if (buttonWorkoutsRecord != null) {
+                                              if (buttonWorkoutsRecord
+                                                      ?.dateUploaded ==
+                                                  getCurrentTimestamp) {
+                                                await buttonWorkoutsRecord!
+                                                    .reference
+                                                    .update({
+                                                  ...mapToFirestore(
+                                                    {
+                                                      'duration':
+                                                          FieldValue.increment(
+                                                              FFAppState()
+                                                                  .workoutTime
+                                                                  .toDouble()),
+                                                      'stepsTaken':
+                                                          FieldValue.increment(
+                                                              FFAppState()
+                                                                  .stepCount),
+                                                      'caloriesBurned':
+                                                          FieldValue.increment(
+                                                              FFAppState()
+                                                                  .caloriesBurned),
+                                                      'distance':
+                                                          FieldValue.increment(
+                                                              FFAppState()
+                                                                  .distance),
+                                                    },
+                                                  ),
+                                                });
+
+                                                await currentUserReference!
+                                                    .update({
+                                                  ...mapToFirestore(
+                                                    {
+                                                      'calorieDifference':
+                                                          FieldValue.increment(
+                                                              -(FFAppState()
+                                                                  .caloriesBurned)),
+                                                    },
+                                                  ),
+                                                });
+                                              } else {
+                                                await WorkoutsRecord.createDoc(
+                                                        currentUserReference!)
+                                                    .set(
+                                                        createWorkoutsRecordData(
+                                                  duration: FFAppState()
+                                                      .workoutTime
+                                                      .toDouble(),
+                                                  stepsTaken:
+                                                      FFAppState().stepCount,
+                                                  caloriesBurned: FFAppState()
+                                                      .caloriesBurned,
+                                                  distance:
+                                                      FFAppState().distance,
+                                                  unixDays: functions
+                                                      .daysSinceEpoch(),
+                                                ));
+
+                                                await currentUserReference!
+                                                    .update({
+                                                  ...mapToFirestore(
+                                                    {
+                                                      'calorieDifference':
+                                                          FieldValue.increment(
+                                                              -(FFAppState()
+                                                                  .caloriesBurned)),
+                                                    },
+                                                  ),
+                                                });
+                                              }
+                                            } else {
+                                              await WorkoutsRecord.createDoc(
+                                                      currentUserReference!)
+                                                  .set(createWorkoutsRecordData(
+                                                duration: FFAppState()
+                                                    .workoutTime
+                                                    .toDouble(),
+                                                stepsTaken:
+                                                    FFAppState().stepCount,
+                                                caloriesBurned:
+                                                    FFAppState().caloriesBurned,
+                                                distance: FFAppState().distance,
+                                                unixDays:
+                                                    functions.daysSinceEpoch(),
+                                              ));
+
+                                              await currentUserReference!
+                                                  .update({
+                                                ...mapToFirestore(
+                                                  {
+                                                    'calorieDifference':
+                                                        FieldValue.increment(
+                                                            -(FFAppState()
+                                                                .caloriesBurned)),
+                                                  },
+                                                ),
+                                              });
+                                            }
+
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  'You have completed the challenge. You can see the result on the challenge page.',
+                                                  style: TextStyle(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
                                                         .primaryText,
+                                                  ),
+                                                ),
+                                                duration: Duration(
+                                                    milliseconds: 4000),
+                                                backgroundColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondary,
                                               ),
+                                            );
+                                            await Future.delayed(const Duration(
+                                                milliseconds: 2000));
+
+                                            context.pushNamed('challengePage');
+                                          },
+                                          child: FFButtonWidget(
+                                            onPressed: () {
+                                              print('Button pressed ...');
+                                            },
+                                            text: 'End challenge',
+                                            options: FFButtonOptions(
+                                              width: double.infinity,
+                                              height: 50.0,
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                              iconPadding: EdgeInsetsDirectional
+                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              textStyle: FlutterFlowTheme.of(
+                                                      context)
+                                                  .titleSmall
+                                                  .override(
+                                                    fontFamily: 'Readex Pro',
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryBackground,
+                                                  ),
+                                              elevation: 2.0,
+                                              borderSide: BorderSide(
+                                                color: Colors.transparent,
+                                                width: 1.0,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12.0),
                                             ),
-                                            duration:
-                                                Duration(milliseconds: 4000),
-                                            backgroundColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .primaryBackground,
                                           ),
                                         );
-                                        await Future.delayed(
-                                            const Duration(milliseconds: 2000));
-
-                                        context.pushNamed('startworkout');
                                       },
-                                      child: FFButtonWidget(
-                                        onPressed: () {
-                                          print('Button pressed ...');
-                                        },
-                                        text: 'Complete Workout',
-                                        options: FFButtonOptions(
-                                          width: double.infinity,
-                                          height: 50.0,
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 0.0, 0.0),
-                                          iconPadding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 0.0, 0.0),
-                                          color: FlutterFlowTheme.of(context)
-                                              .primaryText,
-                                          textStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .titleSmall
-                                              .override(
-                                                fontFamily: 'Readex Pro',
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryBackground,
-                                              ),
-                                          elevation: 2.0,
-                                          borderSide: BorderSide(
-                                            color: Colors.transparent,
-                                            width: 1.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(12.0),
-                                        ),
-                                      ),
                                     ),
                                   ),
                                 ],

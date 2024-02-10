@@ -3,7 +3,6 @@ export '/login/login_widget.dart' show LoginWidget;
 export '/history/history_widget.dart' show HistoryWidget;
 export '/user_profile/user_profile_widget.dart' show UserProfileWidget;
 export '/startworkout/startworkout_widget.dart' show StartworkoutWidget;
-export '/test/test_widget.dart' show TestWidget;
 export '/forgot_password01/forgot_password01_widget.dart'
     show ForgotPassword01Widget;
 export '/delete_account/delete_account_widget.dart' show DeleteAccountWidget;
@@ -44,3 +43,11 @@ export '/admin_view_categories/admin_view_categories_widget.dart'
     show AdminViewCategoriesWidget;
 export '/admin_create_category/admin_create_category_widget.dart'
     show AdminCreateCategoryWidget;
+export '/challenge_timer/challenge_timer_widget.dart' show ChallengeTimerWidget;
+export '/challenge_page/challenge_page_widget.dart' show ChallengePageWidget;
+export '/challenge_friends_page/challenge_friends_page_widget.dart'
+    show ChallengeFriendsPageWidget;
+export '/getting_challenged_timer/getting_challenged_timer_widget.dart'
+    show GettingChallengedTimerWidget;
+export '/challenge_result_page/challenge_result_page_widget.dart'
+    show ChallengeResultPageWidget;

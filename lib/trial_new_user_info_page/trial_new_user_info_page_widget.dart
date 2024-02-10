@@ -374,117 +374,83 @@ class _TrialNewUserInfoPageWidgetState extends State<TrialNewUserInfoPageWidget>
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 32.0, 0.0, 32.0),
-                      child: StreamBuilder<List<UsersRecord>>(
-                        stream: queryUsersRecord(
-                          singleRecord: true,
-                        ),
-                        builder: (context, snapshot) {
-                          // Customize what your widget looks like when it's loading.
-                          if (!snapshot.hasData) {
-                            return Center(
-                              child: SizedBox(
-                                width: 50.0,
-                                height: 50.0,
-                                child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                    FlutterFlowTheme.of(context).primary,
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-                          List<UsersRecord> buttonUsersRecordList =
-                              snapshot.data!;
-                          // Return an empty Container when the item does not exist.
-                          if (snapshot.data!.isEmpty) {
-                            return Container();
-                          }
-                          final buttonUsersRecord =
-                              buttonUsersRecordList.isNotEmpty
-                                  ? buttonUsersRecordList.first
-                                  : null;
-                          return FFButtonWidget(
-                            onPressed: () async {
-                              if (((_model.fitnessDropDownValue ==
-                                          'Losing weight') ||
-                                      (_model.fitnessDropDownValue ==
-                                          'Maintaining fitness') ||
-                                      (_model.fitnessDropDownValue ==
-                                          'Increasing stamina')) &&
-                                  ((_model.activityDropDownValue ==
-                                          'Sedentary (little to no exercise)') ||
-                                      (_model.activityDropDownValue ==
-                                          'Lightly active (light exercise or sports 1-3 days per week)') ||
-                                      (_model.activityDropDownValue ==
-                                          'Moderately active (moderate exercise or sports 3-5 days per week)') ||
-                                      (_model.activityDropDownValue ==
-                                          'Very active (hard exercise or sports 6-7 days per week)'))) {
-                                await currentUserReference!
-                                    .update(createUsersRecordData(
-                                  fitnessGoal2: _model.fitnessDropDownValue,
-                                  howActive: _model.activityDropDownValue,
-                                ));
-                              } else {
-                                await showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.transparent,
-                                  enableDrag: false,
-                                  context: context,
-                                  builder: (context) {
-                                    return GestureDetector(
-                                      onTap: () => _model
-                                              .unfocusNode.canRequestFocus
+                      child: FFButtonWidget(
+                        onPressed: () async {
+                          if (((_model.fitnessDropDownValue ==
+                                      'Losing weight') ||
+                                  (_model.fitnessDropDownValue ==
+                                      'Maintaining fitness') ||
+                                  (_model.fitnessDropDownValue ==
+                                      'Increasing stamina')) &&
+                              ((_model.activityDropDownValue ==
+                                      'Sedentary (little to no exercise)') ||
+                                  (_model.activityDropDownValue ==
+                                      'Lightly active (light exercise or sports 1-3 days per week)') ||
+                                  (_model.activityDropDownValue ==
+                                      'Moderately active (moderate exercise or sports 3-5 days per week)') ||
+                                  (_model.activityDropDownValue ==
+                                      'Very active (hard exercise or sports 6-7 days per week)'))) {
+                            await currentUserReference!
+                                .update(createUsersRecordData(
+                              fitnessGoal2: _model.fitnessDropDownValue,
+                              howActive: _model.activityDropDownValue,
+                            ));
+                          } else {
+                            await showModalBottomSheet(
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              enableDrag: false,
+                              context: context,
+                              builder: (context) {
+                                return GestureDetector(
+                                  onTap: () =>
+                                      _model.unfocusNode.canRequestFocus
                                           ? FocusScope.of(context)
                                               .requestFocus(_model.unfocusNode)
                                           : FocusScope.of(context).unfocus(),
-                                      child: Padding(
-                                        padding:
-                                            MediaQuery.viewInsetsOf(context),
-                                        child: ErrorOccuredWidget(),
-                                      ),
-                                    );
-                                  },
-                                ).then((value) => safeSetState(() {}));
-
-                                return;
-                              }
-
-                              context.pushNamed(
-                                'trialNewUserInterests',
-                                extra: <String, dynamic>{
-                                  kTransitionInfoKey: TransitionInfo(
-                                    hasTransition: true,
-                                    transitionType:
-                                        PageTransitionType.rightToLeft,
-                                    duration: Duration(milliseconds: 200),
+                                  child: Padding(
+                                    padding: MediaQuery.viewInsetsOf(context),
+                                    child: ErrorOccuredWidget(),
                                   ),
-                                },
-                              );
+                                );
+                              },
+                            ).then((value) => safeSetState(() {}));
+
+                            return;
+                          }
+
+                          context.pushNamed(
+                            'trialNewUserInterests',
+                            extra: <String, dynamic>{
+                              kTransitionInfoKey: TransitionInfo(
+                                hasTransition: true,
+                                transitionType: PageTransitionType.rightToLeft,
+                                duration: Duration(milliseconds: 200),
+                              ),
                             },
-                            text: 'Next Question',
-                            options: FFButtonOptions(
-                              width: 300.0,
-                              height: 50.0,
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color: FlutterFlowTheme.of(context).primary,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
+                          );
+                        },
+                        text: 'Next Question',
+                        options: FFButtonOptions(
+                          width: 300.0,
+                          height: 50.0,
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: FlutterFlowTheme.of(context).primary,
+                          textStyle:
+                              FlutterFlowTheme.of(context).titleSmall.override(
                                     fontFamily: 'Readex Pro',
                                     color: Colors.white,
                                   ),
-                              elevation: 3.0,
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1.0,
-                              ),
-                              borderRadius: BorderRadius.circular(40.0),
-                            ),
-                          );
-                        },
+                          elevation: 3.0,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(40.0),
+                        ),
                       ),
                     ),
                   ],

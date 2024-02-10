@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '/backend/backend.dart';
-import '/backend/schema/structs/index.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
@@ -113,11 +112,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => params.isEmpty
               ? NavBarPage(initialPage: 'startworkout')
               : StartworkoutWidget(),
-        ),
-        FFRoute(
-          name: 'test',
-          path: '/test',
-          builder: (context, params) => TestWidget(),
         ),
         FFRoute(
           name: 'ForgotPassword01',
@@ -247,6 +241,31 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'adminCreateCategory',
           path: '/adminCreateCategory',
           builder: (context, params) => AdminCreateCategoryWidget(),
+        ),
+        FFRoute(
+          name: 'challengeTimer',
+          path: '/challengeTimer',
+          builder: (context, params) => ChallengeTimerWidget(),
+        ),
+        FFRoute(
+          name: 'challengePage',
+          path: '/challengePage',
+          builder: (context, params) => ChallengePageWidget(),
+        ),
+        FFRoute(
+          name: 'challengeFriendsPage',
+          path: '/challengeFriendsPage',
+          builder: (context, params) => ChallengeFriendsPageWidget(),
+        ),
+        FFRoute(
+          name: 'gettingChallengedTimer',
+          path: '/gettingChallengedTimer',
+          builder: (context, params) => GettingChallengedTimerWidget(),
+        ),
+        FFRoute(
+          name: 'challengeResultPage',
+          path: '/challengeResultPage',
+          builder: (context, params) => ChallengeResultPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

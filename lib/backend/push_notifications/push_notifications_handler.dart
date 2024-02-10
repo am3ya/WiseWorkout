@@ -116,7 +116,6 @@ final parametersBuilderMap =
   'history': ParameterData.none(),
   'userProfile': ParameterData.none(),
   'startworkout': ParameterData.none(),
-  'test': ParameterData.none(),
   'ForgotPassword01': ParameterData.none(),
   'deleteAccount': ParameterData.none(),
   'searchPage': ParameterData.none(),
@@ -142,6 +141,11 @@ final parametersBuilderMap =
   'createTipsPage': ParameterData.none(),
   'adminViewCategories': ParameterData.none(),
   'adminCreateCategory': ParameterData.none(),
+  'challengeTimer': ParameterData.none(),
+  'challengePage': ParameterData.none(),
+  'challengeFriendsPage': ParameterData.none(),
+  'gettingChallengedTimer': ParameterData.none(),
+  'challengeResultPage': ParameterData.none(),
 };
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {

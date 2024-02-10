@@ -162,6 +162,8 @@ class _StartworkoutWidgetState extends State<StartworkoutWidget> {
                                       context.pushNamed('trialNewUserInfoPage');
 
                                       return;
+                                    } else {
+                                      context.goNamed('challengeFriendsPage');
                                     }
                                   },
                                   text: 'CHALLENGE',

@@ -10,7 +10,6 @@ import 'place.dart';
 import 'uploaded_file.dart';
 import '/backend/backend.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import '/backend/schema/structs/index.dart';
 import '/auth/firebase_auth/auth_util.dart';
 
 String formatDuration(double milliseconds) {
@@ -466,4 +465,56 @@ DocumentReference randomAdvice(List<AdviceRecord> adviceCollection) {
   // Function to return the reference of a random document from the advice collection
   final randomIndex = math.Random().nextInt(adviceCollection.length);
   return adviceCollection[randomIndex].reference;
+}
+
+double? calculateWinPercentage(
+  int? wins,
+  int? draws,
+  int? losses,
+) {
+  double winPercentage = 0.0;
+
+  if (wins! > 0) {
+    winPercentage = wins / (wins + draws! + losses!);
+    winPercentage = winPercentage * 100;
+  }
+
+  return double.parse(winPercentage.toStringAsFixed(2));
+}
+
+String challengeToString(
+  String friendName,
+  String yourSteps,
+  String theirSteps,
+) {
+  String toReturn = "lol";
+
+  int yourStepsInt = int.parse(yourSteps);
+  int theirStepsInt = int.parse(theirSteps);
+
+  if (yourStepsInt > theirStepsInt) {
+    toReturn = "I just beat " +
+        friendName +
+        " on wise workout! Their " +
+        theirSteps +
+        " were no match for my " +
+        yourSteps +
+        ". Next!";
+  } else if (yourStepsInt < theirStepsInt) {
+    toReturn = friendName +
+        " just beat me on wise workout... Their " +
+        theirSteps +
+        " were just too good for my " +
+        yourSteps +
+        ". I'll get 'em next time!";
+  } else {
+    toReturn = friendName +
+        " and I just drew on wise workout... We both ended on the same steps, " +
+        theirSteps +
+        " and " +
+        yourSteps +
+        ". How is that even possible?";
+  }
+
+  return toReturn;
 }

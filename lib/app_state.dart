@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '/backend/backend.dart';
-import '/backend/schema/structs/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 
@@ -34,16 +33,6 @@ class FFAppState extends ChangeNotifier {
   }
 
   late SharedPreferences prefs;
-
-  WorkoutStruct _workout = WorkoutStruct();
-  WorkoutStruct get workout => _workout;
-  set workout(WorkoutStruct _value) {
-    _workout = _value;
-  }
-
-  void updateWorkoutStruct(Function(WorkoutStruct) updateFn) {
-    updateFn(_workout);
-  }
 
   bool _showOnboard = true;
   bool get showOnboard => _showOnboard;
@@ -124,6 +113,24 @@ class FFAppState extends ChangeNotifier {
   String get brandName => _brandName;
   set brandName(String _value) {
     _brandName = _value;
+  }
+
+  String _friendName = '';
+  String get friendName => _friendName;
+  set friendName(String _value) {
+    _friendName = _value;
+  }
+
+  DocumentReference? _friendRef;
+  DocumentReference? get friendRef => _friendRef;
+  set friendRef(DocumentReference? _value) {
+    _friendRef = _value;
+  }
+
+  DocumentReference? _challengeRef;
+  DocumentReference? get challengeRef => _challengeRef;
+  set challengeRef(DocumentReference? _value) {
+    _challengeRef = _value;
   }
 }
 

@@ -153,6 +153,8 @@ class _EditClubPageWidgetState extends State<EditClubPageWidget> {
                             final selectedMedia =
                                 await selectMediaWithSourceBottomSheet(
                               context: context,
+                              maxWidth: 320.00,
+                              maxHeight: 320.00,
                               imageQuality: 80,
                               allowPhoto: true,
                               backgroundColor: FlutterFlowTheme.of(context)

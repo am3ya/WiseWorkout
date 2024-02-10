@@ -191,6 +191,11 @@ class UsersRecord extends FirestoreRecord {
   double get winPercentage => _winPercentage ?? 0.0;
   bool hasWinPercentage() => _winPercentage != null;
 
+  // "credits" field.
+  int? _credits;
+  int get credits => _credits ?? 0;
+  bool hasCredits() => _credits != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -229,6 +234,7 @@ class UsersRecord extends FirestoreRecord {
     _draws = castToType<int>(snapshotData['draws']);
     _losses = castToType<int>(snapshotData['losses']);
     _winPercentage = castToType<double>(snapshotData['winPercentage']);
+    _credits = castToType<int>(snapshotData['credits']);
   }
 
   static CollectionReference get collection =>
@@ -297,6 +303,7 @@ Map<String, dynamic> createUsersRecordData({
   int? draws,
   int? losses,
   double? winPercentage,
+  int? credits,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -332,6 +339,7 @@ Map<String, dynamic> createUsersRecordData({
       'draws': draws,
       'losses': losses,
       'winPercentage': winPercentage,
+      'credits': credits,
     }.withoutNulls,
   );
 
@@ -378,7 +386,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.wins == e2?.wins &&
         e1?.draws == e2?.draws &&
         e1?.losses == e2?.losses &&
-        e1?.winPercentage == e2?.winPercentage;
+        e1?.winPercentage == e2?.winPercentage &&
+        e1?.credits == e2?.credits;
   }
 
   @override
@@ -417,7 +426,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.wins,
         e?.draws,
         e?.losses,
-        e?.winPercentage
+        e?.winPercentage,
+        e?.credits
       ]);
 
   @override

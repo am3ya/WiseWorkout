@@ -208,6 +208,8 @@ class _ClubMembersPageWidgetState extends State<ClubMembersPageWidget>
                                 final selectedMedia =
                                     await selectMediaWithSourceBottomSheet(
                                   context: context,
+                                  maxWidth: 320.00,
+                                  maxHeight: 320.00,
                                   allowPhoto: true,
                                 );
                                 if (selectedMedia != null &&
@@ -379,185 +381,55 @@ class _ClubMembersPageWidgetState extends State<ClubMembersPageWidget>
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
                         child: AuthUserStreamWidget(
-                          builder: (context) =>
-                              StreamBuilder<List<UsersRecord>>(
-                            stream: queryUsersRecord(),
-                            builder: (context, snapshot) {
-                              // Customize what your widget looks like when it's loading.
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: 50.0,
-                                    height: 50.0,
-                                    child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        FlutterFlowTheme.of(context).primary,
-                                      ),
-                                    ),
+                          builder: (context) => FFButtonWidget(
+                            onPressed: () async {
+                              if (!(currentUserDocument?.clubs?.toList() ?? [])
+                                  .contains(
+                                      clubMembersPageClubsRecord?.reference)) {
+                                await currentUserReference!.update({
+                                  ...mapToFirestore(
+                                    {
+                                      'clubs': FieldValue.arrayUnion([
+                                        clubMembersPageClubsRecord?.reference
+                                      ]),
+                                    },
                                   ),
-                                );
-                              }
-                              List<UsersRecord> buttonUsersRecordList =
-                                  snapshot.data!;
-                              return FFButtonWidget(
-                                onPressed: () async {
-                                  if (!(currentUserDocument?.clubs?.toList() ??
-                                          [])
-                                      .contains(clubMembersPageClubsRecord
-                                          ?.reference)) {
-                                    await currentUserReference!.update({
-                                      ...mapToFirestore(
-                                        {
-                                          'clubs': FieldValue.arrayUnion([
-                                            clubMembersPageClubsRecord
-                                                ?.reference
-                                          ]),
-                                        },
-                                      ),
-                                    });
+                                });
 
-                                    await clubMembersPageClubsRecord!.reference
-                                        .update({
-                                      ...mapToFirestore(
-                                        {
-                                          'membersRefs': FieldValue.arrayUnion(
-                                              [currentUserReference]),
-                                          'numberOfMembers':
-                                              FieldValue.increment(1),
-                                        },
-                                      ),
-                                    });
-                                  }
-                                },
-                                text: 'Join',
-                                options: FFButtonOptions(
-                                  height: 40.0,
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      10.0, 0.0, 10.0, 0.0),
-                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
-                                  color: FlutterFlowTheme.of(context).primary,
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .override(
-                                        fontFamily: 'Readex Pro',
-                                        color: Colors.white,
-                                      ),
-                                  elevation: 3.0,
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1.0,
+                                await clubMembersPageClubsRecord!.reference
+                                    .update({
+                                  ...mapToFirestore(
+                                    {
+                                      'membersRefs': FieldValue.arrayUnion(
+                                          [currentUserReference]),
+                                      'numberOfMembers':
+                                          FieldValue.increment(1),
+                                    },
                                   ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                              );
+                                });
+                              }
                             },
-                          ),
-                        ),
-                      ),
-                    if ((clubMembersPageClubsRecord?.creator ==
-                            currentUserReference) ||
-                        (valueOrDefault(currentUserDocument?.userType, '') ==
-                            'admin'))
-                      Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
-                        child: AuthUserStreamWidget(
-                          builder: (context) =>
-                              StreamBuilder<List<UsersRecord>>(
-                            stream: queryUsersRecord(
-                              queryBuilder: (usersRecord) => usersRecord.where(
-                                'clubs',
-                                arrayContains:
-                                    clubMembersPageClubsRecord?.reference,
+                            text: 'Join',
+                            options: FFButtonOptions(
+                              height: 40.0,
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  10.0, 0.0, 10.0, 0.0),
+                              iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: FlutterFlowTheme.of(context).primary,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Colors.white,
+                                  ),
+                              elevation: 3.0,
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                                width: 1.0,
                               ),
+                              borderRadius: BorderRadius.circular(8.0),
                             ),
-                            builder: (context, snapshot) {
-                              // Customize what your widget looks like when it's loading.
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: 50.0,
-                                    height: 50.0,
-                                    child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        FlutterFlowTheme.of(context).primary,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }
-                              List<UsersRecord> buttonUsersRecordList =
-                                  snapshot.data!;
-                              return FFButtonWidget(
-                                onPressed: () async {
-                                  if (functions.removeClubRefFromUsers(
-                                      buttonUsersRecordList.toList(),
-                                      clubMembersPageClubsRecord!.reference)) {
-                                    await currentUserReference!.update({
-                                      ...mapToFirestore(
-                                        {
-                                          'clubs': FieldValue.arrayRemove([
-                                            clubMembersPageClubsRecord
-                                                ?.reference
-                                          ]),
-                                        },
-                                      ),
-                                    });
-
-                                    context.pushNamed('clubsPage');
-
-                                    await clubMembersPageClubsRecord!.reference
-                                        .delete();
-                                    await showModalBottomSheet(
-                                      isScrollControlled: true,
-                                      backgroundColor: Colors.transparent,
-                                      enableDrag: false,
-                                      context: context,
-                                      builder: (context) {
-                                        return GestureDetector(
-                                          onTap: () => _model
-                                                  .unfocusNode.canRequestFocus
-                                              ? FocusScope.of(context)
-                                                  .requestFocus(
-                                                      _model.unfocusNode)
-                                              : FocusScope.of(context)
-                                                  .unfocus(),
-                                          child: Padding(
-                                            padding: MediaQuery.viewInsetsOf(
-                                                context),
-                                            child: FriendRequestSentWidget(),
-                                          ),
-                                        );
-                                      },
-                                    ).then((value) => safeSetState(() {}));
-                                  } else {
-                                    return;
-                                  }
-                                },
-                                text: 'DELETE CLUB',
-                                options: FFButtonOptions(
-                                  height: 40.0,
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      10.0, 0.0, 10.0, 0.0),
-                                  iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 0.0),
-                                  color: Color(0xFFCC1621),
-                                  textStyle: FlutterFlowTheme.of(context)
-                                      .titleSmall
-                                      .override(
-                                        fontFamily: 'Readex Pro',
-                                        color: Colors.white,
-                                      ),
-                                  elevation: 3.0,
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 1.0,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8.0),
-                                ),
-                              );
-                            },
                           ),
                         ),
                       ),

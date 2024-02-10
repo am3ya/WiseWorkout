@@ -15,20 +15,6 @@ service cloud.firestore {
       allow delete: if false;
     }
 
-    match /exercises/{document} {
-      allow create: if true;
-      allow read: if true;
-      allow write: if false;
-      allow delete: if false;
-    }
-
-    match /templates/{document} {
-      allow create: if true;
-      allow read: if true;
-      allow write: if false;
-      allow delete: if false;
-    }
-
     match /applications/{document} {
       allow create: if true;
       allow read: if true;
@@ -55,6 +41,13 @@ service cloud.firestore {
       allow read: if true;
       allow write: if false;
       allow delete: if false;
+    }
+
+    match /challenges/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if true;
+      allow delete: if true;
     }
   }
 }

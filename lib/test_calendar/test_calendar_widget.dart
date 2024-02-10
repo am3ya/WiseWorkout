@@ -121,30 +121,40 @@ class _TestCalendarWidgetState extends State<TestCalendarWidget>
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 24.0, 0.0),
-                      child: badges.Badge(
-                        badgeContent: Text(
-                          '1',
-                          style:
-                              FlutterFlowTheme.of(context).bodyMedium.override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Colors.white,
-                                  ),
-                        ),
-                        showBadge: true,
-                        shape: badges.BadgeShape.circle,
-                        badgeColor: FlutterFlowTheme.of(context).primary,
-                        elevation: 4.0,
-                        padding: EdgeInsets.all(8.0),
-                        position: badges.BadgePosition.topEnd(),
-                        animationType: badges.BadgeAnimationType.scale,
-                        toAnimate: true,
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              8.0, 0.0, 0.0, 0.0),
-                          child: Icon(
-                            Icons.chat_bubble_outline_outlined,
-                            color: FlutterFlowTheme.of(context).secondaryText,
-                            size: 24.0,
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          context.pushNamed('challengePage');
+                        },
+                        child: badges.Badge(
+                          badgeContent: Text(
+                            '',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  color: Colors.white,
+                                ),
+                          ),
+                          showBadge: false,
+                          shape: badges.BadgeShape.circle,
+                          badgeColor: FlutterFlowTheme.of(context).primary,
+                          elevation: 4.0,
+                          padding: EdgeInsets.all(8.0),
+                          position: badges.BadgePosition.topEnd(),
+                          animationType: badges.BadgeAnimationType.scale,
+                          toAnimate: true,
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                8.0, 0.0, 0.0, 0.0),
+                            child: Icon(
+                              Icons.directions_run,
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                              size: 24.0,
+                            ),
                           ),
                         ),
                       ),
@@ -386,7 +396,7 @@ class _TestCalendarWidgetState extends State<TestCalendarWidget>
                                                                           child:
                                                                               Text(
                                                                             dateTimeFormat('d/M/y',
-                                                                                _model.calendarSelectedDay1!.start),
+                                                                                _model.calendarSelectedDay2!.start),
                                                                             style:
                                                                                 FlutterFlowTheme.of(context).bodySmall,
                                                                           ),
