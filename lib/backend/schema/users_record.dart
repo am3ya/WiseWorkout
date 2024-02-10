@@ -71,11 +71,6 @@ class UsersRecord extends FirestoreRecord {
   double get height => _height ?? 0.0;
   bool hasHeight() => _height != null;
 
-  // "interests" field.
-  List<String>? _interests;
-  List<String> get interests => _interests ?? const [];
-  bool hasInterests() => _interests != null;
-
   // "age" field.
   int? _age;
   int get age => _age ?? 0;
@@ -176,6 +171,31 @@ class UsersRecord extends FirestoreRecord {
   String get bmiGroup => _bmiGroup ?? '';
   bool hasBmiGroup() => _bmiGroup != null;
 
+  // "wins" field.
+  int? _wins;
+  int get wins => _wins ?? 0;
+  bool hasWins() => _wins != null;
+
+  // "draws" field.
+  int? _draws;
+  int get draws => _draws ?? 0;
+  bool hasDraws() => _draws != null;
+
+  // "losses" field.
+  int? _losses;
+  int get losses => _losses ?? 0;
+  bool hasLosses() => _losses != null;
+
+  // "winPercentage" field.
+  double? _winPercentage;
+  double get winPercentage => _winPercentage ?? 0.0;
+  bool hasWinPercentage() => _winPercentage != null;
+
+  // "credits" field.
+  int? _credits;
+  int get credits => _credits ?? 0;
+  bool hasCredits() => _credits != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -188,7 +208,6 @@ class UsersRecord extends FirestoreRecord {
     _friendRequests = getDataList(snapshotData['friend_requests']);
     _weight = castToType<double>(snapshotData['weight']);
     _height = castToType<double>(snapshotData['height']);
-    _interests = getDataList(snapshotData['interests']);
     _age = castToType<int>(snapshotData['age']);
     _infoCollectionComplete = snapshotData['info_collection_complete'] as bool?;
     _fitnessGoal2 = snapshotData['fitness_goal2'] as String?;
@@ -211,6 +230,11 @@ class UsersRecord extends FirestoreRecord {
     _bmi = castToType<double>(snapshotData['BMI']);
     _ageGroup = snapshotData['ageGroup'] as String?;
     _bmiGroup = snapshotData['bmiGroup'] as String?;
+    _wins = castToType<int>(snapshotData['wins']);
+    _draws = castToType<int>(snapshotData['draws']);
+    _losses = castToType<int>(snapshotData['losses']);
+    _winPercentage = castToType<double>(snapshotData['winPercentage']);
+    _credits = castToType<int>(snapshotData['credits']);
   }
 
   static CollectionReference get collection =>
@@ -275,6 +299,11 @@ Map<String, dynamic> createUsersRecordData({
   double? bmi,
   String? ageGroup,
   String? bmiGroup,
+  int? wins,
+  int? draws,
+  int? losses,
+  double? winPercentage,
+  int? credits,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -306,6 +335,11 @@ Map<String, dynamic> createUsersRecordData({
       'BMI': bmi,
       'ageGroup': ageGroup,
       'bmiGroup': bmiGroup,
+      'wins': wins,
+      'draws': draws,
+      'losses': losses,
+      'winPercentage': winPercentage,
+      'credits': credits,
     }.withoutNulls,
   );
 
@@ -329,7 +363,6 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         listEquality.equals(e1?.friendRequests, e2?.friendRequests) &&
         e1?.weight == e2?.weight &&
         e1?.height == e2?.height &&
-        listEquality.equals(e1?.interests, e2?.interests) &&
         e1?.age == e2?.age &&
         e1?.infoCollectionComplete == e2?.infoCollectionComplete &&
         e1?.fitnessGoal2 == e2?.fitnessGoal2 &&
@@ -349,7 +382,12 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.calorieDifference == e2?.calorieDifference &&
         e1?.bmi == e2?.bmi &&
         e1?.ageGroup == e2?.ageGroup &&
-        e1?.bmiGroup == e2?.bmiGroup;
+        e1?.bmiGroup == e2?.bmiGroup &&
+        e1?.wins == e2?.wins &&
+        e1?.draws == e2?.draws &&
+        e1?.losses == e2?.losses &&
+        e1?.winPercentage == e2?.winPercentage &&
+        e1?.credits == e2?.credits;
   }
 
   @override
@@ -365,7 +403,6 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.friendRequests,
         e?.weight,
         e?.height,
-        e?.interests,
         e?.age,
         e?.infoCollectionComplete,
         e?.fitnessGoal2,
@@ -385,7 +422,12 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.calorieDifference,
         e?.bmi,
         e?.ageGroup,
-        e?.bmiGroup
+        e?.bmiGroup,
+        e?.wins,
+        e?.draws,
+        e?.losses,
+        e?.winPercentage,
+        e?.credits
       ]);
 
   @override

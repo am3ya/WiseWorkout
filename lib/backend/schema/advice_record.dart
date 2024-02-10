@@ -46,6 +46,16 @@ class AdviceRecord extends FirestoreRecord {
   String get creatorName => _creatorName ?? '';
   bool hasCreatorName() => _creatorName != null;
 
+  // "ageGroup" field.
+  String? _ageGroup;
+  String get ageGroup => _ageGroup ?? '';
+  bool hasAgeGroup() => _ageGroup != null;
+
+  // "bmiGroup" field.
+  String? _bmiGroup;
+  String get bmiGroup => _bmiGroup ?? '';
+  bool hasBmiGroup() => _bmiGroup != null;
+
   void _initializeFields() {
     _fitnessGoal = snapshotData['fitnessGoal'] as String?;
     _adviceString = snapshotData['adviceString'] as String?;
@@ -53,6 +63,8 @@ class AdviceRecord extends FirestoreRecord {
     _creatorPFP = snapshotData['creatorPFP'] as String?;
     _createdTime = snapshotData['created_time'] as DateTime?;
     _creatorName = snapshotData['creatorName'] as String?;
+    _ageGroup = snapshotData['ageGroup'] as String?;
+    _bmiGroup = snapshotData['bmiGroup'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -95,6 +107,8 @@ Map<String, dynamic> createAdviceRecordData({
   String? creatorPFP,
   DateTime? createdTime,
   String? creatorName,
+  String? ageGroup,
+  String? bmiGroup,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -104,6 +118,8 @@ Map<String, dynamic> createAdviceRecordData({
       'creatorPFP': creatorPFP,
       'created_time': createdTime,
       'creatorName': creatorName,
+      'ageGroup': ageGroup,
+      'bmiGroup': bmiGroup,
     }.withoutNulls,
   );
 
@@ -120,7 +136,9 @@ class AdviceRecordDocumentEquality implements Equality<AdviceRecord> {
         e1?.creatorRef == e2?.creatorRef &&
         e1?.creatorPFP == e2?.creatorPFP &&
         e1?.createdTime == e2?.createdTime &&
-        e1?.creatorName == e2?.creatorName;
+        e1?.creatorName == e2?.creatorName &&
+        e1?.ageGroup == e2?.ageGroup &&
+        e1?.bmiGroup == e2?.bmiGroup;
   }
 
   @override
@@ -130,7 +148,9 @@ class AdviceRecordDocumentEquality implements Equality<AdviceRecord> {
         e?.creatorRef,
         e?.creatorPFP,
         e?.createdTime,
-        e?.creatorName
+        e?.creatorName,
+        e?.ageGroup,
+        e?.bmiGroup
       ]);
 
   @override
