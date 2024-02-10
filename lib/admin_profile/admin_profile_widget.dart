@@ -415,18 +415,7 @@ class _AdminProfileWidgetState extends State<AdminProfileWidget> {
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
-                    await showModalBottomSheet(
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      enableDrag: false,
-                      context: context,
-                      builder: (context) {
-                        return Padding(
-                          padding: MediaQuery.viewInsetsOf(context),
-                          child: BusinessAccountApplicationWidget(),
-                        );
-                      },
-                    ).then((value) => safeSetState(() {}));
+                    context.pushNamed('adminViewCategories');
                   },
                   child: Material(
                     color: Colors.transparent,

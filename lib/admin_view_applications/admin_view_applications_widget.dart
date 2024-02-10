@@ -77,7 +77,7 @@ class _AdminViewApplicationsWidgetState
                 size: 30.0,
               ),
               onPressed: () async {
-                context.pushNamed('testCalendar');
+                context.pushNamed('adminProfile');
               },
             ),
             title: Text(

@@ -125,11 +125,9 @@ final parametersBuilderMap =
   'trialNewUserMetrics': ParameterData.none(),
   'friendsPage': ParameterData.none(),
   'editProfilePage': ParameterData.none(),
-  'applicationPending': ParameterData.none(),
   'adminProfile': ParameterData.none(),
   'testCalendar': ParameterData.none(),
   'businessProfile': ParameterData.none(),
-  'businessExercises': ParameterData.none(),
   'sendFeedback': ParameterData.none(),
   'businessEditProfile': ParameterData.none(),
   'viewAboutPage': ParameterData.none(),
@@ -142,6 +140,8 @@ final parametersBuilderMap =
   'manageTips': ParameterData.none(),
   'editClubPage': ParameterData.none(),
   'createTipsPage': ParameterData.none(),
+  'adminViewCategories': ParameterData.none(),
+  'adminCreateCategory': ParameterData.none(),
 };
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {

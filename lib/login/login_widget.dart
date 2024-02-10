@@ -913,6 +913,11 @@ class _LoginWidgetState extends State<LoginWidget>
                                                                 isActive: true,
                                                                 infoCollectionComplete:
                                                                     false,
+                                                                wins: 0,
+                                                                draws: 0,
+                                                                losses: 0,
+                                                                winPercentage:
+                                                                    0.0,
                                                               ));
 
                                                           await authManager

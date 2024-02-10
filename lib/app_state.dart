@@ -119,6 +119,12 @@ class FFAppState extends ChangeNotifier {
   set adviceRef(DocumentReference? _value) {
     _adviceRef = _value;
   }
+
+  String _brandName = '';
+  String get brandName => _brandName;
+  set brandName(String _value) {
+    _brandName = _value;
+  }
 }
 
 void _safeInit(Function() initializeField) {

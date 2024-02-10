@@ -629,7 +629,6 @@ class _TestCalendarWidgetState extends State<TestCalendarWidget>
                                                                       12.0),
                                                           child: Container(
                                                             width: 100.0,
-                                                            height: 300.0,
                                                             decoration:
                                                                 BoxDecoration(
                                                               color: FlutterFlowTheme

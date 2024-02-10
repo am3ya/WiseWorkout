@@ -42,7 +42,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
 
     _model.tabBarController = TabController(
       vsync: this,
-      length: 2,
+      length: 3,
       initialIndex: 0,
     )..addListener(() => setState(() {}));
   }
@@ -189,10 +189,13 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                             Tab(
                               text: 'Clubs',
                             ),
+                            Tab(
+                              text: 'Brands',
+                            ),
                           ],
                           controller: _model.tabBarController,
                           onTap: (i) async {
-                            [() async {}, () async {}][i]();
+                            [() async {}, () async {}, () async {}][i]();
                           },
                         ),
                       ),
@@ -848,6 +851,152 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
 
                                                       context.pushNamed(
                                                           'clubMembersPage');
+                                                    },
+                                                    child: Icon(
+                                                      Icons.chevron_right_sharp,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryText,
+                                                      size: 24.0,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  8.0, 8.0, 8.0, 0.0),
+                              child: StreamBuilder<List<UsersRecord>>(
+                                stream: queryUsersRecord(
+                                  queryBuilder: (usersRecord) => usersRecord
+                                      .where(
+                                        'brand_name',
+                                        isEqualTo: _model
+                                            .searchUsersTextFieldController
+                                            .text,
+                                      )
+                                      .where(
+                                        'user_type',
+                                        isEqualTo: 'business',
+                                      ),
+                                ),
+                                builder: (context, snapshot) {
+                                  // Customize what your widget looks like when it's loading.
+                                  if (!snapshot.hasData) {
+                                    return Center(
+                                      child: SizedBox(
+                                        width: 50.0,
+                                        height: 50.0,
+                                        child: CircularProgressIndicator(
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                            FlutterFlowTheme.of(context)
+                                                .primary,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                  List<UsersRecord> listViewUsersRecordList =
+                                      snapshot.data!;
+                                  return ListView.builder(
+                                    padding: EdgeInsets.zero,
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.vertical,
+                                    itemCount: listViewUsersRecordList.length,
+                                    itemBuilder: (context, listViewIndex) {
+                                      final listViewUsersRecord =
+                                          listViewUsersRecordList[
+                                              listViewIndex];
+                                      return Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 1.0),
+                                        child: Container(
+                                          width: 100.0,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryBackground,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                blurRadius: 0.0,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .alternate,
+                                                offset: Offset(0.0, 1.0),
+                                              )
+                                            ],
+                                          ),
+                                          child: Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          40.0),
+                                                  child: Image.network(
+                                                    listViewUsersRecord
+                                                        .photoUrl,
+                                                    width: 60.0,
+                                                    height: 60.0,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    12.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child: Text(
+                                                          listViewUsersRecord
+                                                              .brandName,
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyLarge,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          8.0, 0.0, 0.0, 0.0),
+                                                  child: InkWell(
+                                                    splashColor:
+                                                        Colors.transparent,
+                                                    focusColor:
+                                                        Colors.transparent,
+                                                    hoverColor:
+                                                        Colors.transparent,
+                                                    highlightColor:
+                                                        Colors.transparent,
+                                                    onTap: () async {
+                                                      FFAppState().brandName =
+                                                          _model
+                                                              .searchUsersTextFieldController
+                                                              .text;
                                                     },
                                                     child: Icon(
                                                       Icons.chevron_right_sharp,

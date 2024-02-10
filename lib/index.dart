@@ -17,14 +17,10 @@ export '/trial_new_user_metrics/trial_new_user_metrics_widget.dart'
 export '/friends_page/friends_page_widget.dart' show FriendsPageWidget;
 export '/edit_profile_page/edit_profile_page_widget.dart'
     show EditProfilePageWidget;
-export '/application_pending/application_pending_widget.dart'
-    show ApplicationPendingWidget;
 export '/admin_profile/admin_profile_widget.dart' show AdminProfileWidget;
 export '/test_calendar/test_calendar_widget.dart' show TestCalendarWidget;
 export '/business_profile/business_profile_widget.dart'
     show BusinessProfileWidget;
-export '/business_exercises/business_exercises_widget.dart'
-    show BusinessExercisesWidget;
 export '/send_feedback/send_feedback_widget.dart' show SendFeedbackWidget;
 export '/business_edit_profile/business_edit_profile_widget.dart'
     show BusinessEditProfileWidget;
@@ -44,3 +40,7 @@ export '/manage_tips/manage_tips_widget.dart' show ManageTipsWidget;
 export '/edit_club_page/edit_club_page_widget.dart' show EditClubPageWidget;
 export '/create_tips_page/create_tips_page_widget.dart'
     show CreateTipsPageWidget;
+export '/admin_view_categories/admin_view_categories_widget.dart'
+    show AdminViewCategoriesWidget;
+export '/admin_create_category/admin_create_category_widget.dart'
+    show AdminCreateCategoryWidget;

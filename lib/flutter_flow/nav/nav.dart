@@ -162,11 +162,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => EditProfilePageWidget(),
         ),
         FFRoute(
-          name: 'applicationPending',
-          path: '/applicationPending',
-          builder: (context, params) => ApplicationPendingWidget(),
-        ),
-        FFRoute(
           name: 'adminProfile',
           path: '/adminProfile',
           builder: (context, params) => AdminProfileWidget(),
@@ -182,11 +177,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'businessProfile',
           path: '/businessProfile',
           builder: (context, params) => BusinessProfileWidget(),
-        ),
-        FFRoute(
-          name: 'businessExercises',
-          path: '/businessExercises',
-          builder: (context, params) => BusinessExercisesWidget(),
         ),
         FFRoute(
           name: 'sendFeedback',
@@ -247,6 +237,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'createTipsPage',
           path: '/createTipsPage',
           builder: (context, params) => CreateTipsPageWidget(),
+        ),
+        FFRoute(
+          name: 'adminViewCategories',
+          path: '/adminViewCategories',
+          builder: (context, params) => AdminViewCategoriesWidget(),
+        ),
+        FFRoute(
+          name: 'adminCreateCategory',
+          path: '/adminCreateCategory',
+          builder: (context, params) => AdminCreateCategoryWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

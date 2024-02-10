@@ -181,7 +181,6 @@ class _ManageTipsWidgetState extends State<ManageTipsWidget> {
                                   0.0, 0.0, 0.0, 5.0),
                               child: Container(
                                 width: 100.0,
-                                height: 300.0,
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
