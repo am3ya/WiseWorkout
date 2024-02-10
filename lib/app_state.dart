@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '/backend/backend.dart';
-import '/backend/schema/structs/index.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'flutter_flow/flutter_flow_util.dart';
 
@@ -34,16 +33,6 @@ class FFAppState extends ChangeNotifier {
   }
 
   late SharedPreferences prefs;
-
-  WorkoutStruct _workout = WorkoutStruct();
-  WorkoutStruct get workout => _workout;
-  set workout(WorkoutStruct _value) {
-    _workout = _value;
-  }
-
-  void updateWorkoutStruct(Function(WorkoutStruct) updateFn) {
-    updateFn(_workout);
-  }
 
   bool _showOnboard = true;
   bool get showOnboard => _showOnboard;
@@ -113,21 +102,36 @@ class FFAppState extends ChangeNotifier {
     _workoutTime = _value;
   }
 
-  int _unixDays = 0;
-  int get unixDays => _unixDays;
-  set unixDays(int _value) {
-    _unixDays = _value;
+  DocumentReference? _adviceRef =
+      FirebaseFirestore.instance.doc('/advice/04V9yG0JaP6h3xL0BJif');
+  DocumentReference? get adviceRef => _adviceRef;
+  set adviceRef(DocumentReference? _value) {
+    _adviceRef = _value;
   }
-}
 
-LatLng? _latLngFromString(String? val) {
-  if (val == null) {
-    return null;
+  String _brandName = '';
+  String get brandName => _brandName;
+  set brandName(String _value) {
+    _brandName = _value;
   }
-  final split = val.split(',');
-  final lat = double.parse(split.first);
-  final lng = double.parse(split.last);
-  return LatLng(lat, lng);
+
+  String _friendName = '';
+  String get friendName => _friendName;
+  set friendName(String _value) {
+    _friendName = _value;
+  }
+
+  DocumentReference? _friendRef;
+  DocumentReference? get friendRef => _friendRef;
+  set friendRef(DocumentReference? _value) {
+    _friendRef = _value;
+  }
+
+  DocumentReference? _challengeRef;
+  DocumentReference? get challengeRef => _challengeRef;
+  set challengeRef(DocumentReference? _value) {
+    _challengeRef = _value;
+  }
 }
 
 void _safeInit(Function() initializeField) {

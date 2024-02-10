@@ -374,108 +374,74 @@ class _TrialNewUserInterestsWidgetState
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 32.0, 0.0, 32.0),
-                      child: StreamBuilder<List<UsersRecord>>(
-                        stream: queryUsersRecord(
-                          singleRecord: true,
-                        ),
-                        builder: (context, snapshot) {
-                          // Customize what your widget looks like when it's loading.
-                          if (!snapshot.hasData) {
-                            return Center(
-                              child: SizedBox(
-                                width: 50.0,
-                                height: 50.0,
-                                child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                    FlutterFlowTheme.of(context).primary,
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-                          List<UsersRecord> buttonUsersRecordList =
-                              snapshot.data!;
-                          // Return an empty Container when the item does not exist.
-                          if (snapshot.data!.isEmpty) {
-                            return Container();
-                          }
-                          final buttonUsersRecord =
-                              buttonUsersRecordList.isNotEmpty
-                                  ? buttonUsersRecordList.first
-                                  : null;
-                          return FFButtonWidget(
-                            onPressed: () async {
-                              if (_model.dropDownValue == 'Please select...') {
-                                await showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.transparent,
-                                  enableDrag: false,
-                                  context: context,
-                                  builder: (context) {
-                                    return GestureDetector(
-                                      onTap: () => _model
-                                              .unfocusNode.canRequestFocus
+                      child: FFButtonWidget(
+                        onPressed: () async {
+                          if (_model.dropDownValue == 'Please select...') {
+                            await showModalBottomSheet(
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              enableDrag: false,
+                              context: context,
+                              builder: (context) {
+                                return GestureDetector(
+                                  onTap: () =>
+                                      _model.unfocusNode.canRequestFocus
                                           ? FocusScope.of(context)
                                               .requestFocus(_model.unfocusNode)
                                           : FocusScope.of(context).unfocus(),
-                                      child: Padding(
-                                        padding:
-                                            MediaQuery.viewInsetsOf(context),
-                                        child: ErrorOccuredWidget(),
-                                      ),
-                                    );
-                                  },
-                                ).then((value) => safeSetState(() {}));
+                                  child: Padding(
+                                    padding: MediaQuery.viewInsetsOf(context),
+                                    child: ErrorOccuredWidget(),
+                                  ),
+                                );
+                              },
+                            ).then((value) => safeSetState(() {}));
 
-                                return;
-                              } else {
-                                await currentUserReference!
-                                    .update(createUsersRecordData(
-                                  weeklyWorkouts: functions
-                                      .weeklyWorkouts(_model.dropDownValue!),
-                                ));
-                                if (_model.calorieIntakeTextFieldController
-                                        .text !=
-                                    '') {
-                                  await currentUserReference!
-                                      .update(createUsersRecordData(
-                                    dailyCalorieIntake: double.tryParse(_model
-                                        .calorieIntakeTextFieldController.text),
-                                  ));
-                                } else {
-                                  await currentUserReference!
-                                      .update(createUsersRecordData(
-                                    dailyCalorieIntake: 0.0,
-                                  ));
-                                }
-                              }
+                            return;
+                          } else {
+                            await currentUserReference!
+                                .update(createUsersRecordData(
+                              weeklyWorkouts: functions
+                                  .weeklyWorkouts(_model.dropDownValue!),
+                            ));
+                            if (_model.calorieIntakeTextFieldController.text !=
+                                '') {
+                              await currentUserReference!
+                                  .update(createUsersRecordData(
+                                dailyCalorieIntake: double.tryParse(_model
+                                    .calorieIntakeTextFieldController.text),
+                              ));
+                            } else {
+                              await currentUserReference!
+                                  .update(createUsersRecordData(
+                                dailyCalorieIntake: 0.0,
+                              ));
+                            }
+                          }
 
-                              context.pushNamed('trialNewUserMetrics');
-                            },
-                            text: 'Next Question',
-                            options: FFButtonOptions(
-                              width: 300.0,
-                              height: 50.0,
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color: FlutterFlowTheme.of(context).primary,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
+                          context.pushNamed('trialNewUserMetrics');
+                        },
+                        text: 'Next Question',
+                        options: FFButtonOptions(
+                          width: 300.0,
+                          height: 50.0,
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: FlutterFlowTheme.of(context).primary,
+                          textStyle:
+                              FlutterFlowTheme.of(context).titleSmall.override(
                                     fontFamily: 'Readex Pro',
                                     color: Colors.white,
                                   ),
-                              elevation: 3.0,
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1.0,
-                              ),
-                              borderRadius: BorderRadius.circular(40.0),
-                            ),
-                          );
-                        },
+                          elevation: 3.0,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(40.0),
+                        ),
                       ),
                     ),
                   ],

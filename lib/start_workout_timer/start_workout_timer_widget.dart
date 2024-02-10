@@ -234,7 +234,9 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                     color: FlutterFlowTheme.of(context).primaryText,
                     size: 30.0,
                   ),
-                  onPressed: () async {
+                  onPressed: (_model.timerMilliseconds > 60000)
+                      ? null
+                      : () async {
                     context.pushNamed('startworkout');
                   },
                 ),
@@ -1064,8 +1066,8 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                                                     .text);
                                             FFAppState().todaysDate =
                                                 getCurrentTimestamp;
-                                            FFAppState().unixDays =
-                                                functions.daysSinceEpoch();
+                                            //FFAppState().unixDays =
+                                                //functions.daysSinceEpoch();
                                             if (startWorkoutTimerWorkoutsRecordList
                                                     .length >
                                                 0) {
@@ -1098,6 +1100,16 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                                                     },
                                                   ),
                                                 });
+                                                await currentUserReference!.update({
+                                              ...mapToFirestore(
+                                                {
+                                                  'calorieDifference':
+                                                      FieldValue.increment(
+                                                          -(FFAppState()
+                                                              .caloriesBurned)),
+                                                },
+                                              ),
+                                                });
                                               } else {
                                                 await WorkoutsRecord.createDoc(
                                                         currentUserReference!)
@@ -1116,6 +1128,16 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                                                       .daysSinceEpoch(),
                                                   dateUploaded: today,
                                                 ));
+                                                await currentUserReference!.update({
+                                              ...mapToFirestore(
+                                                {
+                                                  'calorieDifference':
+                                                      FieldValue.increment(
+                                                          -(FFAppState()
+                                                              .caloriesBurned)),
+                                                },
+                                              ),
+                                                });
                                               }
                                             } else {
                                               await WorkoutsRecord.createDoc(
@@ -1133,6 +1155,16 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                                                     functions.daysSinceEpoch(),
                                                 dateUploaded: today,
                                               ));
+                                              await currentUserReference!.update({
+                                            ...mapToFirestore(
+                                              {
+                                                'calorieDifference':
+                                                    FieldValue.increment(
+                                                        -(FFAppState()
+                                                            .caloriesBurned)),
+                                              },
+                                            ),
+                                          });
                                             }
 
                                             ScaffoldMessenger.of(context)
@@ -1159,7 +1191,41 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                                             context.pushNamed('startworkout');
                                           },
                                           child: FFButtonWidget(
-                                            onPressed: () async {
+                                            onPressed: () {
+                                              print ('Button pressed...');
+                                            },
+                                            text: 'Complete Workout',
+                                        options: FFButtonOptions(
+                                          width: double.infinity,
+                                          height: 50.0,
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
+                                          iconPadding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 0.0, 0.0, 0.0),
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                          textStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .titleSmall
+                                              .override(
+                                                fontFamily: 'Readex Pro',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryBackground,
+                                              ),
+                                          elevation: 2.0,
+                                          borderSide: BorderSide(
+                                            color: Colors.transparent,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(12.0),
+                                        ),
+                                          ),
+                                  
+                                             /*async {
                                               FFAppState().todaysDate =
                                                   getCurrentTimestamp;
 
@@ -1357,7 +1423,7 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                                               borderRadius:
                                                   BorderRadius.circular(12.0),
                                             ),
-                                          ),
+                                          ),*/
                                         );
                                       },
                                     ),

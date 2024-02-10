@@ -544,44 +544,82 @@ class _TrialNewUserMetricsWidgetState extends State<TrialNewUserMetricsWidget>
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 32.0, 0.0, 32.0),
-                      child: AuthUserStreamWidget(
-                        builder: (context) => StreamBuilder<List<UsersRecord>>(
-                          stream: queryUsersRecord(
-                            queryBuilder: (usersRecord) => usersRecord.where(
-                              'display_name',
-                              isEqualTo: currentUserDisplayName,
-                            ),
-                            singleRecord: true,
-                          ),
-                          builder: (context, snapshot) {
-                            // Customize what your widget looks like when it's loading.
-                            if (!snapshot.hasData) {
-                              return Center(
-                                child: SizedBox(
-                                  width: 50.0,
-                                  height: 50.0,
-                                  child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                      FlutterFlowTheme.of(context).primary,
-                                    ),
+                      child: FFButtonWidget(
+                        onPressed: () async {
+                          if (functions.isEmpty(_model.textController1.text)) {
+                            await showModalBottomSheet(
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              enableDrag: false,
+                              context: context,
+                              builder: (context) {
+                                return GestureDetector(
+                                  onTap: () =>
+                                      _model.unfocusNode.canRequestFocus
+                                          ? FocusScope.of(context)
+                                              .requestFocus(_model.unfocusNode)
+                                          : FocusScope.of(context).unfocus(),
+                                  child: Padding(
+                                    padding: MediaQuery.viewInsetsOf(context),
+                                    child: ErrorOccuredWidget(),
                                   ),
-                                ),
-                              );
-                            }
-                            List<UsersRecord> buttonUsersRecordList =
-                                snapshot.data!;
-                            // Return an empty Container when the item does not exist.
-                            if (snapshot.data!.isEmpty) {
-                              return Container();
-                            }
-                            final buttonUsersRecord =
-                                buttonUsersRecordList.isNotEmpty
-                                    ? buttonUsersRecordList.first
-                                    : null;
-                            return FFButtonWidget(
-                              onPressed: () async {
-                                if (functions
-                                    .isEmpty(_model.textController1.text)) {
+                                );
+                              },
+                            ).then((value) => safeSetState(() {}));
+
+                            return;
+                          } else {
+                            if (functions
+                                .isEmpty(_model.textController2.text)) {
+                              await showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                enableDrag: false,
+                                context: context,
+                                builder: (context) {
+                                  return GestureDetector(
+                                    onTap: () => _model
+                                            .unfocusNode.canRequestFocus
+                                        ? FocusScope.of(context)
+                                            .requestFocus(_model.unfocusNode)
+                                        : FocusScope.of(context).unfocus(),
+                                    child: Padding(
+                                      padding: MediaQuery.viewInsetsOf(context),
+                                      child: ErrorOccuredWidget(),
+                                    ),
+                                  );
+                                },
+                              ).then((value) => safeSetState(() {}));
+
+                              return;
+                            } else {
+                              if (functions
+                                  .isEmpty(_model.textController3.text)) {
+                                await showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  backgroundColor: Colors.transparent,
+                                  enableDrag: false,
+                                  context: context,
+                                  builder: (context) {
+                                    return GestureDetector(
+                                      onTap: () => _model
+                                              .unfocusNode.canRequestFocus
+                                          ? FocusScope.of(context)
+                                              .requestFocus(_model.unfocusNode)
+                                          : FocusScope.of(context).unfocus(),
+                                      child: Padding(
+                                        padding:
+                                            MediaQuery.viewInsetsOf(context),
+                                        child: ErrorOccuredWidget(),
+                                      ),
+                                    );
+                                  },
+                                ).then((value) => safeSetState(() {}));
+
+                                return;
+                              } else {
+                                if (!((_model.dropDownValue == 'Male') ||
+                                    (_model.dropDownValue == 'Female'))) {
                                   await showModalBottomSheet(
                                     isScrollControlled: true,
                                     backgroundColor: Colors.transparent,
@@ -605,36 +643,258 @@ class _TrialNewUserMetricsWidgetState extends State<TrialNewUserMetricsWidget>
                                   ).then((value) => safeSetState(() {}));
 
                                   return;
-                                } else {
-                                  if (functions
-                                      .isEmpty(_model.textController2.text)) {
-                                    await showModalBottomSheet(
-                                      isScrollControlled: true,
-                                      backgroundColor: Colors.transparent,
-                                      enableDrag: false,
-                                      context: context,
-                                      builder: (context) {
-                                        return GestureDetector(
-                                          onTap: () => _model
-                                                  .unfocusNode.canRequestFocus
-                                              ? FocusScope.of(context)
-                                                  .requestFocus(
-                                                      _model.unfocusNode)
-                                              : FocusScope.of(context)
-                                                  .unfocus(),
-                                          child: Padding(
-                                            padding: MediaQuery.viewInsetsOf(
-                                                context),
-                                            child: ErrorOccuredWidget(),
-                                          ),
-                                        );
-                                      },
-                                    ).then((value) => safeSetState(() {}));
+                                }
 
-                                    return;
+                                await currentUserReference!
+                                    .update(createUsersRecordData(
+                                  age:
+                                      int.tryParse(_model.textController1.text),
+                                  height: double.tryParse(
+                                      _model.textController2.text),
+                                  weight: double.tryParse(
+                                      _model.textController3.text),
+                                  infoCollectionComplete: true,
+                                  gender: _model.dropDownValue,
+                                ));
+                                if ((valueOrDefault(
+                                            currentUserDocument?.age, 0) >=
+                                        5) &&
+                                    (valueOrDefault(
+                                            currentUserDocument?.age, 0) <=
+                                        12)) {
+                                  await currentUserReference!
+                                      .update(createUsersRecordData(
+                                    ageGroup: 'Children (Ages 5-12)',
+                                  ));
+                                } else {
+                                  if ((valueOrDefault(
+                                              currentUserDocument?.age, 0) >=
+                                          13) &&
+                                      (valueOrDefault(
+                                              currentUserDocument?.age, 0) <=
+                                          18)) {
+                                    await currentUserReference!
+                                        .update(createUsersRecordData(
+                                      ageGroup: 'Teenagers (Ages 13-18)',
+                                    ));
                                   } else {
-                                    if (functions
-                                        .isEmpty(_model.textController3.text)) {
+                                    if ((valueOrDefault(
+                                                currentUserDocument?.age, 0) >=
+                                            19) &&
+                                        (valueOrDefault(
+                                                currentUserDocument?.age, 0) <=
+                                            30)) {
+                                      await currentUserReference!
+                                          .update(createUsersRecordData(
+                                        ageGroup: 'Young Adults (Ages 19-30)',
+                                      ));
+                                    } else {
+                                      if ((valueOrDefault(
+                                                  currentUserDocument?.age,
+                                                  0) >=
+                                              31) &&
+                                          (valueOrDefault(
+                                                  currentUserDocument?.age,
+                                                  0) <=
+                                              60)) {
+                                        await currentUserReference!
+                                            .update(createUsersRecordData(
+                                          ageGroup: 'Adults (Ages 31-60)',
+                                        ));
+                                      } else {
+                                        if (valueOrDefault(
+                                                currentUserDocument?.age, 0) >=
+                                            61) {
+                                          await currentUserReference!
+                                              .update(createUsersRecordData(
+                                            ageGroup:
+                                                'Older Adults (Ages 61 and above)',
+                                          ));
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+
+                                await currentUserReference!
+                                    .update(createUsersRecordData(
+                                  bmr: functions.calculateBMR(
+                                      valueOrDefault(
+                                          currentUserDocument?.gender, ''),
+                                      valueOrDefault(
+                                          currentUserDocument?.weight, 0.0),
+                                      valueOrDefault(
+                                          currentUserDocument?.height, 0.0),
+                                      valueOrDefault(
+                                          currentUserDocument?.age, 0)),
+                                  bmi: functions.calculateBMI(
+                                      valueOrDefault(
+                                          currentUserDocument?.weight, 0.0),
+                                      valueOrDefault(
+                                          currentUserDocument?.height, 0.0)),
+                                ));
+                                if (valueOrDefault(
+                                        currentUserDocument?.bmi, 0.0) <
+                                    18.5) {
+                                  await currentUserReference!
+                                      .update(createUsersRecordData(
+                                    bmiGroup: 'Underweight (<18.5)',
+                                  ));
+                                } else {
+                                  if ((valueOrDefault(
+                                              currentUserDocument?.bmi, 0.0) >=
+                                          18.5) &&
+                                      (valueOrDefault(
+                                              currentUserDocument?.bmi, 0.0) <=
+                                          24.9)) {
+                                    await currentUserReference!
+                                        .update(createUsersRecordData(
+                                      bmiGroup: 'Normal weight (18.5-24.9)',
+                                    ));
+                                  } else {
+                                    if ((valueOrDefault(
+                                                currentUserDocument?.bmi,
+                                                0.0) >=
+                                            25.0) &&
+                                        (valueOrDefault(
+                                                currentUserDocument?.bmi,
+                                                0.0) <=
+                                            29.9)) {
+                                      await currentUserReference!
+                                          .update(createUsersRecordData(
+                                        bmiGroup: 'Overweight (25.0-29.9)',
+                                      ));
+                                    } else {
+                                      if (valueOrDefault(
+                                              currentUserDocument?.bmi, 0.0) >=
+                                          30.0) {
+                                        await currentUserReference!
+                                            .update(createUsersRecordData(
+                                          bmiGroup: 'Obesity (30+)',
+                                        ));
+                                      }
+                                    }
+                                  }
+                                }
+
+                                await currentUserReference!
+                                    .update(createUsersRecordData(
+                                  tdee: functions.calculateTDEE(
+                                      valueOrDefault(
+                                          currentUserDocument?.howActive, ''),
+                                      valueOrDefault(
+                                          currentUserDocument?.bmr, 0.0)),
+                                ));
+                                if (valueOrDefault(
+                                        currentUserDocument?.dailyCalorieIntake,
+                                        0.0) ==
+                                    0.0) {
+                                  await currentUserReference!
+                                      .update(createUsersRecordData(
+                                    dailyCalorieIntake: functions
+                                        .setDailyCalorieIntake(valueOrDefault(
+                                            currentUserDocument?.tdee, 0.0)),
+                                    dailyCalorieBurningGoal: 300.0,
+                                  ));
+
+                                  await currentUserReference!
+                                      .update(createUsersRecordData(
+                                    calorieDifference: valueOrDefault(
+                                        currentUserDocument
+                                            ?.dailyCalorieBurningGoal,
+                                        0.0),
+                                  ));
+                                  if (valueOrDefault(
+                                          currentUserDocument?.fitnessGoal2,
+                                          '') ==
+                                      'Losing weight') {
+                                    await currentUserReference!.update({
+                                      ...mapToFirestore(
+                                        {
+                                          'dailyCalorieBurningGoal':
+                                              FieldValue.increment(100.0),
+                                        },
+                                      ),
+                                    });
+
+                                    await currentUserReference!
+                                        .update(createUsersRecordData(
+                                      calorieDifference: valueOrDefault(
+                                          currentUserDocument
+                                              ?.dailyCalorieBurningGoal,
+                                          0.0),
+                                    ));
+                                  }
+                                } else {
+                                  if (functions.intakeMinusTdee(
+                                          valueOrDefault(
+                                              currentUserDocument
+                                                  ?.dailyCalorieIntake,
+                                              0.0),
+                                          valueOrDefault(
+                                              currentUserDocument?.tdee,
+                                              0.0)) ==
+                                      'good') {
+                                    await currentUserReference!
+                                        .update(createUsersRecordData(
+                                      dailyCalorieBurningGoal:
+                                          functions.setDailyBurnGoal(
+                                              valueOrDefault(
+                                                  currentUserDocument
+                                                      ?.dailyCalorieIntake,
+                                                  0.0),
+                                              valueOrDefault(
+                                                  currentUserDocument?.tdee,
+                                                  0.0)),
+                                    ));
+
+                                    await currentUserReference!
+                                        .update(createUsersRecordData(
+                                      calorieDifference: valueOrDefault(
+                                          currentUserDocument
+                                              ?.dailyCalorieBurningGoal,
+                                          0.0),
+                                    ));
+                                    if (valueOrDefault(
+                                            currentUserDocument?.fitnessGoal2,
+                                            '') ==
+                                        'Losing weight') {
+                                      await currentUserReference!.update({
+                                        ...mapToFirestore(
+                                          {
+                                            'dailyCalorieBurningGoal':
+                                                FieldValue.increment(100.0),
+                                          },
+                                        ),
+                                      });
+
+                                      await currentUserReference!
+                                          .update(createUsersRecordData(
+                                        calorieDifference: valueOrDefault(
+                                            currentUserDocument
+                                                ?.dailyCalorieBurningGoal,
+                                            0.0),
+                                      ));
+                                    }
+                                  } else {
+                                    if ((functions.intakeMinusTdee(
+                                                valueOrDefault(
+                                                    currentUserDocument
+                                                        ?.dailyCalorieIntake,
+                                                    0.0),
+                                                valueOrDefault(
+                                                    currentUserDocument?.tdee,
+                                                    0.0)) ==
+                                            'intakeTooLittle') ||
+                                        (functions.intakeMinusTdee(
+                                                valueOrDefault(
+                                                    currentUserDocument
+                                                        ?.dailyCalorieIntake,
+                                                    0.0),
+                                                valueOrDefault(
+                                                    currentUserDocument?.tdee,
+                                                    0.0)) ==
+                                            'differenceTooLittle')) {
                                       await showModalBottomSheet(
                                         isScrollControlled: true,
                                         backgroundColor: Colors.transparent,
@@ -652,7 +912,7 @@ class _TrialNewUserMetricsWidgetState extends State<TrialNewUserMetricsWidget>
                                             child: Padding(
                                               padding: MediaQuery.viewInsetsOf(
                                                   context),
-                                              child: ErrorOccuredWidget(),
+                                              child: IntakeTooLowWidget(),
                                             ),
                                           );
                                         },
@@ -660,8 +920,15 @@ class _TrialNewUserMetricsWidgetState extends State<TrialNewUserMetricsWidget>
 
                                       return;
                                     } else {
-                                      if (!((_model.dropDownValue == 'Male') ||
-                                          (_model.dropDownValue == 'Female'))) {
+                                      if (functions.intakeMinusTdee(
+                                              valueOrDefault(
+                                                  currentUserDocument
+                                                      ?.dailyCalorieIntake,
+                                                  0.0),
+                                              valueOrDefault(
+                                                  currentUserDocument?.tdee,
+                                                  0.0)) ==
+                                          'intakeTooMuch') {
                                         await showModalBottomSheet(
                                           isScrollControlled: true,
                                           backgroundColor: Colors.transparent,
@@ -680,415 +947,59 @@ class _TrialNewUserMetricsWidgetState extends State<TrialNewUserMetricsWidget>
                                                 padding:
                                                     MediaQuery.viewInsetsOf(
                                                         context),
-                                                child: ErrorOccuredWidget(),
+                                                child: IntakeTooHighWidget(),
                                               ),
                                             );
                                           },
                                         ).then((value) => safeSetState(() {}));
 
                                         return;
-                                      }
-
-                                      await currentUserReference!
-                                          .update(createUsersRecordData(
-                                        age: int.tryParse(
-                                            _model.textController1.text),
-                                        height: double.tryParse(
-                                            _model.textController2.text),
-                                        weight: double.tryParse(
-                                            _model.textController3.text),
-                                        infoCollectionComplete: true,
-                                        gender: _model.dropDownValue,
-                                      ));
-                                      if ((valueOrDefault(
-                                                  currentUserDocument?.age,
-                                                  0) >=
-                                              5) &&
-                                          (valueOrDefault(
-                                                  currentUserDocument?.age,
-                                                  0) <=
-                                              12)) {
-                                        await currentUserReference!
-                                            .update(createUsersRecordData(
-                                          ageGroup: 'Children (Ages 5-12)',
-                                        ));
                                       } else {
-                                        if ((valueOrDefault(
-                                                    currentUserDocument?.age,
-                                                    0) >=
-                                                13) &&
-                                            (valueOrDefault(
-                                                    currentUserDocument?.age,
-                                                    0) <=
-                                                18)) {
-                                          await currentUserReference!
-                                              .update(createUsersRecordData(
-                                            ageGroup: 'Teenagers (Ages 13-18)',
-                                          ));
-                                        } else {
-                                          if ((valueOrDefault(
-                                                      currentUserDocument?.age,
-                                                      0) >=
-                                                  19) &&
-                                              (valueOrDefault(
-                                                      currentUserDocument?.age,
-                                                      0) <=
-                                                  30)) {
-                                            await currentUserReference!
-                                                .update(createUsersRecordData(
-                                              ageGroup:
-                                                  'Young Adults (Ages 19-30)',
-                                            ));
-                                          } else {
-                                            if ((valueOrDefault(
-                                                        currentUserDocument
-                                                            ?.age,
-                                                        0) >=
-                                                    31) &&
-                                                (valueOrDefault(
-                                                        currentUserDocument
-                                                            ?.age,
-                                                        0) <=
-                                                    60)) {
-                                              await currentUserReference!
-                                                  .update(createUsersRecordData(
-                                                ageGroup: 'Adults (Ages 31-60)',
-                                              ));
-                                            } else {
-                                              if (valueOrDefault(
-                                                      currentUserDocument?.age,
-                                                      0) >=
-                                                  61) {
-                                                await currentUserReference!
-                                                    .update(
-                                                        createUsersRecordData(
-                                                  ageGroup:
-                                                      'Older Adults (Ages 61 and above)',
-                                                ));
-                                              }
-                                            }
-                                          }
-                                        }
-                                      }
-
-                                      await currentUserReference!
-                                          .update(createUsersRecordData(
-                                        bmr: functions.calculateBMR(
-                                            valueOrDefault(
-                                                currentUserDocument?.gender,
-                                                ''),
-                                            valueOrDefault(
-                                                currentUserDocument?.weight,
-                                                0.0),
-                                            valueOrDefault(
-                                                currentUserDocument?.height,
-                                                0.0),
-                                            valueOrDefault(
-                                                currentUserDocument?.age, 0)),
-                                        bmi: functions.calculateBMI(
-                                            valueOrDefault(
-                                                currentUserDocument?.weight,
-                                                0.0),
-                                            valueOrDefault(
-                                                currentUserDocument?.height,
-                                                0.0)),
-                                      ));
-                                      if (valueOrDefault(
-                                              currentUserDocument?.bmi, 0.0) <
-                                          18.5) {
-                                        await currentUserReference!
-                                            .update(createUsersRecordData(
-                                          bmiGroup: 'Underweight (<18.5)',
-                                        ));
-                                      } else {
-                                        if ((valueOrDefault(
-                                                    currentUserDocument?.bmi,
-                                                    0.0) >=
-                                                18.5) &&
-                                            (valueOrDefault(
-                                                    currentUserDocument?.bmi,
-                                                    0.0) <=
-                                                24.9)) {
-                                          await currentUserReference!
-                                              .update(createUsersRecordData(
-                                            bmiGroup:
-                                                'Normal weight (18.5-24.9)',
-                                          ));
-                                        } else {
-                                          if ((valueOrDefault(
-                                                      currentUserDocument?.bmi,
-                                                      0.0) >=
-                                                  25.0) &&
-                                              (valueOrDefault(
-                                                      currentUserDocument?.bmi,
-                                                      0.0) <=
-                                                  29.9)) {
-                                            await currentUserReference!
-                                                .update(createUsersRecordData(
-                                              bmiGroup:
-                                                  'Overweight (25.0-29.9)',
-                                            ));
-                                          } else {
-                                            if (valueOrDefault(
-                                                    currentUserDocument?.bmi,
-                                                    0.0) >=
-                                                30.0) {
-                                              await currentUserReference!
-                                                  .update(createUsersRecordData(
-                                                bmiGroup: 'Obesity (30+)',
-                                              ));
-                                            }
-                                          }
-                                        }
-                                      }
-
-                                      await currentUserReference!
-                                          .update(createUsersRecordData(
-                                        tdee: functions.calculateTDEE(
-                                            valueOrDefault(
-                                                currentUserDocument?.howActive,
-                                                ''),
-                                            valueOrDefault(
-                                                currentUserDocument?.bmr, 0.0)),
-                                      ));
-                                      if (valueOrDefault(
-                                              currentUserDocument
-                                                  ?.dailyCalorieIntake,
-                                              0.0) ==
-                                          0.0) {
-                                        await currentUserReference!
-                                            .update(createUsersRecordData(
-                                          dailyCalorieIntake:
-                                              functions.setDailyCalorieIntake(
-                                                  valueOrDefault(
-                                                      currentUserDocument?.tdee,
-                                                      0.0)),
-                                          dailyCalorieBurningGoal: 300.0,
-                                        ));
-
-                                        await currentUserReference!
-                                            .update(createUsersRecordData(
-                                          calorieDifference: valueOrDefault(
-                                              currentUserDocument
-                                                  ?.dailyCalorieBurningGoal,
-                                              0.0),
-                                        ));
-                                        if (valueOrDefault(
-                                                currentUserDocument
-                                                    ?.fitnessGoal2,
-                                                '') ==
-                                            'Losing weight') {
-                                          await currentUserReference!.update({
-                                            ...mapToFirestore(
-                                              {
-                                                'dailyCalorieBurningGoal':
-                                                    FieldValue.increment(100.0),
-                                              },
-                                            ),
-                                          });
-
-                                          await currentUserReference!
-                                              .update(createUsersRecordData(
-                                            calorieDifference: valueOrDefault(
-                                                currentUserDocument
-                                                    ?.dailyCalorieBurningGoal,
-                                                0.0),
-                                          ));
-                                        }
-                                      } else {
-                                        if (functions.intakeMinusTdee(
-                                                valueOrDefault(
-                                                    currentUserDocument
-                                                        ?.dailyCalorieIntake,
-                                                    0.0),
-                                                valueOrDefault(
-                                                    currentUserDocument?.tdee,
-                                                    0.0)) ==
-                                            'good') {
-                                          await currentUserReference!
-                                              .update(createUsersRecordData(
-                                            dailyCalorieBurningGoal:
-                                                functions.setDailyBurnGoal(
-                                                    valueOrDefault(
-                                                        currentUserDocument
-                                                            ?.dailyCalorieIntake,
-                                                        0.0),
-                                                    valueOrDefault(
-                                                        currentUserDocument
-                                                            ?.tdee,
-                                                        0.0)),
-                                          ));
-
-                                          await currentUserReference!
-                                              .update(createUsersRecordData(
-                                            calorieDifference: valueOrDefault(
-                                                currentUserDocument
-                                                    ?.dailyCalorieBurningGoal,
-                                                0.0),
-                                          ));
-                                          if (valueOrDefault(
-                                                  currentUserDocument
-                                                      ?.fitnessGoal2,
-                                                  '') ==
-                                              'Losing weight') {
-                                            await currentUserReference!.update({
-                                              ...mapToFirestore(
-                                                {
-                                                  'dailyCalorieBurningGoal':
-                                                      FieldValue.increment(
-                                                          100.0),
-                                                },
-                                              ),
-                                            });
-
-                                            await currentUserReference!
-                                                .update(createUsersRecordData(
-                                              calorieDifference: valueOrDefault(
-                                                  currentUserDocument
-                                                      ?.dailyCalorieBurningGoal,
-                                                  0.0),
-                                            ));
-                                          }
-                                        } else {
-                                          if ((functions.intakeMinusTdee(
-                                                      valueOrDefault(
-                                                          currentUserDocument
-                                                              ?.dailyCalorieIntake,
-                                                          0.0),
-                                                      valueOrDefault(
-                                                          currentUserDocument
-                                                              ?.tdee,
-                                                          0.0)) ==
-                                                  'intakeTooLittle') ||
-                                              (functions.intakeMinusTdee(
-                                                      valueOrDefault(
-                                                          currentUserDocument
-                                                              ?.dailyCalorieIntake,
-                                                          0.0),
-                                                      valueOrDefault(
-                                                          currentUserDocument
-                                                              ?.tdee,
-                                                          0.0)) ==
-                                                  'differenceTooLittle')) {
-                                            await showModalBottomSheet(
-                                              isScrollControlled: true,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              enableDrag: false,
-                                              context: context,
-                                              builder: (context) {
-                                                return GestureDetector(
-                                                  onTap: () => _model
-                                                          .unfocusNode
-                                                          .canRequestFocus
-                                                      ? FocusScope.of(context)
-                                                          .requestFocus(_model
-                                                              .unfocusNode)
-                                                      : FocusScope.of(context)
-                                                          .unfocus(),
-                                                  child: Padding(
-                                                    padding:
-                                                        MediaQuery.viewInsetsOf(
-                                                            context),
-                                                    child: IntakeTooLowWidget(),
-                                                  ),
-                                                );
-                                              },
-                                            ).then(
-                                                (value) => safeSetState(() {}));
-
-                                            return;
-                                          } else {
-                                            if (functions.intakeMinusTdee(
-                                                    valueOrDefault(
-                                                        currentUserDocument
-                                                            ?.dailyCalorieIntake,
-                                                        0.0),
-                                                    valueOrDefault(
-                                                        currentUserDocument
-                                                            ?.tdee,
-                                                        0.0)) ==
-                                                'intakeTooMuch') {
-                                              await showModalBottomSheet(
-                                                isScrollControlled: true,
-                                                backgroundColor:
-                                                    Colors.transparent,
-                                                enableDrag: false,
-                                                context: context,
-                                                builder: (context) {
-                                                  return GestureDetector(
-                                                    onTap: () => _model
-                                                            .unfocusNode
-                                                            .canRequestFocus
-                                                        ? FocusScope.of(context)
-                                                            .requestFocus(_model
-                                                                .unfocusNode)
-                                                        : FocusScope.of(context)
-                                                            .unfocus(),
-                                                    child: Padding(
-                                                      padding: MediaQuery
-                                                          .viewInsetsOf(
-                                                              context),
-                                                      child:
-                                                          IntakeTooHighWidget(),
-                                                    ),
-                                                  );
-                                                },
-                                              ).then((value) =>
-                                                  safeSetState(() {}));
-
-                                              return;
-                                            } else {
-                                              return;
-                                            }
-                                          }
-                                        }
+                                        return;
                                       }
                                     }
                                   }
                                 }
+                              }
+                            }
+                          }
 
-                                setState(() {
-                                  FFAppState().showInfoCollection = false;
-                                  FFAppState().weekStart = getCurrentTimestamp;
-                                });
+                          setState(() {
+                            FFAppState().showInfoCollection = false;
+                            FFAppState().weekStart = getCurrentTimestamp;
+                          });
 
-                                context.pushNamed(
-                                  'startworkout',
-                                  extra: <String, dynamic>{
-                                    kTransitionInfoKey: TransitionInfo(
-                                      hasTransition: true,
-                                      transitionType:
-                                          PageTransitionType.rightToLeft,
-                                      duration: Duration(milliseconds: 200),
-                                    ),
-                                  },
-                                );
-                              },
-                              text: 'Continue to workout',
-                              options: FFButtonOptions(
-                                width: 300.0,
-                                height: 50.0,
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 0.0),
-                                color: FlutterFlowTheme.of(context).primary,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Readex Pro',
-                                      color: Colors.white,
-                                    ),
-                                elevation: 3.0,
-                                borderSide: BorderSide(
-                                  color: Colors.transparent,
-                                  width: 1.0,
-                                ),
-                                borderRadius: BorderRadius.circular(40.0),
+                          context.pushNamed(
+                            'startworkout',
+                            extra: <String, dynamic>{
+                              kTransitionInfoKey: TransitionInfo(
+                                hasTransition: true,
+                                transitionType: PageTransitionType.rightToLeft,
+                                duration: Duration(milliseconds: 200),
                               ),
-                            );
-                          },
+                            },
+                          );
+                        },
+                        text: 'Continue to workout',
+                        options: FFButtonOptions(
+                          width: 300.0,
+                          height: 50.0,
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 0.0, 0.0),
+                          color: FlutterFlowTheme.of(context).primary,
+                          textStyle:
+                              FlutterFlowTheme.of(context).titleSmall.override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Colors.white,
+                                  ),
+                          elevation: 3.0,
+                          borderSide: BorderSide(
+                            color: Colors.transparent,
+                            width: 1.0,
+                          ),
+                          borderRadius: BorderRadius.circular(40.0),
                         ),
                       ),
                     ),

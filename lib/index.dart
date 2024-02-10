@@ -3,9 +3,6 @@ export '/login/login_widget.dart' show LoginWidget;
 export '/history/history_widget.dart' show HistoryWidget;
 export '/user_profile/user_profile_widget.dart' show UserProfileWidget;
 export '/startworkout/startworkout_widget.dart' show StartworkoutWidget;
-export '/test/test_widget.dart' show TestWidget;
-export '/exercises/exercises_widget.dart' show ExercisesWidget;
-export '/new_test_page/new_test_page_widget.dart' show NewTestPageWidget;
 export '/forgot_password01/forgot_password01_widget.dart'
     show ForgotPassword01Widget;
 export '/delete_account/delete_account_widget.dart' show DeleteAccountWidget;
@@ -19,14 +16,10 @@ export '/trial_new_user_metrics/trial_new_user_metrics_widget.dart'
 export '/friends_page/friends_page_widget.dart' show FriendsPageWidget;
 export '/edit_profile_page/edit_profile_page_widget.dart'
     show EditProfilePageWidget;
-export '/application_pending/application_pending_widget.dart'
-    show ApplicationPendingWidget;
 export '/admin_profile/admin_profile_widget.dart' show AdminProfileWidget;
 export '/test_calendar/test_calendar_widget.dart' show TestCalendarWidget;
 export '/business_profile/business_profile_widget.dart'
     show BusinessProfileWidget;
-export '/business_exercises/business_exercises_widget.dart'
-    show BusinessExercisesWidget;
 export '/send_feedback/send_feedback_widget.dart' show SendFeedbackWidget;
 export '/business_edit_profile/business_edit_profile_widget.dart'
     show BusinessEditProfileWidget;
@@ -40,9 +33,21 @@ export '/create_club_page/create_club_page_widget.dart'
     show CreateClubPageWidget;
 export '/club_members_page/club_members_page_widget.dart'
     show ClubMembersPageWidget;
-export '/applications_page/applications_page_widget.dart'
-    show ApplicationsPageWidget;
 export '/admin_view_applications/admin_view_applications_widget.dart'
     show AdminViewApplicationsWidget;
-//export '/manage_tips/manage_tips_widget.dart' show ManageTipsWidget;
+export '/manage_tips/manage_tips_widget.dart' show ManageTipsWidget;
 export '/edit_club_page/edit_club_page_widget.dart' show EditClubPageWidget;
+export '/create_tips_page/create_tips_page_widget.dart'
+    show CreateTipsPageWidget;
+export '/admin_view_categories/admin_view_categories_widget.dart'
+    show AdminViewCategoriesWidget;
+export '/admin_create_category/admin_create_category_widget.dart'
+    show AdminCreateCategoryWidget;
+export '/challenge_timer/challenge_timer_widget.dart' show ChallengeTimerWidget;
+export '/challenge_page/challenge_page_widget.dart' show ChallengePageWidget;
+export '/challenge_friends_page/challenge_friends_page_widget.dart'
+    show ChallengeFriendsPageWidget;
+export '/getting_challenged_timer/getting_challenged_timer_widget.dart'
+    show GettingChallengedTimerWidget;
+export '/challenge_result_page/challenge_result_page_widget.dart'
+    show ChallengeResultPageWidget;
