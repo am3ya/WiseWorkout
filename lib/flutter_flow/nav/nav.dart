@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import '/backend/backend.dart';
-import '/backend/schema/structs/index.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
@@ -113,23 +112,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               : StartworkoutWidget(),
         ),
         FFRoute(
-          name: 'test',
-          path: '/test',
-          builder: (context, params) => TestWidget(),
-        ),
-        FFRoute(
-          name: 'exercises',
-          path: '/exercises',
-          builder: (context, params) => params.isEmpty
-              ? NavBarPage(initialPage: 'exercises')
-              : ExercisesWidget(),
-        ),
-        FFRoute(
-          name: 'newTestPage',
-          path: '/newTestPage',
-          builder: (context, params) => NewTestPageWidget(),
-        ),
-        FFRoute(
           name: 'ForgotPassword01',
           path: '/forgotPassword01',
           builder: (context, params) => ForgotPassword01Widget(),
@@ -172,11 +154,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => EditProfilePageWidget(),
         ),
         FFRoute(
-          name: 'applicationPending',
-          path: '/applicationPending',
-          builder: (context, params) => ApplicationPendingWidget(),
-        ),
-        FFRoute(
           name: 'adminProfile',
           path: '/adminProfile',
           builder: (context, params) => AdminProfileWidget(),
@@ -192,11 +169,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'businessProfile',
           path: '/businessProfile',
           builder: (context, params) => BusinessProfileWidget(),
-        ),
-        FFRoute(
-          name: 'businessExercises',
-          path: '/businessExercises',
-          builder: (context, params) => BusinessExercisesWidget(),
         ),
         FFRoute(
           name: 'sendFeedback',
@@ -238,25 +210,60 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           path: '/clubMembersPage',
           builder: (context, params) => ClubMembersPageWidget(),
         ),
-        FFRoute( //Is this necessary?
-          name: 'applicationsPage',
-          path: '/applicationsPage',
-          builder: (context, params) => ApplicationsPageWidget(),
-        ),
         FFRoute(
           name: 'adminViewApplications',
           path: '/adminViewApplications',
           builder: (context, params) => AdminViewApplicationsWidget(),
         ),
-        /*FFRoute(
+        FFRoute(
           name: 'manageTips',
           path: '/manageTips',
           builder: (context, params) => ManageTipsWidget(),
-        ),*/
+        ),
         FFRoute(
           name: 'editClubPage',
           path: '/editClubPage',
           builder: (context, params) => EditClubPageWidget(),
+        ),
+        FFRoute(
+          name: 'createTipsPage',
+          path: '/createTipsPage',
+          builder: (context, params) => CreateTipsPageWidget(),
+        ),
+        FFRoute(
+          name: 'adminViewCategories',
+          path: '/adminViewCategories',
+          builder: (context, params) => AdminViewCategoriesWidget(),
+        ),
+        FFRoute(
+          name: 'adminCreateCategory',
+          path: '/adminCreateCategory',
+          builder: (context, params) => AdminCreateCategoryWidget(),
+        ),
+        FFRoute(
+          name: 'challengeTimer',
+          path: '/challengeTimer',
+          builder: (context, params) => ChallengeTimerWidget(),
+        ),
+        FFRoute(
+          name: 'challengePage',
+          path: '/challengePage',
+          builder: (context, params) => ChallengePageWidget(),
+        ),
+        FFRoute(
+          name: 'challengeFriendsPage',
+          path: '/challengeFriendsPage',
+          builder: (context, params) => ChallengeFriendsPageWidget(),
+        ),
+        FFRoute(
+          name: 'gettingChallengedTimer',
+          path: '/gettingChallengedTimer',
+          builder: (context, params) => GettingChallengedTimerWidget(),
+        ),
+        FFRoute(
+          name: 'challengeResultPage',
+          path: '/challengeResultPage',
+          builder: (context, params) => ChallengeResultPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
