@@ -117,8 +117,6 @@ final parametersBuilderMap =
   'userProfile': ParameterData.none(),
   'startworkout': ParameterData.none(),
   'test': ParameterData.none(),
-  'exercises': ParameterData.none(),
-  'newTestPage': ParameterData.none(),
   'ForgotPassword01': ParameterData.none(),
   'deleteAccount': ParameterData.none(),
   'searchPage': ParameterData.none(),

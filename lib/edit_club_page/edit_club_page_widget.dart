@@ -350,7 +350,6 @@ class _EditClubPageWidgetState extends State<EditClubPageWidget> {
                             20.0, 24.0, 0.0, 24.0),
                       ),
                       style: FlutterFlowTheme.of(context).bodyMedium,
-                      keyboardType: TextInputType.number,
                       validator:
                           _model.ageControllerValidator.asValidator(context),
                     ),

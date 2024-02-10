@@ -113,10 +113,11 @@ class FFAppState extends ChangeNotifier {
     _workoutTime = _value;
   }
 
-  int _unixDays = 0;
-  int get unixDays => _unixDays;
-  set unixDays(int _value) {
-    _unixDays = _value;
+  DocumentReference? _adviceRef =
+      FirebaseFirestore.instance.doc('/advice/04V9yG0JaP6h3xL0BJif');
+  DocumentReference? get adviceRef => _adviceRef;
+  set adviceRef(DocumentReference? _value) {
+    _adviceRef = _value;
   }
 }
 

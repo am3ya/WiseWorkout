@@ -457,3 +457,13 @@ double calculateBMI(
 
   return bmi;
 }
+
+int minusOne(int var1) {
+  return var1 - 1;
+}
+
+DocumentReference randomAdvice(List<AdviceRecord> adviceCollection) {
+  // Function to return the reference of a random document from the advice collection
+  final randomIndex = math.Random().nextInt(adviceCollection.length);
+  return adviceCollection[randomIndex].reference;
+}

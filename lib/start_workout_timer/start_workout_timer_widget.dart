@@ -918,14 +918,12 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                                                     .text);
                                             FFAppState().todaysDate =
                                                 getCurrentTimestamp;
-                                            FFAppState().unixDays =
-                                                functions.daysSinceEpoch();
                                             if (startWorkoutTimerWorkoutsRecordList
                                                     .length >
                                                 0) {
                                               if (startWorkoutTimerWorkoutsRecordList
-                                                      .last.unixDays ==
-                                                  FFAppState().unixDays) {
+                                                      .last.dateUploaded ==
+                                                  getCurrentTimestamp) {
                                                 await startWorkoutTimerWorkoutsRecordList
                                                     .last.reference
                                                     .update({

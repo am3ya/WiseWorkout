@@ -910,7 +910,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                                     'user',
                                                                 photoUrl:
                                                                     'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/workout-app-o0nwer/assets/wxddpzwj052m/blank-profile-picture-973460_640.png',
-                                                                isActive: false,
+                                                                isActive: true,
                                                                 infoCollectionComplete:
                                                                     false,
                                                               ));
