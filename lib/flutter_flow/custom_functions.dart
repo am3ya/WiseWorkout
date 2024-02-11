@@ -497,14 +497,14 @@ String challengeToString(
         friendName +
         " on wise workout! Their " +
         theirSteps +
-        " were no match for my " +
+        " steps were no match for my " +
         yourSteps +
         ". Next!";
   } else if (yourStepsInt < theirStepsInt) {
     toReturn = friendName +
         " just beat me on wise workout... Their " +
         theirSteps +
-        " were just too good for my " +
+        " steps were just too good for my " +
         yourSteps +
         ". I'll get 'em next time!";
   } else {

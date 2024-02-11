@@ -17,6 +17,7 @@ import 'package:sensors_plus/sensors_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:math';
 import 'distance.dart';
+import 'calories.dart';
 import 'package:geolocator/geolocator.dart'; 
 import 'dart:async';
 import 'start_workout_timer_model.dart';
@@ -44,6 +45,7 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
   bool isTrackingSteps = false;
   double previousFilteredMagnitude = 0.0;
   late DistanceTracker _distanceTracker;
+  late CalorieTracker calorieTracker;
   late Timer _distanceUpdateTimer;
   double liveDistance = 0.0;
   bool isTrackingDistance = false;
@@ -90,13 +92,22 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
 
         if (isTimerStarted) {
           totalTimeInMinutes = (_model.timerMilliseconds / 1000) / 60; // convert to meters
-          paceInMinPerKm = totalTimeInMinutes > 0 ? totalTimeInMinutes / liveDistance : 0.0;
+          paceInMinPerKm = totalTimeInMinutes > 0 ? totalTimeInMinutes / distance : 0.0;
           _model.speedTextFieldController = 
             TextEditingController(text:paceInMinPerKm.toStringAsFixed(2));
       }
         });
       },
     );
+
+    calorieTracker = CalorieTracker(
+      getIsRunning: () => _model.walkingSwitchValue ?? true,
+      onCaloriesUpdated: (caloriesBurnedd) {
+        setState((){
+            _model.caloriesTextFieldController.text = caloriesBurnedd.toStringAsFixed(2);
+        });
+      },
+    ); // CalorieTracker
   }
 
   double lowPassFilter(double input) {
@@ -151,6 +162,8 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
     _distanceTracker.startTracking();  // Start distance tracking
     _distanceTracker.resumeTracking();
     _model.timerController.onStartTimer();
+    calorieTracker.startCalorieTracking();
+    calorieTracker.resumeTracking();
     setState(() {
       isTimerStarted = true;
     });
@@ -160,6 +173,7 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
     isTrackingSteps = false;
     _distanceTracker.pauseTracking();  // Stop distance tracking
     _model.timerController.onStopTimer();
+    calorieTracker.pauseTracking();
     setState(() {
       isTimerStarted = false;
     });
@@ -170,6 +184,8 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
     _model.dispose();
     // Add Distance
     _distanceTracker.stopTracking();
+    isTrackingSteps = false; //Take a look if this line is necessary
+    calorieTracker.stopCalorieTracking();
     _distanceUpdateTimer.cancel();
     super.dispose();
   }
@@ -1053,10 +1069,10 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                                                 _model.timerMilliseconds;
                                                 DateTime now = DateTime.now();
                                                 DateTime today = DateTime(now.year, now.month,now.day);
-                                            /*FFAppState().caloriesBurned =
+                                            FFAppState().caloriesBurned =
                                                 functions.stringtoDouble(_model
                                                     .caloriesTextFieldController
-                                                    .text);*/
+                                                    .text);
                                             FFAppState().distance =
                                                 functions.stringtoDouble(_model
                                                     .distanceTextFieldController
