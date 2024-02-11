@@ -146,6 +146,10 @@ final parametersBuilderMap =
   'challengeFriendsPage': ParameterData.none(),
   'gettingChallengedTimer': ParameterData.none(),
   'challengeResultPage': ParameterData.none(),
+  'businessStoreFront': ParameterData.none(),
+  'purchasesPage': ParameterData.none(),
+  'addProductPage': ParameterData.none(),
+  'favouriteBrandsPage': ParameterData.none(),
 };
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {

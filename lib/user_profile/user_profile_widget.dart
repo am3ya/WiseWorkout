@@ -3,7 +3,6 @@ import '/components/business_account_application_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/permissions_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -115,6 +114,30 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
                                       ),
                                 ),
                               ),
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Icon(
+                                    Icons.monetization_on_rounded,
+                                    color: Color(0xFF3FAD25),
+                                    size: 24.0,
+                                  ),
+                                  AuthUserStreamWidget(
+                                    builder: (context) => Text(
+                                      valueOrDefault(
+                                              currentUserDocument?.credits, 0)
+                                          .toString(),
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily: 'Readex Pro',
+                                            color: Color(0xFF1CC018),
+                                            fontSize: 16.0,
+                                          ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ),
@@ -167,59 +190,6 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
                           children: [
                             Text(
                               'Edit Profile',
-                              style: FlutterFlowTheme.of(context).bodyLarge,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
-                child: InkWell(
-                  splashColor: Colors.transparent,
-                  focusColor: Colors.transparent,
-                  hoverColor: Colors.transparent,
-                  highlightColor: Colors.transparent,
-                  onTap: () async {
-                    await requestPermission(notificationsPermission);
-                  },
-                  child: Material(
-                    color: Colors.transparent,
-                    elevation: 0.0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                    child: Container(
-                      width: double.infinity,
-                      height: 60.0,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).secondaryBackground,
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 3.0,
-                            color: Color(0x33000000),
-                            offset: Offset(0.0, 1.0),
-                          )
-                        ],
-                        borderRadius: BorderRadius.circular(8.0),
-                        border: Border.all(
-                          color:
-                              FlutterFlowTheme.of(context).secondaryBackground,
-                          width: 0.0,
-                        ),
-                      ),
-                      child: Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 4.0, 0.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Notification Settings',
                               style: FlutterFlowTheme.of(context).bodyLarge,
                             ),
                           ],
@@ -396,6 +366,59 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
+                    context.pushNamed('purchasesPage');
+                  },
+                  child: Material(
+                    color: Colors.transparent,
+                    elevation: 0.0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Container(
+                      width: double.infinity,
+                      height: 60.0,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 3.0,
+                            color: Color(0x33000000),
+                            offset: Offset(0.0, 1.0),
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          width: 0.0,
+                        ),
+                      ),
+                      child: Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 4.0, 0.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'View purchases',
+                              style: FlutterFlowTheme.of(context).bodyLarge,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
+                child: InkWell(
+                  splashColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () async {
                     context.pushNamed('clubsPage');
                   },
                   child: Material(
@@ -432,6 +455,59 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
                           children: [
                             Text(
                               'View my clubs',
+                              style: FlutterFlowTheme.of(context).bodyLarge,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
+                child: InkWell(
+                  splashColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () async {
+                    context.pushNamed('favouriteBrandsPage');
+                  },
+                  child: Material(
+                    color: Colors.transparent,
+                    elevation: 0.0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Container(
+                      width: double.infinity,
+                      height: 60.0,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 3.0,
+                            color: Color(0x33000000),
+                            offset: Offset(0.0, 1.0),
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          width: 0.0,
+                        ),
+                      ),
+                      child: Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 4.0, 0.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Favourite brands',
                               style: FlutterFlowTheme.of(context).bodyLarge,
                             ),
                           ],
@@ -619,7 +695,7 @@ class _UserProfileWidgetState extends State<UserProfileWidget> {
                     await authManager.signOut();
                     GoRouter.of(context).clearRedirectLocation();
 
-                    context.pushNamedAuth('login', context.mounted);
+                    context.goNamedAuth('viewAboutPage', context.mounted);
                   },
                   text: 'Log Out',
                   options: FFButtonOptions(

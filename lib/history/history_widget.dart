@@ -336,7 +336,9 @@ class _HistoryWidgetState extends State<HistoryWidget> {
                                             child: Text(
                                               listViewWorkoutsRecord
                                                   .caloriesBurned
-                                                  .toString(),
+                                                  .toString()
+                                                  .maybeHandleOverflow(
+                                                      maxChars: 6),
                                               style:
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMedium,

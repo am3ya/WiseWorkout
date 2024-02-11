@@ -1,14 +1,12 @@
-import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import 'business_profile_widget.dart' show BusinessProfileWidget;
+import 'store_empty_widget.dart' show StoreEmptyWidget;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class BusinessProfileModel extends FlutterFlowModel<BusinessProfileWidget> {
+class StoreEmptyModel extends FlutterFlowModel<StoreEmptyWidget> {
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {}

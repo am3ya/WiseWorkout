@@ -518,3 +518,9 @@ String challengeToString(
 
   return toReturn;
 }
+
+List<String> stringSplitter(String largeString) {
+  List<String> array = largeString.split(',');
+
+  return array;
+}

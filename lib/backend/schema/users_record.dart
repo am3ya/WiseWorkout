@@ -196,6 +196,22 @@ class UsersRecord extends FirestoreRecord {
   int get credits => _credits ?? 0;
   bool hasCredits() => _credits != null;
 
+  // "favouriteBusinesses" field.
+  List<DocumentReference>? _favouriteBusinesses;
+  List<DocumentReference> get favouriteBusinesses =>
+      _favouriteBusinesses ?? const [];
+  bool hasFavouriteBusinesses() => _favouriteBusinesses != null;
+
+  // "purchases" field.
+  List<DocumentReference>? _purchases;
+  List<DocumentReference> get purchases => _purchases ?? const [];
+  bool hasPurchases() => _purchases != null;
+
+  // "productKeys" field.
+  List<String>? _productKeys;
+  List<String> get productKeys => _productKeys ?? const [];
+  bool hasProductKeys() => _productKeys != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -235,6 +251,9 @@ class UsersRecord extends FirestoreRecord {
     _losses = castToType<int>(snapshotData['losses']);
     _winPercentage = castToType<double>(snapshotData['winPercentage']);
     _credits = castToType<int>(snapshotData['credits']);
+    _favouriteBusinesses = getDataList(snapshotData['favouriteBusinesses']);
+    _purchases = getDataList(snapshotData['purchases']);
+    _productKeys = getDataList(snapshotData['productKeys']);
   }
 
   static CollectionReference get collection =>
@@ -387,7 +406,10 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.draws == e2?.draws &&
         e1?.losses == e2?.losses &&
         e1?.winPercentage == e2?.winPercentage &&
-        e1?.credits == e2?.credits;
+        e1?.credits == e2?.credits &&
+        listEquality.equals(e1?.favouriteBusinesses, e2?.favouriteBusinesses) &&
+        listEquality.equals(e1?.purchases, e2?.purchases) &&
+        listEquality.equals(e1?.productKeys, e2?.productKeys);
   }
 
   @override
@@ -427,7 +449,10 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.draws,
         e?.losses,
         e?.winPercentage,
-        e?.credits
+        e?.credits,
+        e?.favouriteBusinesses,
+        e?.purchases,
+        e?.productKeys
       ]);
 
   @override
