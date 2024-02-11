@@ -58,3 +58,5 @@ export '/add_product_page/add_product_page_widget.dart'
     show AddProductPageWidget;
 export '/favourite_brands_page/favourite_brands_page_widget.dart'
     show FavouriteBrandsPageWidget;
+export '/admin_search_clubs/admin_search_clubs_widget.dart'
+    show AdminSearchClubsWidget;

@@ -286,6 +286,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'favouriteBrandsPage',
           path: '/favouriteBrandsPage',
           builder: (context, params) => FavouriteBrandsPageWidget(),
+        ),
+        FFRoute(
+          name: 'adminSearchClubs',
+          path: '/adminSearchClubs',
+          builder: (context, params) => AdminSearchClubsWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
