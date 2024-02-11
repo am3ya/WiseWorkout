@@ -11,10 +11,18 @@ import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:sensors_plus/sensors_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:math';
+import 'dart:async';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'calories.dart';
+import 'distance.dart';
 import 'challenge_timer_model.dart';
 export 'challenge_timer_model.dart';
+import 'package:intl/intl.dart';
 
 class ChallengeTimerWidget extends StatefulWidget {
   const ChallengeTimerWidget({super.key});
@@ -25,8 +33,28 @@ class ChallengeTimerWidget extends StatefulWidget {
 
 class _ChallengeTimerWidgetState extends State<ChallengeTimerWidget> {
   late ChallengeTimerModel _model;
+  double x = 0.0;
+  double y = 0.0;
+  double z = 0.0;
+  double addValue = 0.025;
+  int steps = 0;
+  double previousDistacne = 0.0;
+  double distance = 0.0;
+  bool isTimerStarted = false;
+  bool isTrackingSteps = false;
+  double previousFilteredMagnitude = 0.0;
+  late DistanceTracker _distanceTracker;
+  late CalorieTracker calorieTracker;
+  double liveDistance = 0.0;
+  bool isTrackingDistance = false;
+  double paceInMinPerKm = 0.0;
+  double totalTimeInMinutes = 0.0;
+  int livesteps = 0;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  final CollectionReference usersCollection =
+      FirebaseFirestore.instance.collection('users');
 
   @override
   void initState() {
@@ -51,12 +79,109 @@ class _ChallengeTimerWidgetState extends State<ChallengeTimerWidget> {
     _model.targetTextFieldFocusNode ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
+
+    // Add distance
+    _distanceTracker = DistanceTracker(
+      onUpdateLiveDistance: (distance) {
+        setState(() {
+          _model.distanceTextFieldController =
+            TextEditingController(text: distance.toStringAsFixed(2));
+
+        if (isTimerStarted) {
+          totalTimeInMinutes = 30 - (_model.timerMilliseconds / 1000) / 60;
+          paceInMinPerKm = totalTimeInMinutes > 0 ? totalTimeInMinutes / distance : 0.0;
+          _model.speedTextFieldController = 
+            TextEditingController(text:paceInMinPerKm.toStringAsFixed(2));
+      }
+        });
+      },
+    );
+
+    calorieTracker = CalorieTracker(
+      getIsRunning: () => _model.walkingSwitchValue ?? true,
+      onCaloriesUpdated: (caloriesBurnedd) {
+        setState((){
+            _model.caloriesTextFieldController.text = caloriesBurnedd.toStringAsFixed(2);
+        });
+      },
+    );
+  }
+
+  double lowPassFilter(double input) {
+    double alpha = 0.2; // Experiment with different alpha values
+    return alpha * input + (1 - alpha) * previousFilteredMagnitude;
+  }
+
+  double getValue(double x, double y, double z) {
+    if (!isTrackingSteps || !isTimerStarted) {
+      return 0.0; // Don't track steps if not started or paused
+    }
+
+    double magnitude = sqrt(x * x + y * y + z * z);
+    getPreviousValue();
+
+    // Apply a low-pass filter to smooth the signal
+    double filteredMagnitude = lowPassFilter(magnitude);
+
+    double modDistance = filteredMagnitude - previousFilteredMagnitude;
+    setPreviousValue(filteredMagnitude);
+
+    // Implement zero-crossing or peak detection for step counting
+    if (isStep(filteredMagnitude)) {
+      steps++;
+      String livesteps = steps.toString();
+      _model.stepsTextFieldController.text = livesteps;
+    }
+
+    return modDistance;
+  }
+
+  // Threshold-based step detection
+  bool isStep(double magnitude) {
+    double threshold = 4.0; // Set a threshold based on experimentation
+    return magnitude > threshold;
+  }
+
+  void setPreviousValue(double distance) async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    _pref.setDouble("preValue", distance);
+  }
+
+  void getPreviousValue() async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    setState(() {
+      previousDistacne = _pref.getDouble("preValue") ?? 0.0;
+    });
+  }
+
+  void startTrackingStepsAndDistance() {
+    isTrackingSteps = true;
+    _distanceTracker.startTracking(); 
+    _distanceTracker.resumeTracking();
+    _model.timerController.onStartTimer();
+    calorieTracker.startCalorieTracking();
+    calorieTracker.resumeTracking();
+    setState(() {
+      isTimerStarted = true;
+    });
+  }
+
+  void pauseTrackingStepsAndDistance() {
+    isTrackingSteps = false;
+    _distanceTracker.pauseTracking(); 
+    _model.timerController.onStopTimer();
+    calorieTracker.pauseTracking();
+    setState(() {
+      isTimerStarted = false;
+    });
   }
 
   @override
   void dispose() {
     _model.dispose();
-
+    _distanceTracker.stopTracking();
+    isTrackingSteps = false;
+    calorieTracker.stopCalorieTracking();
     super.dispose();
   }
 
@@ -166,14 +291,30 @@ class _ChallengeTimerWidgetState extends State<ChallengeTimerWidget> {
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             70.0, 0.0, 0.0, 0.0),
-                                        child: Text(
-                                          'Steps',
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily: 'Roboto',
-                                                fontSize: 20.0,
+                                        child: StreamBuilder<AccelerometerEvent>(
+                                          stream: SensorsPlatform.instance.accelerometerEvents,
+                                          builder: (context, snapShort) {
+                                            if (snapShort.hasData){
+                                              x = snapShort.data!.x;
+                                              y = snapShort.data!.y;
+                                              z = snapShort.data!.z;
+                                              distance = getValue(x, y, z);
+                                              if (distance > 6){
+                                                steps++;
+                                              }
+                                            }
+                                            return Center (
+                                              child: Text(
+                                                "Steps ",
+                                                style:FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily: 'Roboto',
+                                                  fontSize: 20.0,
+                                                ),
                                               ),
+                                            );
+                                          },
                                         ),
                                       ),
                                       Padding(
@@ -257,6 +398,7 @@ class _ChallengeTimerWidgetState extends State<ChallengeTimerWidget> {
                                                 borderRadius:
                                                     BorderRadius.circular(8.0),
                                               ),
+                                              hintText: livesteps.toString()
                                             ),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium,
@@ -330,6 +472,9 @@ class _ChallengeTimerWidgetState extends State<ChallengeTimerWidget> {
                                                 borderRadius:
                                                     BorderRadius.circular(8.0),
                                               ),
+                                              hintText: isTimerStarted
+                                              ? liveDistance.toStringAsFixed(2)
+                                              : '0.00',
                                             ),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium,
@@ -457,6 +602,9 @@ class _ChallengeTimerWidgetState extends State<ChallengeTimerWidget> {
                                                 borderRadius:
                                                     BorderRadius.circular(8.0),
                                               ),
+                                              hintText: isTimerStarted
+                                              ? paceInMinPerKm.toStringAsFixed(2)
+                                              : '0.00',
                                             ),
                                             style: FlutterFlowTheme.of(context)
                                                 .bodyMedium,
@@ -799,6 +947,9 @@ class _ChallengeTimerWidgetState extends State<ChallengeTimerWidget> {
                                         _model.timerValue = displayTime;
                                         if (shouldUpdate) setState(() {});
                                       },
+                                      onEnded: () async {
+                                        pauseTrackingStepsAndDistance();
+                                      },
                                       textAlign: TextAlign.center,
                                       style: FlutterFlowTheme.of(context)
                                           .displaySmall
@@ -834,6 +985,9 @@ class _ChallengeTimerWidgetState extends State<ChallengeTimerWidget> {
                                           onPressed: () async {
                                             _model.timerController
                                                 .onStartTimer();
+                                                if (!isTimerStarted){
+                                                  startTrackingStepsAndDistance();
+                                                }
                                           },
                                         ),
                                       ),
@@ -852,6 +1006,9 @@ class _ChallengeTimerWidgetState extends State<ChallengeTimerWidget> {
                                         ),
                                         onPressed: () async {
                                           _model.timerController.onStopTimer();
+                                          if (isTimerStarted){
+                                            pauseTrackingStepsAndDistance();
+                                          }
                                         },
                                       ),
                                     ],
