@@ -690,7 +690,11 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                                                           40.0),
                                                   child: Image.network(
                                                     listViewClubsRecord
-                                                        .photoUrl,
+                                                                .photoUrl ==
+                                                            ''
+                                                        ? 'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/workout-app-o0nwer/assets/wxddpzwj052m/blank-profile-picture-973460_640.png'
+                                                        : listViewClubsRecord
+                                                            .photoUrl,
                                                     width: 60.0,
                                                     height: 60.0,
                                                     fit: BoxFit.cover,
@@ -838,7 +842,11 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                                                           40.0),
                                                   child: Image.network(
                                                     listViewUsersRecord
-                                                        .photoUrl,
+                                                                .photoUrl ==
+                                                            ''
+                                                        ? 'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/workout-app-o0nwer/assets/wxddpzwj052m/blank-profile-picture-973460_640.png'
+                                                        : listViewUsersRecord
+                                                            .photoUrl,
                                                     width: 60.0,
                                                     height: 60.0,
                                                     fit: BoxFit.cover,

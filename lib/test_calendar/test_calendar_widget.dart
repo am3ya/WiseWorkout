@@ -1,3 +1,5 @@
+import 'package:flutter/scheduler.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/rest_day_are_you_sure_widget.dart';
@@ -33,6 +35,23 @@ class _TestCalendarWidgetState extends State<TestCalendarWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => TestCalendarModel());
+
+    //On page load
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (_model.calendarSelectedDay2!.start >
+          currentUserDocument!.calorieDiffLastUpdate!){
+            await currentUserReference!.update({
+              ...createUsersRecordData(
+                calorieDiffLastUpdate: getCurrentTimestamp,
+              ),
+              ...mapToFirestore({
+                'calorieDifference' : FieldValue.increment(valueOrDefault(
+                  currentUserDocument?.dailyCalorieBurningGoal, 0.0)),
+              },
+              ),
+            });
+          }
+    });
 
     _model.tabBarController = TabController(
       vsync: this,
