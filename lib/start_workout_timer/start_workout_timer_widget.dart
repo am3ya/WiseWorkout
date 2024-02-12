@@ -859,7 +859,8 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'Hold complete workout to save your session.',
+                                          'Hold complete workout and wait to save your session.',
+                                          textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.of(context)
                                               .labelMedium,
                                         ),
@@ -868,7 +869,7 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 24.0, 0.0, 44.0),
+                                        0.0, 2.0, 0.0, 44.0),
                                     child: InkWell(
                                       splashColor: Colors.transparent,
                                       focusColor: Colors.transparent,
@@ -918,6 +919,8 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                                                       FieldValue.increment(
                                                           FFAppState()
                                                               .distance),
+                                                  'last_updated': FieldValue
+                                                      .serverTimestamp(),
                                                 },
                                               ),
                                             });
@@ -935,18 +938,26 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                                           } else {
                                             await WorkoutsRecord.createDoc(
                                                     currentUserReference!)
-                                                .set(createWorkoutsRecordData(
-                                              duration: FFAppState()
-                                                  .workoutTime
-                                                  .toDouble(),
-                                              stepsTaken:
-                                                  FFAppState().stepCount,
-                                              caloriesBurned:
-                                                  FFAppState().caloriesBurned,
-                                              distance: FFAppState().distance,
-                                              unixDays:
-                                                  functions.daysSinceEpoch(),
-                                            ));
+                                                .set({
+                                              ...createWorkoutsRecordData(
+                                                duration: FFAppState()
+                                                    .workoutTime
+                                                    .toDouble(),
+                                                stepsTaken:
+                                                    FFAppState().stepCount,
+                                                caloriesBurned:
+                                                    FFAppState().caloriesBurned,
+                                                distance: FFAppState().distance,
+                                                unixDays:
+                                                    functions.daysSinceEpoch(),
+                                              ),
+                                              ...mapToFirestore(
+                                                {
+                                                  'dateUploaded': FieldValue
+                                                      .serverTimestamp(),
+                                                },
+                                              ),
+                                            });
 
                                             await currentUserReference!.update({
                                               ...mapToFirestore(
@@ -962,17 +973,26 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                                         } else {
                                           await WorkoutsRecord.createDoc(
                                                   currentUserReference!)
-                                              .set(createWorkoutsRecordData(
-                                            duration: FFAppState()
-                                                .workoutTime
-                                                .toDouble(),
-                                            stepsTaken: FFAppState().stepCount,
-                                            caloriesBurned:
-                                                FFAppState().caloriesBurned,
-                                            distance: FFAppState().distance,
-                                            unixDays:
-                                                functions.daysSinceEpoch(),
-                                          ));
+                                              .set({
+                                            ...createWorkoutsRecordData(
+                                              duration: FFAppState()
+                                                  .workoutTime
+                                                  .toDouble(),
+                                              stepsTaken:
+                                                  FFAppState().stepCount,
+                                              caloriesBurned:
+                                                  FFAppState().caloriesBurned,
+                                              distance: FFAppState().distance,
+                                              unixDays:
+                                                  functions.daysSinceEpoch(),
+                                            ),
+                                            ...mapToFirestore(
+                                              {
+                                                'dateUploaded': FieldValue
+                                                    .serverTimestamp(),
+                                              },
+                                            ),
+                                          });
 
                                           await currentUserReference!.update({
                                             ...mapToFirestore(

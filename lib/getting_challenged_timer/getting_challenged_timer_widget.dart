@@ -873,7 +873,6 @@ class _GettingChallengedTimerWidgetState
                                     child: StreamBuilder<List<WorkoutsRecord>>(
                                       stream: queryWorkoutsRecord(
                                         parent: currentUserReference,
-                                        singleRecord: true,
                                       ),
                                       builder: (context, snapshot) {
                                         // Customize what your widget looks like when it's loading.
@@ -896,10 +895,6 @@ class _GettingChallengedTimerWidgetState
                                         List<WorkoutsRecord>
                                             buttonWorkoutsRecordList =
                                             snapshot.data!;
-                                        final buttonWorkoutsRecord =
-                                            buttonWorkoutsRecordList.isNotEmpty
-                                                ? buttonWorkoutsRecordList.first
-                                                : null;
                                         return InkWell(
                                           splashColor: Colors.transparent,
                                           focusColor: Colors.transparent,
@@ -1136,12 +1131,14 @@ class _GettingChallengedTimerWidgetState
                                               }
                                             }
 
-                                            if (buttonWorkoutsRecord != null) {
-                                              if (buttonWorkoutsRecord
-                                                      ?.dateUploaded ==
+                                            if (buttonWorkoutsRecordList
+                                                    .length >
+                                                0) {
+                                              if (buttonWorkoutsRecordList
+                                                      .last.dateUploaded ==
                                                   getCurrentTimestamp) {
-                                                await buttonWorkoutsRecord!
-                                                    .reference
+                                                await buttonWorkoutsRecordList
+                                                    .last.reference
                                                     .update({
                                                   ...mapToFirestore(
                                                     {

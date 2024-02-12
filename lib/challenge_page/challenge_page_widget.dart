@@ -278,7 +278,7 @@ class _ChallengePageWidgetState extends State<ChallengePageWidget>
                                                             ),
                                                             TextSpan(
                                                               text: dateTimeFormat(
-                                                                  'd/M/y',
+                                                                  'd/M/y H:mm',
                                                                   listViewChallengesRecord
                                                                       .createdTime!),
                                                               style:

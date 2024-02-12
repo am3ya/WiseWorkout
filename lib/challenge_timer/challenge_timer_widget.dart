@@ -76,7 +76,6 @@ class _ChallengeTimerWidgetState extends State<ChallengeTimerWidget> {
     return StreamBuilder<List<WorkoutsRecord>>(
       stream: queryWorkoutsRecord(
         parent: currentUserReference,
-        singleRecord: true,
       ),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
@@ -97,10 +96,6 @@ class _ChallengeTimerWidgetState extends State<ChallengeTimerWidget> {
           );
         }
         List<WorkoutsRecord> challengeTimerWorkoutsRecordList = snapshot.data!;
-        final challengeTimerWorkoutsRecord =
-            challengeTimerWorkoutsRecordList.isNotEmpty
-                ? challengeTimerWorkoutsRecordList.first
-                : null;
         return GestureDetector(
           onTap: () => _model.unfocusNode.canRequestFocus
               ? FocusScope.of(context).requestFocus(_model.unfocusNode)
@@ -964,13 +959,14 @@ class _ChallengeTimerWidgetState extends State<ChallengeTimerWidget> {
                                                 _model.timerMilliseconds;
                                             FFAppState().todaysDate =
                                                 getCurrentTimestamp;
-                                            if (challengeTimerWorkoutsRecord !=
-                                                null) {
-                                              if (challengeTimerWorkoutsRecord
-                                                      ?.dateUploaded ==
+                                            if (challengeTimerWorkoutsRecordList
+                                                    .length >
+                                                0) {
+                                              if (challengeTimerWorkoutsRecordList
+                                                      .last.dateUploaded ==
                                                   getCurrentTimestamp) {
-                                                await challengeTimerWorkoutsRecord!
-                                                    .reference
+                                                await challengeTimerWorkoutsRecordList
+                                                    .last.reference
                                                     .update({
                                                   ...mapToFirestore(
                                                     {
