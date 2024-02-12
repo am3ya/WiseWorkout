@@ -433,6 +433,41 @@ class _ClubMembersPageWidgetState extends State<ClubMembersPageWidget>
                           ),
                         ),
                       ),
+                    if (valueOrDefault(currentUserDocument?.userType, '') ==
+                        'admin')
+                      Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                        child: AuthUserStreamWidget(
+                          builder: (context) => FFButtonWidget(
+                            onPressed: () async {
+                              await clubMembersPageClubsRecord!.reference
+                                  .delete();
+                            },
+                            text: 'DELETE CLUB',
+                            options: FFButtonOptions(
+                              height: 40.0,
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  10.0, 0.0, 10.0, 0.0),
+                              iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: Color(0xFFA90E18),
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleSmall
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Colors.white,
+                                  ),
+                              elevation: 3.0,
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          ),
+                        ),
+                      ),
                     Expanded(
                       child: Padding(
                         padding:

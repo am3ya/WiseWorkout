@@ -77,7 +77,7 @@ class _AdminViewApplicationsWidgetState
                 size: 30.0,
               ),
               onPressed: () async {
-                context.pushNamed('testCalendar');
+                context.pushNamed('adminProfile');
               },
             ),
             title: Text(
@@ -175,43 +175,15 @@ class _AdminViewApplicationsWidgetState
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
-                                        StreamBuilder<List<UsersRecord>>(
-                                          stream: queryUsersRecord(),
-                                          builder: (context, snapshot) {
-                                            // Customize what your widget looks like when it's loading.
-                                            if (!snapshot.hasData) {
-                                              return Center(
-                                                child: SizedBox(
-                                                  width: 50.0,
-                                                  height: 50.0,
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                    valueColor:
-                                                        AlwaysStoppedAnimation<
-                                                            Color>(
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .primary,
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            }
-                                            List<UsersRecord>
-                                                imageUsersRecordList =
-                                                snapshot.data!;
-                                            return ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(40.0),
-                                              child: Image.network(
-                                                listViewApplicationsRecord
-                                                    .photoUrl,
-                                                width: 60.0,
-                                                height: 60.0,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            );
-                                          },
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(40.0),
+                                          child: Image.network(
+                                            listViewApplicationsRecord.photoUrl,
+                                            width: 60.0,
+                                            height: 60.0,
+                                            fit: BoxFit.cover,
+                                          ),
                                         ),
                                         Expanded(
                                           child: Column(

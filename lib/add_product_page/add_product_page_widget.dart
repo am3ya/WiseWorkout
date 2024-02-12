@@ -501,7 +501,7 @@ class _AddProductPageWidgetState extends State<AddProductPageWidget> {
                       FFAppState().clubName = '';
                     });
 
-                    context.pushNamed('businessProfile');
+                    context.pushNamed('businessStoreFront');
                   },
                   text: 'Exit',
                   options: FFButtonOptions(

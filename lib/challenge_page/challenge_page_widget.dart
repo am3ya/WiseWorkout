@@ -522,8 +522,8 @@ class _ChallengePageWidgetState extends State<ChallengePageWidget>
                                                                       fontFamily:
                                                                           'Readex Pro',
                                                                       color: FlutterFlowTheme.of(
-                                                                        context
-                                                                      ).primaryText,
+                                                                              context)
+                                                                          .primaryText,
                                                                       fontWeight:
                                                                           FontWeight
                                                                               .normal,
@@ -742,7 +742,9 @@ class _ChallengePageWidgetState extends State<ChallengePageWidget>
                                                                     .winnerName,
                                                                 style:
                                                                     TextStyle(
-                                                                      color: FlutterFlowTheme.of(context).primaryText,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryText,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .bold,
@@ -972,7 +974,9 @@ class _ChallengePageWidgetState extends State<ChallengePageWidget>
                                                                         .first,
                                                                 style:
                                                                     TextStyle(
-                                                                      color: FlutterFlowTheme.of(context).primaryText,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryText,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .bold,
@@ -990,8 +994,10 @@ class _ChallengePageWidgetState extends State<ChallengePageWidget>
                                                                         .createdTime!),
                                                                 style:
                                                                     TextStyle(
-                                                                      color: FlutterFlowTheme.of(context).primaryText,
-                                                                    ),
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primaryText,
+                                                                ),
                                                               )
                                                             ],
                                                             style: FlutterFlowTheme

@@ -156,6 +156,8 @@ class _BusinessEditProfileWidgetState extends State<BusinessEditProfileWidget> {
                           final selectedMedia =
                               await selectMediaWithSourceBottomSheet(
                             context: context,
+                            maxWidth: 320.00,
+                            maxHeight: 320.00,
                             imageQuality: 80,
                             allowPhoto: true,
                             backgroundColor:
@@ -349,7 +351,6 @@ class _BusinessEditProfileWidgetState extends State<BusinessEditProfileWidget> {
                             20.0, 24.0, 0.0, 24.0),
                       ),
                       style: FlutterFlowTheme.of(context).bodyMedium,
-                      keyboardType: TextInputType.number,
                       validator:
                           _model.heightControllerValidator.asValidator(context),
                     ),
