@@ -151,6 +151,7 @@ final parametersBuilderMap =
   'addProductPage': ParameterData.none(),
   'favouriteBrandsPage': ParameterData.none(),
   'adminSearchClubs': ParameterData.none(),
+  'leaderboardPage': ParameterData.none(),
 };
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {

@@ -206,13 +206,6 @@ class _FavouriteBrandsPageWidgetState extends State<FavouriteBrandsPageWidget>
                                                   ],
                                                 ),
                                               ),
-                                              Icon(
-                                                Icons.delete,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondaryText,
-                                                size: 24.0,
-                                              ),
                                             ],
                                           ),
                                         ),

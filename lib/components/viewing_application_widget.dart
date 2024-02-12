@@ -257,8 +257,12 @@ class _ViewingApplicationWidgetState extends State<ViewingApplicationWidget>
                                               borderRadius:
                                                   BorderRadius.circular(8.0),
                                               child: Image.network(
-                                                formApplicationsRecord!
-                                                    .credentialDoc,
+                                                formApplicationsRecord
+                                                            ?.credentialDoc ==
+                                                        ''
+                                                    ? 'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/workout-app-o0nwer/assets/wxddpzwj052m/blank-profile-picture-973460_640.png'
+                                                    : formApplicationsRecord!
+                                                        .credentialDoc,
                                                 width: 300.0,
                                                 height: 200.0,
                                                 fit: BoxFit.cover,

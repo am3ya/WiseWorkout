@@ -382,10 +382,26 @@ class _BusinessStoreFrontWidgetState extends State<BusinessStoreFrontWidget>
                                                     alignment:
                                                         AlignmentDirectional(
                                                             1.0, -1.0),
-                                                    child: Icon(
-                                                      Icons.delete,
-                                                      color: Color(0xFFA90E18),
-                                                      size: 24.0,
+                                                    child: InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        await listViewProductsRecord
+                                                            .reference
+                                                            .delete();
+                                                      },
+                                                      child: Icon(
+                                                        Icons.delete,
+                                                        color:
+                                                            Color(0xFFA90E18),
+                                                        size: 24.0,
+                                                      ),
                                                     ),
                                                   ),
                                                 Padding(
@@ -536,15 +552,22 @@ class _BusinessStoreFrontWidgetState extends State<BusinessStoreFrontWidget>
                                                                   'purchases':
                                                                       FieldValue
                                                                           .arrayUnion([
-                                                                    listViewProductsRecord
-                                                                        .reference
-                                                                  ]),
-                                                                  'productKeys':
-                                                                      FieldValue
-                                                                          .arrayUnion([
-                                                                    listViewProductsRecord
-                                                                        .keys
-                                                                        .last
+                                                                    getPurchaseFirestoreData(
+                                                                      createPurchaseStruct(
+                                                                        productRef:
+                                                                            listViewProductsRecord.reference,
+                                                                        productName:
+                                                                            listViewProductsRecord.productName,
+                                                                        productPFP:
+                                                                            listViewProductsRecord.productPFP,
+                                                                        productKey: listViewProductsRecord
+                                                                            .keys
+                                                                            .last,
+                                                                        clearUnsetFields:
+                                                                            false,
+                                                                      ),
+                                                                      true,
+                                                                    )
                                                                   ]),
                                                                 },
                                                               ),
@@ -567,6 +590,13 @@ class _BusinessStoreFrontWidgetState extends State<BusinessStoreFrontWidget>
                                                                 },
                                                               ),
                                                             });
+                                                            if (listViewProductsRecord
+                                                                    .quantity ==
+                                                                0) {
+                                                              await listViewProductsRecord
+                                                                  .reference
+                                                                  .delete();
+                                                            }
                                                             ScaffoldMessenger
                                                                     .of(context)
                                                                 .showSnackBar(

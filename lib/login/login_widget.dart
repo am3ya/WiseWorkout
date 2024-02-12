@@ -919,6 +919,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                                                 winPercentage:
                                                                     0.0,
                                                                 credits: 0,
+                                                                email: '',
                                                               ));
 
                                                           await authManager

@@ -10,6 +10,7 @@ import 'place.dart';
 import 'uploaded_file.dart';
 import '/backend/backend.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import '/backend/schema/structs/index.dart';
 import '/auth/firebase_auth/auth_util.dart';
 
 String formatDuration(double milliseconds) {
@@ -523,4 +524,14 @@ List<String> stringSplitter(String largeString) {
   List<String> array = largeString.split(',');
 
   return array;
+}
+
+int plusOne(int number) {
+  return number + 1;
+}
+
+int listSize(String theList) {
+  // converts a string to list<String> and returns list length
+  List<String> convertedList = theList.split(",");
+  return convertedList.length;
 }

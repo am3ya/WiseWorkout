@@ -60,3 +60,5 @@ export '/favourite_brands_page/favourite_brands_page_widget.dart'
     show FavouriteBrandsPageWidget;
 export '/admin_search_clubs/admin_search_clubs_widget.dart'
     show AdminSearchClubsWidget;
+export '/leaderboard_page/leaderboard_page_widget.dart'
+    show LeaderboardPageWidget;

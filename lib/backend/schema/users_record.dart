@@ -202,20 +202,15 @@ class UsersRecord extends FirestoreRecord {
       _favouriteBusinesses ?? const [];
   bool hasFavouriteBusinesses() => _favouriteBusinesses != null;
 
-  // "purchases" field.
-  List<DocumentReference>? _purchases;
-  List<DocumentReference> get purchases => _purchases ?? const [];
-  bool hasPurchases() => _purchases != null;
-
-  // "productKeys" field.
-  List<String>? _productKeys;
-  List<String> get productKeys => _productKeys ?? const [];
-  bool hasProductKeys() => _productKeys != null;
-
   // "calorieDiffLastUpdate" field.
   DateTime? _calorieDiffLastUpdate;
   DateTime? get calorieDiffLastUpdate => _calorieDiffLastUpdate;
   bool hasCalorieDiffLastUpdate() => _calorieDiffLastUpdate != null;
+
+  // "purchases" field.
+  List<PurchaseStruct>? _purchases;
+  List<PurchaseStruct> get purchases => _purchases ?? const [];
+  bool hasPurchases() => _purchases != null;
 
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
@@ -257,9 +252,11 @@ class UsersRecord extends FirestoreRecord {
     _winPercentage = castToType<double>(snapshotData['winPercentage']);
     _credits = castToType<int>(snapshotData['credits']);
     _favouriteBusinesses = getDataList(snapshotData['favouriteBusinesses']);
-    _purchases = getDataList(snapshotData['purchases']);
-    _productKeys = getDataList(snapshotData['productKeys']);
     _calorieDiffLastUpdate = snapshotData['calorieDiffLastUpdate'] as DateTime?;
+    _purchases = getStructList(
+      snapshotData['purchases'],
+      PurchaseStruct.fromMap,
+    );
   }
 
   static CollectionReference get collection =>
@@ -416,9 +413,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.winPercentage == e2?.winPercentage &&
         e1?.credits == e2?.credits &&
         listEquality.equals(e1?.favouriteBusinesses, e2?.favouriteBusinesses) &&
-        listEquality.equals(e1?.purchases, e2?.purchases) &&
-        listEquality.equals(e1?.productKeys, e2?.productKeys) &&
-        e1?.calorieDiffLastUpdate == e2?.calorieDiffLastUpdate;
+        e1?.calorieDiffLastUpdate == e2?.calorieDiffLastUpdate &&
+        listEquality.equals(e1?.purchases, e2?.purchases);
   }
 
   @override
@@ -460,9 +456,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.winPercentage,
         e?.credits,
         e?.favouriteBusinesses,
-        e?.purchases,
-        e?.productKeys,
-        e?.calorieDiffLastUpdate
+        e?.calorieDiffLastUpdate,
+        e?.purchases
       ]);
 
   @override
