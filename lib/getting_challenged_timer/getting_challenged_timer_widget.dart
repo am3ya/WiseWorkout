@@ -959,8 +959,7 @@ class _GettingChallengedTimerWidgetState
                                                 ...mapToFirestore(
                                                   {
                                                     'wins':
-                                                        FieldValue.increment(
-                                                            -(1)),
+                                                        FieldValue.increment(1),
                                                     'credits':
                                                         FieldValue.increment(2),
                                                   },
@@ -1076,7 +1075,8 @@ class _GettingChallengedTimerWidgetState
                                                       {
                                                         'draw': FieldValue
                                                             .arrayUnion([
-                                                          currentUserReference
+                                                          gettingChallengedTimerChallengesRecord
+                                                              .challengerRef
                                                         ]),
                                                         'drawNames': FieldValue
                                                             .arrayUnion([
