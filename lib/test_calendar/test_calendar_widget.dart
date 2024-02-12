@@ -38,6 +38,19 @@ class _TestCalendarWidgetState extends State<TestCalendarWidget>
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (valueOrDefault(currentUserDocument?.userType, '') != 'user') {
+        if (valueOrDefault(currentUserDocument?.userType, '') == 'business') {
+          context.pushNamed('businessProfile');
+        } else {
+          if (valueOrDefault(currentUserDocument?.userType, '') == 'admin') {
+            context.pushNamed('adminProfile');
+
+            return;
+          }
+        }
+
+        return;
+      }
       if (_model.calendarSelectedDay2!.start >
           currentUserDocument!.calorieDiffLastUpdate!) {
         await currentUserReference!.update({
@@ -51,6 +64,8 @@ class _TestCalendarWidgetState extends State<TestCalendarWidget>
             },
           ),
         });
+      } else {
+        return;
       }
     });
 

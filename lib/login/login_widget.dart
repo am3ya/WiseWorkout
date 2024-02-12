@@ -1,6 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/components/email_not_verified_widget.dart';
 import '/components/username_empty_widget.dart';
 import '/components/username_exists_widget.dart';
 import '/components/username_no_spaces_widget.dart';
@@ -10,7 +9,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -1290,8 +1288,6 @@ class _LoginWidgetState extends State<LoginWidget>
                                                           0.0, 0.0, 0.0, 16.0),
                                                   child: FFButtonWidget(
                                                     onPressed: () async {
-                                                      await authManager
-                                                          .refreshUser();
                                                       GoRouter.of(context)
                                                           .prepareAuthEvent();
 
@@ -1310,101 +1306,9 @@ class _LoginWidgetState extends State<LoginWidget>
                                                         return;
                                                       }
 
-                                                      if (currentUserEmailVerified &&
-                                                          (valueOrDefault(
-                                                                  currentUserDocument
-                                                                      ?.userType,
-                                                                  '') ==
-                                                              'user')) {
-                                                        await currentUserReference!
-                                                            .update(
-                                                                createUsersRecordData(
-                                                          isActive: true,
-                                                        ));
-
-                                                        context.pushNamedAuth(
-                                                            'testCalendar',
-                                                            context.mounted);
-
-                                                        return;
-                                                      } else {
-                                                        if (currentUserEmailVerified &&
-                                                            (valueOrDefault(
-                                                                    currentUserDocument
-                                                                        ?.userType,
-                                                                    '') ==
-                                                                'business')) {
-                                                          context.pushNamedAuth(
-                                                              'businessProfile',
-                                                              context.mounted);
-
-                                                          return;
-                                                        } else {
-                                                          if (currentUserEmailVerified &&
-                                                              (valueOrDefault(
-                                                                      currentUserDocument
-                                                                          ?.userType,
-                                                                      '') ==
-                                                                  'admin')) {
-                                                            if (valueOrDefault<
-                                                                    bool>(
-                                                                currentUserDocument
-                                                                    ?.infoCollectionComplete,
-                                                                false)) {
-                                                              context.pushNamedAuth(
-                                                                  'adminProfile',
-                                                                  context
-                                                                      .mounted);
-
-                                                              return;
-                                                            } else {
-                                                              context.pushNamedAuth(
-                                                                  'trialNewUserInfoPage',
-                                                                  context
-                                                                      .mounted);
-
-                                                              return;
-                                                            }
-                                                          } else {
-                                                            await showModalBottomSheet(
-                                                              isScrollControlled:
-                                                                  true,
-                                                              backgroundColor:
-                                                                  Colors
-                                                                      .transparent,
-                                                              enableDrag: false,
-                                                              context: context,
-                                                              builder:
-                                                                  (context) {
-                                                                return GestureDetector(
-                                                                  onTap: () => _model
-                                                                          .unfocusNode
-                                                                          .canRequestFocus
-                                                                      ? FocusScope.of(
-                                                                              context)
-                                                                          .requestFocus(_model
-                                                                              .unfocusNode)
-                                                                      : FocusScope.of(
-                                                                              context)
-                                                                          .unfocus(),
-                                                                  child:
-                                                                      Padding(
-                                                                    padding: MediaQuery
-                                                                        .viewInsetsOf(
-                                                                            context),
-                                                                    child:
-                                                                        EmailNotVerifiedWidget(),
-                                                                  ),
-                                                                );
-                                                              },
-                                                            ).then((value) =>
-                                                                safeSetState(
-                                                                    () {}));
-
-                                                            return;
-                                                          }
-                                                        }
-                                                      }
+                                                      context.goNamedAuth(
+                                                          'testCalendar',
+                                                          context.mounted);
                                                     },
                                                     text: 'Sign In',
                                                     options: FFButtonOptions(
