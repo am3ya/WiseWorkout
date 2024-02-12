@@ -1026,19 +1026,18 @@ class _GettingChallengedTimerWidgetState
                                   ),
                                   Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 24.0, 0.0, 44.0),
+                                        0, 24, 0, 44),
                                     child: StreamBuilder<List<WorkoutsRecord>>(
                                       stream: queryWorkoutsRecord(
                                         parent: currentUserReference,
-                                        singleRecord: true,
                                       ),
                                       builder: (context, snapshot) {
                                         // Customize what your widget looks like when it's loading.
                                         if (!snapshot.hasData) {
                                           return Center(
                                             child: SizedBox(
-                                              width: 50.0,
-                                              height: 50.0,
+                                              width: 50,
+                                              height: 50,
                                               child: CircularProgressIndicator(
                                                 valueColor:
                                                     AlwaysStoppedAnimation<
@@ -1053,10 +1052,6 @@ class _GettingChallengedTimerWidgetState
                                         List<WorkoutsRecord>
                                             buttonWorkoutsRecordList =
                                             snapshot.data!;
-                                        final buttonWorkoutsRecord =
-                                            buttonWorkoutsRecordList.isNotEmpty
-                                                ? buttonWorkoutsRecordList.first
-                                                : null;
                                         return InkWell(
                                           splashColor: Colors.transparent,
                                           focusColor: Colors.transparent,
@@ -1076,8 +1071,10 @@ class _GettingChallengedTimerWidgetState
                                                 double.parse(_model
                                                     .caloriesTextFieldController
                                                     .text);
-                                            FFAppState().workoutTime =
+                                            FFAppState().workoutTime = 1800000 -
                                                 _model.timerMilliseconds;
+                                            DateTime now = DateTime.now();
+                                            DateTime today = DateTime(now.year, now.month, now.day);
                                             if (FFAppState().stepCount >
                                                 gettingChallengedTimerChallengesRecord
                                                     .challengerSteps) {
@@ -1121,8 +1118,8 @@ class _GettingChallengedTimerWidgetState
                                                 ...mapToFirestore(
                                                   {
                                                     'wins':
-                                                        FieldValue.increment(
-                                                            -(1)),
+                                                        FieldValue.increment
+                                                            (1),
                                                     'credits':
                                                         FieldValue.increment(2),
                                                   },
@@ -1238,7 +1235,7 @@ class _GettingChallengedTimerWidgetState
                                                       {
                                                         'draw': FieldValue
                                                             .arrayUnion([
-                                                          currentUserReference
+                                                          gettingChallengedTimerChallengesRecord.challengerRef
                                                         ]),
                                                         'drawNames': FieldValue
                                                             .arrayUnion([
@@ -1293,12 +1290,12 @@ class _GettingChallengedTimerWidgetState
                                               }
                                             }
 
-                                            if (buttonWorkoutsRecord != null) {
-                                              if (buttonWorkoutsRecord
-                                                      ?.dateUploaded ==
-                                                  getCurrentTimestamp) {
-                                                await buttonWorkoutsRecord!
-                                                    .reference
+                                            if (buttonWorkoutsRecordList.isNotEmpty) {
+                                              if (buttonWorkoutsRecordList
+                                                      .last.dateUploaded ==
+                                                  today) {
+                                                await buttonWorkoutsRecordList
+                                                    .last.reference
                                                     .update({
                                                   ...mapToFirestore(
                                                     {
@@ -1319,6 +1316,8 @@ class _GettingChallengedTimerWidgetState
                                                           FieldValue.increment(
                                                               FFAppState()
                                                                   .distance),
+                                                      'last_updated': FieldValue
+                                                          .serverTimestamp(),
                                                     },
                                                   ),
                                                 });
@@ -1337,20 +1336,26 @@ class _GettingChallengedTimerWidgetState
                                               } else {
                                                 await WorkoutsRecord.createDoc(
                                                         currentUserReference!)
-                                                    .set(
-                                                        createWorkoutsRecordData(
-                                                  duration: FFAppState()
-                                                      .workoutTime
-                                                      .toDouble(),
-                                                  stepsTaken:
-                                                      FFAppState().stepCount,
-                                                  caloriesBurned: FFAppState()
-                                                      .caloriesBurned,
-                                                  distance:
-                                                      FFAppState().distance,
-                                                  unixDays: functions
-                                                      .daysSinceEpoch(),
-                                                ));
+                                                    .set({
+                                                  ...createWorkoutsRecordData(
+                                                    duration: FFAppState()
+                                                        .workoutTime
+                                                        .toDouble(),
+                                                    stepsTaken:
+                                                        FFAppState().stepCount,
+                                                    caloriesBurned: FFAppState()
+                                                        .caloriesBurned,
+                                                    distance:
+                                                        FFAppState().distance,
+                                                    unixDays: functions
+                                                        .daysSinceEpoch(),
+                                                  ),
+                                                  ...mapToFirestore(
+                                                    {
+                                                      'dateUploaded': today,
+                                                    },
+                                                  ),
+                                                });
 
                                                 await currentUserReference!
                                                     .update({
@@ -1367,18 +1372,28 @@ class _GettingChallengedTimerWidgetState
                                             } else {
                                               await WorkoutsRecord.createDoc(
                                                       currentUserReference!)
-                                                  .set(createWorkoutsRecordData(
-                                                duration: FFAppState()
-                                                    .workoutTime
-                                                    .toDouble(),
-                                                stepsTaken:
-                                                    FFAppState().stepCount,
-                                                caloriesBurned:
-                                                    FFAppState().caloriesBurned,
-                                                distance: FFAppState().distance,
-                                                unixDays:
-                                                    functions.daysSinceEpoch(),
-                                              ));
+                                                  .set({
+                                                ...createWorkoutsRecordData(
+                                                  duration: FFAppState()
+                                                      .workoutTime
+                                                      .toDouble(),
+                                                  stepsTaken:
+                                                      FFAppState().stepCount,
+                                                  caloriesBurned: FFAppState()
+                                                      .caloriesBurned,
+                                                  distance:
+                                                      FFAppState().distance,
+                                                  unixDays: functions
+                                                      .daysSinceEpoch(),
+                                                ),
+                                                ...mapToFirestore(
+                                                  {
+                                                    'dateUploaded': today,
+                                                    'last_updated': FieldValue
+                                                        .serverTimestamp(),
+                                                  },
+                                                ),
+                                              });
 
                                               await currentUserReference!
                                                   .update({
@@ -1392,6 +1407,8 @@ class _GettingChallengedTimerWidgetState
                                                 ),
                                               });
                                             }
+
+                                            context.pushNamed('challengePage');
 
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(
@@ -1411,10 +1428,10 @@ class _GettingChallengedTimerWidgetState
                                                         .secondary,
                                               ),
                                             );
-                                            await Future.delayed(const Duration(
-                                                milliseconds: 2000));
+                                            //await Future.delayed(const Duration(
+                                                //milliseconds: 2000));
 
-                                            context.pushNamed('challengePage');
+                                            //context.pushNamed('challengePage');
                                           },
                                           child: FFButtonWidget(
                                             onPressed: () {
@@ -1423,11 +1440,11 @@ class _GettingChallengedTimerWidgetState
                                             text: 'End challenge',
                                             options: FFButtonOptions(
                                               width: double.infinity,
-                                              height: 50.0,
+                                              height: 50,
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                                  .fromSTEB(0, 0, 0, 0),
                                               iconPadding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 0.0, 0.0, 0.0),
+                                                  .fromSTEB(0, 0, 0, 0),
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primaryText,
@@ -1440,13 +1457,13 @@ class _GettingChallengedTimerWidgetState
                                                             context)
                                                         .primaryBackground,
                                                   ),
-                                              elevation: 2.0,
+                                              elevation: 2,
                                               borderSide: BorderSide(
                                                 color: Colors.transparent,
-                                                width: 1.0,
+                                                width: 1,
                                               ),
                                               borderRadius:
-                                                  BorderRadius.circular(12.0),
+                                                  BorderRadius.circular(12),
                                             ),
                                           ),
                                         );

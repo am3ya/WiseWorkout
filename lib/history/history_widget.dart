@@ -116,6 +116,8 @@ class _HistoryWidgetState extends State<HistoryWidget> {
                     child: StreamBuilder<List<WorkoutsRecord>>(
                       stream: queryWorkoutsRecord(
                         parent: currentUserReference,
+                        queryBuilder: (workoutsRecord) =>
+                        workoutsRecord.orderBy('dateUploaded'),
                       ),
                       builder: (context, snapshot) {
                         // Customize what your widget looks like when it's loading.
