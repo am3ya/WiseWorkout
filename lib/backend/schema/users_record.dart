@@ -212,6 +212,11 @@ class UsersRecord extends FirestoreRecord {
   List<String> get productKeys => _productKeys ?? const [];
   bool hasProductKeys() => _productKeys != null;
 
+  // "calorieDiffLastUpdate" field.
+  DateTime? _calorieDiffLastUpdate;
+  DateTime? get calorieDiffLastUpdate => _calorieDiffLastUpdate;
+  bool hasCalorieDiffLastUpdate() => _calorieDiffLastUpdate != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -254,6 +259,7 @@ class UsersRecord extends FirestoreRecord {
     _favouriteBusinesses = getDataList(snapshotData['favouriteBusinesses']);
     _purchases = getDataList(snapshotData['purchases']);
     _productKeys = getDataList(snapshotData['productKeys']);
+    _calorieDiffLastUpdate = snapshotData['calorieDiffLastUpdate'] as DateTime?;
   }
 
   static CollectionReference get collection =>
@@ -323,6 +329,7 @@ Map<String, dynamic> createUsersRecordData({
   int? losses,
   double? winPercentage,
   int? credits,
+  DateTime? calorieDiffLastUpdate,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -359,6 +366,7 @@ Map<String, dynamic> createUsersRecordData({
       'losses': losses,
       'winPercentage': winPercentage,
       'credits': credits,
+      'calorieDiffLastUpdate': calorieDiffLastUpdate,
     }.withoutNulls,
   );
 
@@ -409,7 +417,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.credits == e2?.credits &&
         listEquality.equals(e1?.favouriteBusinesses, e2?.favouriteBusinesses) &&
         listEquality.equals(e1?.purchases, e2?.purchases) &&
-        listEquality.equals(e1?.productKeys, e2?.productKeys);
+        listEquality.equals(e1?.productKeys, e2?.productKeys) &&
+        e1?.calorieDiffLastUpdate == e2?.calorieDiffLastUpdate;
   }
 
   @override
@@ -452,7 +461,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.credits,
         e?.favouriteBusinesses,
         e?.purchases,
-        e?.productKeys
+        e?.productKeys,
+        e?.calorieDiffLastUpdate
       ]);
 
   @override
