@@ -708,24 +708,48 @@ class _TestCalendarWidgetState extends State<TestCalendarWidget>
                                                                           0.0,
                                                                           0.0),
                                                                       child:
-                                                                          Container(
-                                                                        width:
-                                                                            60.0,
-                                                                        height:
-                                                                            60.0,
-                                                                        clipBehavior:
-                                                                            Clip.antiAlias,
-                                                                        decoration:
-                                                                            BoxDecoration(
-                                                                          shape:
-                                                                              BoxShape.circle,
-                                                                        ),
-                                                                        child: Image
-                                                                            .network(
-                                                                          listViewAdviceRecord
-                                                                              .creatorPFP,
-                                                                          fit: BoxFit
-                                                                              .cover,
+                                                                          InkWell(
+                                                                        splashColor:
+                                                                            Colors.transparent,
+                                                                        focusColor:
+                                                                            Colors.transparent,
+                                                                        hoverColor:
+                                                                            Colors.transparent,
+                                                                        highlightColor:
+                                                                            Colors.transparent,
+                                                                        onTap:
+                                                                            () async {
+                                                                              if (listViewAdviceRecord.creatorName!="admin"){
+                                                                          FFAppState().brandName =
+                                                                              listViewAdviceRecord.creatorName;
+                                                                          FFAppState().brandRef =
+                                                                              listViewAdviceRecord.creatorRef;
+
+                                                                          context
+                                                                              .pushNamed('businessStoreFront');
+                                                                            } else {
+                                                                              print("Image pressed...");
+                                                                            }
+                                                                        },
+                                                                        child:
+                                                                            Container(
+                                                                          width:
+                                                                              60.0,
+                                                                          height:
+                                                                              60.0,
+                                                                          clipBehavior:
+                                                                              Clip.antiAlias,
+                                                                          decoration:
+                                                                              BoxDecoration(
+                                                                            shape:
+                                                                                BoxShape.circle,
+                                                                          ),
+                                                                          child:
+                                                                              Image.network(
+                                                                            listViewAdviceRecord.creatorPFP,
+                                                                            fit:
+                                                                                BoxFit.cover,
+                                                                          ),
                                                                         ),
                                                                       ),
                                                                     ),
@@ -1263,24 +1287,49 @@ class _TestCalendarWidgetState extends State<TestCalendarWidget>
                                                                             0.0,
                                                                             0.0),
                                                                     child:
-                                                                        Container(
-                                                                      width:
-                                                                          60.0,
-                                                                      height:
-                                                                          60.0,
-                                                                      clipBehavior:
-                                                                          Clip.antiAlias,
-                                                                      decoration:
-                                                                          BoxDecoration(
-                                                                        shape: BoxShape
-                                                                            .circle,
-                                                                      ),
-                                                                      child: Image
-                                                                          .network(
-                                                                        listViewAdviceRecord
-                                                                            .creatorPFP,
-                                                                        fit: BoxFit
-                                                                            .cover,
+                                                                        InkWell(
+                                                                      splashColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      focusColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      hoverColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      highlightColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      onTap:
+                                                                          () async {
+                                                                        FFAppState().brandName =
+                                                                            listViewAdviceRecord.creatorName;
+                                                                        FFAppState().brandRef =
+                                                                            listViewAdviceRecord.creatorRef;
+
+                                                                        context.pushNamed(
+                                                                            'businessStoreFront');
+                                                                      },
+                                                                      child:
+                                                                          Container(
+                                                                        width:
+                                                                            60.0,
+                                                                        height:
+                                                                            60.0,
+                                                                        clipBehavior:
+                                                                            Clip.antiAlias,
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          shape:
+                                                                              BoxShape.circle,
+                                                                        ),
+                                                                        child: Image
+                                                                            .network(
+                                                                          listViewAdviceRecord
+                                                                              .creatorPFP,
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                        ),
                                                                       ),
                                                                     ),
                                                                   ),

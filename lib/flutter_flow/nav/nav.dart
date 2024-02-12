@@ -264,6 +264,31 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'challengeResultPage',
           path: '/challengeResultPage',
           builder: (context, params) => ChallengeResultPageWidget(),
+        ),
+        FFRoute(
+          name: 'businessStoreFront',
+          path: '/businessStoreFront',
+          builder: (context, params) => BusinessStoreFrontWidget(),
+        ),
+        FFRoute(
+          name: 'purchasesPage',
+          path: '/purchasesPage',
+          builder: (context, params) => PurchasesPageWidget(),
+        ),
+        FFRoute(
+          name: 'addProductPage',
+          path: '/addProductPage',
+          builder: (context, params) => AddProductPageWidget(),
+        ),
+        FFRoute(
+          name: 'favouriteBrandsPage',
+          path: '/favouriteBrandsPage',
+          builder: (context, params) => FavouriteBrandsPageWidget(),
+        ),
+        FFRoute(
+          name: 'adminSearchClubs',
+          path: '/adminSearchClubs',
+          builder: (context, params) => AdminSearchClubsWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

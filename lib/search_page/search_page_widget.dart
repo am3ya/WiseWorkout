@@ -889,6 +889,12 @@ class _SearchPageWidgetState extends State<SearchPageWidget>
                                                           _model
                                                               .searchUsersTextFieldController
                                                               .text;
+                                                      FFAppState().brandRef =
+                                                          listViewUsersRecord
+                                                              .reference;
+
+                                                      context.pushNamed(
+                                                          'businessStoreFront');
                                                     },
                                                     child: Icon(
                                                       Icons.chevron_right_sharp,

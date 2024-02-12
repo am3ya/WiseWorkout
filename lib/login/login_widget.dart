@@ -924,8 +924,8 @@ class _LoginWidgetState extends State<LoginWidget>
                                                           await authManager
                                                               .sendEmailVerification();
 
-                                                          context.pushNamedAuth(
-                                                              'login',
+                                                          context.goNamedAuth(
+                                                              'testCalendar',
                                                               context.mounted);
                                                         },
                                                         text: 'Get Started',
