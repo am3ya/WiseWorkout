@@ -1,14 +1,10 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
-import '/components/error_occured_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
-import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/form_field_controller.dart';
-import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -55,25 +51,6 @@ class _TrialNewUserInterestsWidgetState
       ],
     ),
     'textOnPageLoadAnimation2': AnimationInfo(
-      trigger: AnimationTrigger.onPageLoad,
-      effects: [
-        FadeEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: 0.0,
-          end: 1.0,
-        ),
-        MoveEffect(
-          curve: Curves.easeInOut,
-          delay: 0.ms,
-          duration: 600.ms,
-          begin: Offset(0.0, 70.0),
-          end: Offset(0.0, 0.0),
-        ),
-      ],
-    ),
-    'textOnPageLoadAnimation3': AnimationInfo(
       trigger: AnimationTrigger.onPageLoad,
       effects: [
         FadeEffect(
@@ -225,86 +202,10 @@ class _TrialNewUserInterestsWidgetState
                           padding: EdgeInsetsDirectional.fromSTEB(
                               16.0, 8.0, 0.0, 0.0),
                           child: Text(
-                            'How many times a week would you like to workout?',
-                            style: FlutterFlowTheme.of(context).labelLarge,
-                          ).animateOnPageLoad(
-                              animationsMap['textOnPageLoadAnimation2']!),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 6.0, 0.0, 0.0),
-                          child: Wrap(
-                            spacing: 0.0,
-                            runSpacing: 0.0,
-                            alignment: WrapAlignment.start,
-                            crossAxisAlignment: WrapCrossAlignment.start,
-                            direction: Axis.horizontal,
-                            runAlignment: WrapAlignment.center,
-                            verticalDirection: VerticalDirection.down,
-                            clipBehavior: Clip.none,
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    16.0, 8.0, 0.0, 0.0),
-                                child: AuthUserStreamWidget(
-                                  builder: (context) =>
-                                      FlutterFlowDropDown<String>(
-                                    controller:
-                                        _model.dropDownValueController ??=
-                                            FormFieldController<String>(
-                                      _model.dropDownValue ??= valueOrDefault(
-                                                  currentUserDocument
-                                                      ?.weeklyWorkouts,
-                                                  0) !=
-                                              null
-                                          ? valueOrDefault(
-                                                  currentUserDocument
-                                                      ?.weeklyWorkouts,
-                                                  0)
-                                              .toString()
-                                          : null,
-                                    ),
-                                    options: ['2', '3', '5', '7'],
-                                    onChanged: (val) => setState(
-                                        () => _model.dropDownValue = val),
-                                    width: 300.0,
-                                    height: 50.0,
-                                    textStyle:
-                                        FlutterFlowTheme.of(context).bodyMedium,
-                                    hintText: 'Please select...',
-                                    icon: Icon(
-                                      Icons.keyboard_arrow_down_rounded,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      size: 24.0,
-                                    ),
-                                    fillColor: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
-                                    elevation: 2.0,
-                                    borderColor:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    borderWidth: 2.0,
-                                    borderRadius: 8.0,
-                                    margin: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 4.0, 16.0, 4.0),
-                                    hidesUnderline: true,
-                                    isOverButton: true,
-                                    isSearchable: false,
-                                    isMultiSelect: false,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 8.0, 0.0, 0.0),
-                          child: Text(
                             'On average, how many calories do you\nconsume daily? (Optional)',
                             style: FlutterFlowTheme.of(context).labelLarge,
                           ).animateOnPageLoad(
-                              animationsMap['textOnPageLoadAnimation3']!),
+                              animationsMap['textOnPageLoadAnimation2']!),
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
@@ -376,47 +277,18 @@ class _TrialNewUserInterestsWidgetState
                           EdgeInsetsDirectional.fromSTEB(0.0, 32.0, 0.0, 32.0),
                       child: FFButtonWidget(
                         onPressed: () async {
-                          if (_model.dropDownValue == 'Please select...') {
-                            await showModalBottomSheet(
-                              isScrollControlled: true,
-                              backgroundColor: Colors.transparent,
-                              enableDrag: false,
-                              context: context,
-                              builder: (context) {
-                                return GestureDetector(
-                                  onTap: () =>
-                                      _model.unfocusNode.canRequestFocus
-                                          ? FocusScope.of(context)
-                                              .requestFocus(_model.unfocusNode)
-                                          : FocusScope.of(context).unfocus(),
-                                  child: Padding(
-                                    padding: MediaQuery.viewInsetsOf(context),
-                                    child: ErrorOccuredWidget(),
-                                  ),
-                                );
-                              },
-                            ).then((value) => safeSetState(() {}));
-
-                            return;
+                          if (_model.calorieIntakeTextFieldController.text !=
+                              '') {
+                            await currentUserReference!
+                                .update(createUsersRecordData(
+                              dailyCalorieIntake: double.tryParse(
+                                  _model.calorieIntakeTextFieldController.text),
+                            ));
                           } else {
                             await currentUserReference!
                                 .update(createUsersRecordData(
-                              weeklyWorkouts: functions
-                                  .weeklyWorkouts(_model.dropDownValue!),
+                              dailyCalorieIntake: 0.0,
                             ));
-                            if (_model.calorieIntakeTextFieldController.text !=
-                                '') {
-                              await currentUserReference!
-                                  .update(createUsersRecordData(
-                                dailyCalorieIntake: double.tryParse(_model
-                                    .calorieIntakeTextFieldController.text),
-                              ));
-                            } else {
-                              await currentUserReference!
-                                  .update(createUsersRecordData(
-                                dailyCalorieIntake: 0.0,
-                              ));
-                            }
                           }
 
                           context.pushNamed('trialNewUserMetrics');

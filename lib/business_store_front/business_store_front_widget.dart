@@ -81,7 +81,19 @@ class _BusinessStoreFrontWidgetState extends State<BusinessStoreFrontWidget>
               size: 30.0,
             ),
             onPressed: () async {
-              context.pushNamed('testCalendar');
+              if (valueOrDefault(currentUserDocument?.userType, '') == 'user') {
+                context.pushNamed('testCalendar');
+              } else {
+                if (valueOrDefault(currentUserDocument?.userType, '') ==
+                    'business') {
+                  context.pushNamed('businessProfile');
+                } else {
+                  if (valueOrDefault(currentUserDocument?.userType, '') ==
+                      'admin') {
+                    context.pushNamed('adminProfile');
+                  }
+                }
+              }
             },
           ),
           title: Text(
@@ -669,17 +681,14 @@ class _BusinessStoreFrontWidgetState extends State<BusinessStoreFrontWidget>
                               children: [
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 20.0, 0.0, 0.0),
+                                      0.0, 12.0, 0.0, 0.0),
                                   child: StreamBuilder<List<AdviceRecord>>(
                                     stream: queryAdviceRecord(
                                       queryBuilder: (adviceRecord) =>
-                                          adviceRecord
-                                              .where(
-                                                'creatorRef',
-                                                isEqualTo:
-                                                    FFAppState().brandRef,
-                                              )
-                                              .orderBy('created_time'),
+                                          adviceRecord.where(
+                                        'creatorRef',
+                                        isEqualTo: FFAppState().brandRef,
+                                      ),
                                     ),
                                     builder: (context, snapshot) {
                                       // Customize what your widget looks like when it's loading.
@@ -703,6 +712,7 @@ class _BusinessStoreFrontWidgetState extends State<BusinessStoreFrontWidget>
                                           snapshot.data!;
                                       return ListView.builder(
                                         padding: EdgeInsets.zero,
+                                        primary: false,
                                         shrinkWrap: true,
                                         scrollDirection: Axis.vertical,
                                         itemCount:
@@ -714,159 +724,132 @@ class _BusinessStoreFrontWidgetState extends State<BusinessStoreFrontWidget>
                                           return Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 0.0, 5.0),
+                                                    16.0, 0.0, 16.0, 12.0),
                                             child: Container(
                                               width: 100.0,
                                               decoration: BoxDecoration(
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .secondaryBackground,
+                                                boxShadow: [
+                                                  BoxShadow(
+                                                    blurRadius: 3.0,
+                                                    color: Color(0x33000000),
+                                                    offset: Offset(0.0, 1.0),
+                                                  )
+                                                ],
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
                                               ),
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 0.0, 0.0, 8.0),
-                                                child: SingleChildScrollView(
-                                                  child: Column(
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                children: [
+                                                  Row(
                                                     mainAxisSize:
                                                         MainAxisSize.max,
                                                     children: [
-                                                      Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          RichText(
-                                                            textScaleFactor:
-                                                                MediaQuery.of(
-                                                                        context)
-                                                                    .textScaleFactor,
-                                                            text: TextSpan(
-                                                              children: [
-                                                                TextSpan(
-                                                                  text: 'Tip ',
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .headlineMedium,
-                                                                ),
-                                                                TextSpan(
-                                                                  text: listViewIndex
-                                                                      .toString(),
-                                                                  style: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .headlineMedium,
-                                                                ),
-                                                                TextSpan(
-                                                                  text:
-                                                                      ' - Age group : ',
-                                                                  style:
-                                                                      TextStyle(),
-                                                                ),
-                                                                TextSpan(
-                                                                  text: listViewAdviceRecord
-                                                                      .ageGroup,
-                                                                  style:
-                                                                      TextStyle(),
-                                                                )
-                                                              ],
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          RichText(
-                                                            textScaleFactor:
-                                                                MediaQuery.of(
-                                                                        context)
-                                                                    .textScaleFactor,
-                                                            text: TextSpan(
-                                                              children: [
-                                                                TextSpan(
-                                                                  text:
-                                                                      'BMI group - ',
-                                                                  style:
-                                                                      TextStyle(),
-                                                                ),
-                                                                TextSpan(
-                                                                  text: listViewAdviceRecord
-                                                                      .bmiGroup,
-                                                                  style:
-                                                                      TextStyle(),
-                                                                )
-                                                              ],
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          RichText(
-                                                            textScaleFactor:
-                                                                MediaQuery.of(
-                                                                        context)
-                                                                    .textScaleFactor,
-                                                            text: TextSpan(
-                                                              children: [
-                                                                TextSpan(
-                                                                  text:
-                                                                      'Fitness goal - ',
-                                                                  style:
-                                                                      TextStyle(),
-                                                                ),
-                                                                TextSpan(
-                                                                  text: listViewAdviceRecord
-                                                                      .fitnessGoal,
-                                                                  style:
-                                                                      TextStyle(),
-                                                                )
-                                                              ],
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMedium,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Align(
-                                                        alignment:
-                                                            AlignmentDirectional(
-                                                                -1.0, 0.0),
-                                                        child: Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
+                                                      RichText(
+                                                        textScaleFactor:
+                                                            MediaQuery.of(
+                                                                    context)
+                                                                .textScaleFactor,
+                                                        text: TextSpan(
                                                           children: [
-                                                            Text(
-                                                              listViewAdviceRecord
-                                                                  .adviceString,
+                                                            TextSpan(
+                                                              text: 'By ',
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         'Readex Pro',
-                                                                    fontSize:
-                                                                        18.0,
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primaryText,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .normal,
                                                                   ),
                                                             ),
+                                                            TextSpan(
+                                                              text: listViewAdviceRecord
+                                                                  .creatorName,
+                                                              style: TextStyle(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                            )
                                                           ],
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodyMedium,
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    8.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child: Container(
+                                                          width: 60.0,
+                                                          height: 60.0,
+                                                          clipBehavior:
+                                                              Clip.antiAlias,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            shape:
+                                                                BoxShape.circle,
+                                                          ),
+                                                          child: Image.network(
+                                                            listViewAdviceRecord
+                                                                .creatorPFP,
+                                                            fit: BoxFit.cover,
+                                                          ),
                                                         ),
                                                       ),
                                                     ],
                                                   ),
-                                                ),
+                                                  Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    children: [
+                                                      Align(
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                -1.0, 0.0),
+                                                        child: Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(
+                                                                      0.0,
+                                                                      15.0,
+                                                                      0.0,
+                                                                      0.0),
+                                                          child: Text(
+                                                            listViewAdviceRecord
+                                                                .adviceString,
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodyMedium
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Readex Pro',
+                                                                  fontSize:
+                                                                      18.0,
+                                                                ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           );
@@ -884,6 +867,42 @@ class _BusinessStoreFrontWidgetState extends State<BusinessStoreFrontWidget>
                   ],
                 ),
               ),
+              if (FFAppState().brandName ==
+                  valueOrDefault(currentUserDocument?.brandName, ''))
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(100.0, 0.0, 0.0, 0.0),
+                  child: AuthUserStreamWidget(
+                    builder: (context) => FFButtonWidget(
+                      onPressed: () async {
+                        context.pushNamed('addProductPage');
+                      },
+                      text: 'Add a product',
+                      icon: Icon(
+                        Icons.add,
+                        size: 15.0,
+                      ),
+                      options: FFButtonOptions(
+                        height: 40.0,
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            24.0, 0.0, 24.0, 0.0),
+                        iconPadding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                        color: FlutterFlowTheme.of(context).primary,
+                        textStyle:
+                            FlutterFlowTheme.of(context).titleSmall.override(
+                                  fontFamily: 'Readex Pro',
+                                  color: Colors.white,
+                                ),
+                        elevation: 3.0,
+                        borderSide: BorderSide(
+                          color: Colors.transparent,
+                          width: 1.0,
+                        ),
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                    ),
+                  ),
+                ),
             ],
           ),
         ),

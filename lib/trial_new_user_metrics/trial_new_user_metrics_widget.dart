@@ -803,6 +803,7 @@ class _TrialNewUserMetricsWidgetState extends State<TrialNewUserMetricsWidget>
                                         currentUserDocument
                                             ?.dailyCalorieBurningGoal,
                                         0.0),
+                                    calorieDiffLastUpdate: getCurrentTimestamp,
                                   ));
                                   if (valueOrDefault(
                                           currentUserDocument?.fitnessGoal2,
@@ -823,6 +824,8 @@ class _TrialNewUserMetricsWidgetState extends State<TrialNewUserMetricsWidget>
                                           currentUserDocument
                                               ?.dailyCalorieBurningGoal,
                                           0.0),
+                                      calorieDiffLastUpdate:
+                                          getCurrentTimestamp,
                                     ));
                                   }
                                 } else {
@@ -854,6 +857,8 @@ class _TrialNewUserMetricsWidgetState extends State<TrialNewUserMetricsWidget>
                                           currentUserDocument
                                               ?.dailyCalorieBurningGoal,
                                           0.0),
+                                      calorieDiffLastUpdate:
+                                          getCurrentTimestamp,
                                     ));
                                     if (valueOrDefault(
                                             currentUserDocument?.fitnessGoal2,
@@ -874,6 +879,8 @@ class _TrialNewUserMetricsWidgetState extends State<TrialNewUserMetricsWidget>
                                             currentUserDocument
                                                 ?.dailyCalorieBurningGoal,
                                             0.0),
+                                        calorieDiffLastUpdate:
+                                            getCurrentTimestamp,
                                       ));
                                     }
                                   } else {

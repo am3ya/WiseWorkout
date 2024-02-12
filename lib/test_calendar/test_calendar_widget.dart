@@ -8,8 +8,10 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:badges/badges.dart' as badges;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -33,6 +35,24 @@ class _TestCalendarWidgetState extends State<TestCalendarWidget>
   void initState() {
     super.initState();
     _model = createModel(context, () => TestCalendarModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      if (_model.calendarSelectedDay2!.start >
+          currentUserDocument!.calorieDiffLastUpdate!) {
+        await currentUserReference!.update({
+          ...createUsersRecordData(
+            calorieDiffLastUpdate: getCurrentTimestamp,
+          ),
+          ...mapToFirestore(
+            {
+              'calorieDifference': FieldValue.increment(valueOrDefault(
+                  currentUserDocument?.dailyCalorieBurningGoal, 0.0)),
+            },
+          ),
+        });
+      }
+    });
 
     _model.tabBarController = TabController(
       vsync: this,
@@ -1296,13 +1316,16 @@ class _TestCalendarWidgetState extends State<TestCalendarWidget>
                                                                               .transparent,
                                                                       onTap:
                                                                           () async {
-                                                                        FFAppState().brandName =
-                                                                            listViewAdviceRecord.creatorName;
-                                                                        FFAppState().brandRef =
-                                                                            listViewAdviceRecord.creatorRef;
+                                                                        if (listViewAdviceRecord.creatorName !=
+                                                                            'admin') {
+                                                                          FFAppState().brandName =
+                                                                              listViewAdviceRecord.creatorName;
+                                                                          FFAppState().brandRef =
+                                                                              listViewAdviceRecord.creatorRef;
 
-                                                                        context.pushNamed(
-                                                                            'businessStoreFront');
+                                                                          context
+                                                                              .pushNamed('businessStoreFront');
+                                                                        }
                                                                       },
                                                                       child:
                                                                           Container(

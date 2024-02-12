@@ -1162,6 +1162,8 @@ class _GettingChallengedTimerWidgetState
                                                           FieldValue.increment(
                                                               FFAppState()
                                                                   .distance),
+                                                      'last_updated': FieldValue
+                                                          .serverTimestamp(),
                                                     },
                                                   ),
                                                 });
@@ -1180,20 +1182,27 @@ class _GettingChallengedTimerWidgetState
                                               } else {
                                                 await WorkoutsRecord.createDoc(
                                                         currentUserReference!)
-                                                    .set(
-                                                        createWorkoutsRecordData(
-                                                  duration: FFAppState()
-                                                      .workoutTime
-                                                      .toDouble(),
-                                                  stepsTaken:
-                                                      FFAppState().stepCount,
-                                                  caloriesBurned: FFAppState()
-                                                      .caloriesBurned,
-                                                  distance:
-                                                      FFAppState().distance,
-                                                  unixDays: functions
-                                                      .daysSinceEpoch(),
-                                                ));
+                                                    .set({
+                                                  ...createWorkoutsRecordData(
+                                                    duration: FFAppState()
+                                                        .workoutTime
+                                                        .toDouble(),
+                                                    stepsTaken:
+                                                        FFAppState().stepCount,
+                                                    caloriesBurned: FFAppState()
+                                                        .caloriesBurned,
+                                                    distance:
+                                                        FFAppState().distance,
+                                                    unixDays: functions
+                                                        .daysSinceEpoch(),
+                                                  ),
+                                                  ...mapToFirestore(
+                                                    {
+                                                      'dateUploaded': FieldValue
+                                                          .serverTimestamp(),
+                                                    },
+                                                  ),
+                                                });
 
                                                 await currentUserReference!
                                                     .update({
@@ -1210,18 +1219,29 @@ class _GettingChallengedTimerWidgetState
                                             } else {
                                               await WorkoutsRecord.createDoc(
                                                       currentUserReference!)
-                                                  .set(createWorkoutsRecordData(
-                                                duration: FFAppState()
-                                                    .workoutTime
-                                                    .toDouble(),
-                                                stepsTaken:
-                                                    FFAppState().stepCount,
-                                                caloriesBurned:
-                                                    FFAppState().caloriesBurned,
-                                                distance: FFAppState().distance,
-                                                unixDays:
-                                                    functions.daysSinceEpoch(),
-                                              ));
+                                                  .set({
+                                                ...createWorkoutsRecordData(
+                                                  duration: FFAppState()
+                                                      .workoutTime
+                                                      .toDouble(),
+                                                  stepsTaken:
+                                                      FFAppState().stepCount,
+                                                  caloriesBurned: FFAppState()
+                                                      .caloriesBurned,
+                                                  distance:
+                                                      FFAppState().distance,
+                                                  unixDays: functions
+                                                      .daysSinceEpoch(),
+                                                ),
+                                                ...mapToFirestore(
+                                                  {
+                                                    'dateUploaded': FieldValue
+                                                        .serverTimestamp(),
+                                                    'last_updated': FieldValue
+                                                        .serverTimestamp(),
+                                                  },
+                                                ),
+                                              });
 
                                               await currentUserReference!
                                                   .update({

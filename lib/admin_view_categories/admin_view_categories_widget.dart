@@ -98,8 +98,8 @@ class _AdminViewCategoriesWidgetState extends State<AdminViewCategoriesWidget>
                 Align(
                   alignment: AlignmentDirectional(0.0, 0.0),
                   child: FFButtonWidget(
-                    onPressed: () {
-                      print('Button pressed ...');
+                    onPressed: () async {
+                      context.pushNamed('adminCreateCategory');
                     },
                     text: 'Create a category',
                     icon: Icon(

@@ -1,5 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/components/error_occured_widget.dart';
 import '/components/friend_request_unsuccessful_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -861,7 +862,7 @@ class _FriendsPageWidgetState extends State<FriendsPageWidget>
                                                                         padding:
                                                                             MediaQuery.viewInsetsOf(context),
                                                                         child:
-                                                                            FriendRequestUnsuccessfulWidget(),
+                                                                            ErrorOccuredWidget(),
                                                                       ),
                                                                     );
                                                                   },

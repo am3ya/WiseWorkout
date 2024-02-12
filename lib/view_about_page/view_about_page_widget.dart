@@ -2,7 +2,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -25,18 +24,6 @@ class _ViewAboutPageWidgetState extends State<ViewAboutPageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ViewAboutPageModel());
-
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if (FFAppState().showOnboard) {
-        setState(() {
-          FFAppState().showOnboard = false;
-        });
-        return;
-      } else {
-        context.pushNamed('login');
-      }
-    });
   }
 
   @override
@@ -84,7 +71,7 @@ class _ViewAboutPageWidgetState extends State<ViewAboutPageWidget> {
                 child: Padding(
                   padding: EdgeInsets.all(30.0),
                   child: Icon(
-                    Icons.directions_bike,
+                    Icons.run_circle,
                     color: FlutterFlowTheme.of(context).primary,
                     size: 60.0,
                   ),
@@ -125,7 +112,7 @@ class _ViewAboutPageWidgetState extends State<ViewAboutPageWidget> {
                             FFAppState().showOnboard = false;
                           });
                         },
-                        text: 'Create an account',
+                        text: 'Go to login',
                         options: FFButtonOptions(
                           width: 230.0,
                           height: 50.0,
