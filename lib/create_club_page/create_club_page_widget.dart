@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
 import 'create_club_page_model.dart';
 export 'create_club_page_model.dart';
 
@@ -65,14 +66,14 @@ class _CreateClubPageWidgetState extends State<CreateClubPageWidget> {
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(100.0),
+          preferredSize: Size.fromHeight(100),
           child: AppBar(
             backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
             automaticallyImplyLeading: false,
             actions: [],
             flexibleSpace: FlexibleSpaceBar(
               title: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 14.0),
+                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 14),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -84,7 +85,7 @@ class _CreateClubPageWidgetState extends State<CreateClubPageWidget> {
                           FlutterFlowTheme.of(context).headlineMedium.override(
                                 fontFamily: 'Outfit',
                                 color: FlutterFlowTheme.of(context).primaryText,
-                                fontSize: 22.0,
+                                fontSize: 22,
                               ),
                     ),
                   ],
@@ -93,7 +94,7 @@ class _CreateClubPageWidgetState extends State<CreateClubPageWidget> {
               centerTitle: true,
               expandedTitleScale: 1.0,
             ),
-            elevation: 0.0,
+            elevation: 0,
           ),
         ),
         body: SafeArea(
@@ -103,7 +104,7 @@ class _CreateClubPageWidgetState extends State<CreateClubPageWidget> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -181,18 +182,18 @@ class _CreateClubPageWidgetState extends State<CreateClubPageWidget> {
                           }
                         },
                         child: Container(
-                          width: 100.0,
-                          height: 100.0,
+                          width: 100,
+                          height: 100,
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context).alternate,
                             shape: BoxShape.circle,
                           ),
                           child: Padding(
-                            padding: EdgeInsets.all(2.0),
+                            padding: EdgeInsets.all(2),
                             child: AuthUserStreamWidget(
                               builder: (context) => Container(
-                                width: 90.0,
-                                height: 90.0,
+                                width: 90,
+                                height: 90,
                                 clipBehavior: Clip.antiAlias,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
@@ -215,8 +216,7 @@ class _CreateClubPageWidgetState extends State<CreateClubPageWidget> {
                   ),
                 ),
                 Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 16.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 16),
                   child: TextFormField(
                     controller: _model.yourNameController,
                     focusNode: _model.yourNameFocusNode,
@@ -229,36 +229,36 @@ class _CreateClubPageWidgetState extends State<CreateClubPageWidget> {
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: FlutterFlowTheme.of(context).alternate,
-                          width: 2.0,
+                          width: 2,
                         ),
-                        borderRadius: BorderRadius.circular(8.0),
+                        borderRadius: BorderRadius.circular(8),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: FlutterFlowTheme.of(context).primary,
-                          width: 2.0,
+                          width: 2,
                         ),
-                        borderRadius: BorderRadius.circular(8.0),
+                        borderRadius: BorderRadius.circular(8),
                       ),
                       errorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: FlutterFlowTheme.of(context).error,
-                          width: 2.0,
+                          width: 2,
                         ),
-                        borderRadius: BorderRadius.circular(8.0),
+                        borderRadius: BorderRadius.circular(8),
                       ),
                       focusedErrorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: FlutterFlowTheme.of(context).error,
-                          width: 2.0,
+                          width: 2,
                         ),
-                        borderRadius: BorderRadius.circular(8.0),
+                        borderRadius: BorderRadius.circular(8),
                       ),
                       filled: true,
                       fillColor:
                           FlutterFlowTheme.of(context).secondaryBackground,
                       contentPadding:
-                          EdgeInsetsDirectional.fromSTEB(20.0, 24.0, 0.0, 24.0),
+                          EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
                     ),
                     style: FlutterFlowTheme.of(context).bodyMedium,
                     validator:
@@ -266,8 +266,7 @@ class _CreateClubPageWidgetState extends State<CreateClubPageWidget> {
                   ),
                 ),
                 Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 16.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 16),
                   child: TextFormField(
                     controller: _model.ageController,
                     focusNode: _model.ageFocusNode,
@@ -280,36 +279,36 @@ class _CreateClubPageWidgetState extends State<CreateClubPageWidget> {
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: FlutterFlowTheme.of(context).alternate,
-                          width: 2.0,
+                          width: 2,
                         ),
-                        borderRadius: BorderRadius.circular(8.0),
+                        borderRadius: BorderRadius.circular(8),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: FlutterFlowTheme.of(context).primary,
-                          width: 2.0,
+                          width: 2,
                         ),
-                        borderRadius: BorderRadius.circular(8.0),
+                        borderRadius: BorderRadius.circular(8),
                       ),
                       errorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: FlutterFlowTheme.of(context).error,
-                          width: 2.0,
+                          width: 2,
                         ),
-                        borderRadius: BorderRadius.circular(8.0),
+                        borderRadius: BorderRadius.circular(8),
                       ),
                       focusedErrorBorder: OutlineInputBorder(
                         borderSide: BorderSide(
                           color: FlutterFlowTheme.of(context).error,
-                          width: 2.0,
+                          width: 2,
                         ),
-                        borderRadius: BorderRadius.circular(8.0),
+                        borderRadius: BorderRadius.circular(8),
                       ),
                       filled: true,
                       fillColor:
                           FlutterFlowTheme.of(context).secondaryBackground,
                       contentPadding:
-                          EdgeInsetsDirectional.fromSTEB(20.0, 24.0, 0.0, 24.0),
+                          EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
                     ),
                     style: FlutterFlowTheme.of(context).bodyMedium,
                     validator:
@@ -317,10 +316,9 @@ class _CreateClubPageWidgetState extends State<CreateClubPageWidget> {
                   ),
                 ),
                 Align(
-                  alignment: AlignmentDirectional(0.0, 0.05),
+                  alignment: AlignmentDirectional(0, 0.05),
                   child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
                     child: StreamBuilder<List<ClubsRecord>>(
                       stream: queryClubsRecord(),
                       builder: (context, snapshot) {
@@ -328,8 +326,8 @@ class _CreateClubPageWidgetState extends State<CreateClubPageWidget> {
                         if (!snapshot.hasData) {
                           return Center(
                             child: SizedBox(
-                              width: 50.0,
-                              height: 50.0,
+                              width: 50,
+                              height: 50,
                               child: CircularProgressIndicator(
                                 valueColor: AlwaysStoppedAnimation<Color>(
                                   FlutterFlowTheme.of(context).primary,
@@ -413,16 +411,31 @@ class _CreateClubPageWidgetState extends State<CreateClubPageWidget> {
                                       FlutterFlowTheme.of(context).secondary,
                                 ),
                               );
+
+                              await currentUserReference!.update({
+                                ...mapToFirestore(
+                                  {
+                                    'clubs': FieldValue.arrayUnion([
+                                      buttonClubsRecordList
+                                          .where((e) =>
+                                              e.clubName ==
+                                              _model.yourNameController.text)
+                                          .toList()
+                                          .first
+                                          .reference
+                                    ]),
+                                  },
+                                ),
+                              });
                             }
                           },
                           text: 'Create',
                           options: FFButtonOptions(
-                            width: 270.0,
-                            height: 50.0,
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
+                            width: 270,
+                            height: 50,
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                            iconPadding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                             color: FlutterFlowTheme.of(context).primary,
                             textStyle: FlutterFlowTheme.of(context)
                                 .titleMedium
@@ -430,12 +443,12 @@ class _CreateClubPageWidgetState extends State<CreateClubPageWidget> {
                                   fontFamily: 'Readex Pro',
                                   color: Colors.white,
                                 ),
-                            elevation: 2.0,
+                            elevation: 2,
                             borderSide: BorderSide(
                               color: Colors.transparent,
-                              width: 1.0,
+                              width: 1,
                             ),
-                            borderRadius: BorderRadius.circular(12.0),
+                            borderRadius: BorderRadius.circular(12),
                           ),
                         );
                       },
@@ -443,7 +456,7 @@ class _CreateClubPageWidgetState extends State<CreateClubPageWidget> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                   child: FFButtonWidget(
                     onPressed: () async {
                       setState(() {
@@ -454,23 +467,21 @@ class _CreateClubPageWidgetState extends State<CreateClubPageWidget> {
                     },
                     text: 'Exit',
                     options: FFButtonOptions(
-                      height: 40.0,
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                      iconPadding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      height: 40,
+                      padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+                      iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                       color: Color(0xFF0A0526),
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
                                 fontFamily: 'Readex Pro',
                                 color: Colors.white,
                               ),
-                      elevation: 3.0,
+                      elevation: 3,
                       borderSide: BorderSide(
                         color: Colors.transparent,
-                        width: 1.0,
+                        width: 1,
                       ),
-                      borderRadius: BorderRadius.circular(8.0),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                 ),

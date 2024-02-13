@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
 import 'clubs_page_model.dart';
 export 'clubs_page_model.dart';
 
@@ -68,13 +69,13 @@ class _ClubsPageWidgetState extends State<ClubsPageWidget>
             automaticallyImplyLeading: false,
             leading: FlutterFlowIconButton(
               borderColor: Colors.transparent,
-              borderRadius: 30.0,
-              borderWidth: 1.0,
-              buttonSize: 60.0,
+              borderRadius: 30,
+              borderWidth: 1,
+              buttonSize: 60,
               icon: Icon(
                 Icons.arrow_back_rounded,
                 color: FlutterFlowTheme.of(context).primaryText,
-                size: 30.0,
+                size: 30,
               ),
               onPressed: () async {
                 context.pushNamed('userProfile');
@@ -86,7 +87,7 @@ class _ClubsPageWidgetState extends State<ClubsPageWidget>
             ),
             actions: [],
             centerTitle: false,
-            elevation: 0.0,
+            elevation: 0,
           ),
           body: SafeArea(
             top: true,
@@ -95,7 +96,7 @@ class _ClubsPageWidgetState extends State<ClubsPageWidget>
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 0),
                     child: StreamBuilder<List<ClubsRecord>>(
                       stream: queryClubsRecord(
                         queryBuilder: (clubsRecord) => clubsRecord.where(
@@ -108,8 +109,8 @@ class _ClubsPageWidgetState extends State<ClubsPageWidget>
                         if (!snapshot.hasData) {
                           return Center(
                             child: SizedBox(
-                              width: 50.0,
-                              height: 50.0,
+                              width: 50,
+                              height: 50,
                               child: CircularProgressIndicator(
                                 valueColor: AlwaysStoppedAnimation<Color>(
                                   FlutterFlowTheme.of(context).primary,
@@ -129,34 +130,33 @@ class _ClubsPageWidgetState extends State<ClubsPageWidget>
                             final listViewClubsRecord =
                                 listViewClubsRecordList[listViewIndex];
                             return Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 1.0),
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 1),
                               child: Container(
-                                width: 100.0,
+                                width: 100,
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
                                   boxShadow: [
                                     BoxShadow(
-                                      blurRadius: 0.0,
+                                      blurRadius: 0,
                                       color: FlutterFlowTheme.of(context)
                                           .alternate,
-                                      offset: Offset(0.0, 1.0),
+                                      offset: Offset(0, 1),
                                     )
                                   ],
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsets.all(8.0),
+                                  padding: EdgeInsets.all(8),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(40.0),
+                                        borderRadius: BorderRadius.circular(40),
                                         child: Image.network(
                                           listViewClubsRecord.photoUrl,
-                                          width: 60.0,
-                                          height: 60.0,
+                                          width: 60,
+                                          height: 60,
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -168,8 +168,7 @@ class _ClubsPageWidgetState extends State<ClubsPageWidget>
                                           children: [
                                             Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      12.0, 0.0, 0.0, 0.0),
+                                                  .fromSTEB(12, 0, 0, 0),
                                               child: Text(
                                                 listViewClubsRecord.clubName,
                                                 style:
@@ -180,92 +179,101 @@ class _ClubsPageWidgetState extends State<ClubsPageWidget>
                                           ],
                                         ),
                                       ),
-                                      FFButtonWidget(
-                                        onPressed: () async {
-                                          if (listViewClubsRecord
-                                                  .numberOfMembers >
-                                              1) {
-                                            await currentUserReference!.update({
-                                              ...mapToFirestore(
-                                                {
-                                                  'clubs':
-                                                      FieldValue.arrayRemove([
-                                                    listViewClubsRecord
-                                                        .reference
-                                                  ]),
-                                                },
-                                              ),
-                                            });
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 0, 10, 0),
+                                        child: FFButtonWidget(
+                                          onPressed: () async {
+                                            if (listViewClubsRecord
+                                                    .numberOfMembers >
+                                                1) {
+                                              await currentUserReference!
+                                                  .update({
+                                                ...mapToFirestore(
+                                                  {
+                                                    'clubs':
+                                                        FieldValue.arrayRemove([
+                                                      listViewClubsRecord
+                                                          .reference
+                                                    ]),
+                                                  },
+                                                ),
+                                              });
 
-                                            await listViewClubsRecord.reference
-                                                .update({
-                                              ...mapToFirestore(
-                                                {
-                                                  'membersRefs':
-                                                      FieldValue.arrayRemove([
-                                                    currentUserReference
-                                                  ]),
-                                                  'numberOfMembers':
-                                                      FieldValue.increment(
-                                                          -(1)),
-                                                },
-                                              ),
-                                            });
-                                            if (listViewClubsRecord.creator ==
-                                                currentUserReference) {
                                               await listViewClubsRecord
                                                   .reference
-                                                  .update(createClubsRecordData(
-                                                creator: listViewClubsRecord
-                                                    .membersRefs.first,
-                                              ));
+                                                  .update({
+                                                ...mapToFirestore(
+                                                  {
+                                                    'membersRefs':
+                                                        FieldValue.arrayRemove([
+                                                      currentUserReference
+                                                    ]),
+                                                    'numberOfMembers':
+                                                        FieldValue.increment(
+                                                            -(1)),
+                                                  },
+                                                ),
+                                              });
+                                              if (listViewClubsRecord.creator ==
+                                                  currentUserReference) {
+                                                await listViewClubsRecord
+                                                    .reference
+                                                    .update(
+                                                        createClubsRecordData(
+                                                  creator: listViewClubsRecord
+                                                      .membersRefs.first,
+                                                ));
+                                              }
+                                            } else {
+                                              await currentUserReference!
+                                                  .update({
+                                                ...mapToFirestore(
+                                                  {
+                                                    'clubs':
+                                                        FieldValue.arrayRemove([
+                                                      listViewClubsRecord
+                                                          .reference
+                                                    ]),
+                                                  },
+                                                ),
+                                              });
+                                              await listViewClubsRecord
+                                                  .reference
+                                                  .delete();
                                             }
-                                          } else {
-                                            await currentUserReference!.update({
-                                              ...mapToFirestore(
-                                                {
-                                                  'clubs':
-                                                      FieldValue.arrayRemove([
-                                                    listViewClubsRecord
-                                                        .reference
-                                                  ]),
-                                                },
-                                              ),
-                                            });
-                                            await listViewClubsRecord.reference
-                                                .delete();
-                                          }
-                                        },
-                                        text: 'Leave',
-                                        options: FFButtonOptions(
-                                          height: 40.0,
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  10.0, 0.0, 10.0, 0.0),
-                                          iconPadding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 0.0, 0.0),
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          textStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmall
-                                                  .override(
-                                                    fontFamily: 'Readex Pro',
-                                                    color: Colors.white,
-                                                  ),
-                                          elevation: 3.0,
-                                          borderSide: BorderSide(
-                                            color: Colors.transparent,
-                                            width: 1.0,
+                                          },
+                                          text: 'Leave',
+                                          options: FFButtonOptions(
+                                            height: 40,
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    10, 0, 10, 0),
+                                            iconPadding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0, 0, 0, 0),
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            textStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmall
+                                                    .override(
+                                                      fontFamily: 'Readex Pro',
+                                                      color: Colors.white,
+                                                    ),
+                                            elevation: 3,
+                                            borderSide: BorderSide(
+                                              color: Colors.transparent,
+                                              width: 1,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
                                         ),
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            8.0, 0.0, 0.0, 0.0),
+                                            8, 0, 0, 0),
                                         child: InkWell(
                                           splashColor: Colors.transparent,
                                           focusColor: Colors.transparent,
@@ -284,7 +292,7 @@ class _ClubsPageWidgetState extends State<ClubsPageWidget>
                                             Icons.chevron_right_sharp,
                                             color: FlutterFlowTheme.of(context)
                                                 .secondaryText,
-                                            size: 24.0,
+                                            size: 24,
                                           ),
                                         ),
                                       ),
@@ -305,26 +313,24 @@ class _ClubsPageWidgetState extends State<ClubsPageWidget>
                     text: 'Create a club',
                     icon: Icon(
                       Icons.add,
-                      size: 15.0,
+                      size: 15,
                     ),
                     options: FFButtonOptions(
-                      height: 40.0,
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
-                      iconPadding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                      height: 40,
+                      padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
+                      iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                       color: FlutterFlowTheme.of(context).primary,
                       textStyle:
                           FlutterFlowTheme.of(context).titleSmall.override(
                                 fontFamily: 'Readex Pro',
                                 color: Colors.white,
                               ),
-                      elevation: 3.0,
+                      elevation: 3,
                       borderSide: BorderSide(
                         color: Colors.transparent,
-                        width: 1.0,
+                        width: 1,
                       ),
-                      borderRadius: BorderRadius.circular(8.0),
+                      borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                 ],

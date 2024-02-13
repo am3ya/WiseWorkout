@@ -19,6 +19,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
 import 'club_members_page_model.dart';
 export 'club_members_page_model.dart';
 
@@ -97,8 +98,8 @@ class _ClubMembersPageWidgetState extends State<ClubMembersPageWidget>
             backgroundColor: FlutterFlowTheme.of(context).primaryText,
             body: Center(
               child: SizedBox(
-                width: 50.0,
-                height: 50.0,
+                width: 50,
+                height: 50,
                 child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(
                     FlutterFlowTheme.of(context).primary,
@@ -131,27 +132,35 @@ class _ClubMembersPageWidgetState extends State<ClubMembersPageWidget>
                 automaticallyImplyLeading: false,
                 leading: FlutterFlowIconButton(
                   borderColor: Colors.transparent,
-                  borderRadius: 30.0,
-                  borderWidth: 1.0,
-                  buttonSize: 60.0,
+                  borderRadius: 30,
+                  borderWidth: 1,
+                  buttonSize: 60,
                   icon: Icon(
                     Icons.arrow_back_rounded,
                     color: FlutterFlowTheme.of(context).secondaryBackground,
-                    size: 30.0,
+                    size: 30,
                   ),
                   onPressed: () async {
                     setState(() {
                       FFAppState().clubName = '';
                     });
-                    context.pop();
+                    if (valueOrDefault(currentUserDocument?.userType, '') ==
+                        'user') {
+                      context.pushNamed('clubsPage');
+                    } else {
+                      if (valueOrDefault(currentUserDocument?.userType, '') ==
+                          'admin') {
+                        context.pushNamed('adminSearchClubs');
+                      }
+                    }
                   },
                 ),
                 actions: [],
                 centerTitle: false,
-                elevation: 0.0,
+                elevation: 0,
               ),
               body: Align(
-                alignment: AlignmentDirectional(0.0, 0.0),
+                alignment: AlignmentDirectional(0, 0),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -164,8 +173,8 @@ class _ClubMembersPageWidgetState extends State<ClubMembersPageWidget>
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 12.0),
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 12),
                                 child: Text(
                                   clubMembersPageClubsRecord!.numberOfMembers
                                       .toString(),
@@ -194,8 +203,7 @@ class _ClubMembersPageWidgetState extends State<ClubMembersPageWidget>
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 0.0, 16.0, 0.0),
+                          padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                           child: InkWell(
                             splashColor: Colors.transparent,
                             focusColor: Colors.transparent,
@@ -270,41 +278,42 @@ class _ClubMembersPageWidgetState extends State<ClubMembersPageWidget>
                               }
                             },
                             child: Container(
-                              width: 100.0,
-                              height: 100.0,
+                              width: 100,
+                              height: 100,
                               decoration: BoxDecoration(
                                 gradient: LinearGradient(
                                   colors: [
                                     FlutterFlowTheme.of(context).primary,
                                     FlutterFlowTheme.of(context).tertiary
                                   ],
-                                  stops: [0.0, 1.0],
-                                  begin: AlignmentDirectional(1.0, -1.0),
-                                  end: AlignmentDirectional(-1.0, 1.0),
+                                  stops: [0, 1],
+                                  begin: AlignmentDirectional(1, -1),
+                                  end: AlignmentDirectional(-1, 1),
                                 ),
                                 shape: BoxShape.circle,
                               ),
                               child: Align(
-                                alignment: AlignmentDirectional(0.0, 0.0),
+                                alignment: AlignmentDirectional(0, 0),
                                 child: Padding(
-                                  padding: EdgeInsets.all(4.0),
+                                  padding: EdgeInsets.all(4),
                                   child: Container(
-                                    width: 100.0,
-                                    height: 100.0,
+                                    width: 100,
+                                    height: 100,
                                     decoration: BoxDecoration(
                                       color: FlutterFlowTheme.of(context)
                                           .primaryText,
                                       shape: BoxShape.circle,
                                     ),
                                     child: Padding(
-                                      padding: EdgeInsets.all(4.0),
+                                      padding: EdgeInsets.all(4),
                                       child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(50.0),
+                                        borderRadius: BorderRadius.circular(50),
                                         child: Image.network(
-                                          clubMembersPageClubsRecord!.photoUrl,
-                                          width: 100.0,
-                                          height: 100.0,
+                                          _model.uploadedFileUrl == ''
+                                              ? 'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/workout-app-o0nwer/assets/wxddpzwj052m/blank-profile-picture-973460_640.png'
+                                              : _model.uploadedFileUrl,
+                                          width: 100,
+                                          height: 100,
                                           fit: BoxFit.cover,
                                         ),
                                       ),
@@ -318,8 +327,7 @@ class _ClubMembersPageWidgetState extends State<ClubMembersPageWidget>
                       ],
                     ),
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 0.0, 0.0),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
                       child: InkWell(
                         splashColor: Colors.transparent,
                         focusColor: Colors.transparent,
@@ -348,8 +356,7 @@ class _ClubMembersPageWidgetState extends State<ClubMembersPageWidget>
                       ),
                     ),
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(24.0, 12.0, 24.0, 0.0),
+                      padding: EdgeInsetsDirectional.fromSTEB(24, 12, 24, 0),
                       child: InkWell(
                         splashColor: Colors.transparent,
                         focusColor: Colors.transparent,
@@ -375,69 +382,64 @@ class _ClubMembersPageWidgetState extends State<ClubMembersPageWidget>
                         ),
                       ),
                     ),
-                    if (!(currentUserDocument?.clubs?.toList() ?? [])
-                        .contains(clubMembersPageClubsRecord?.reference))
+                    if (!clubMembersPageClubsRecord!.membersRefs
+                        .contains(currentUserReference))
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
-                        child: AuthUserStreamWidget(
-                          builder: (context) => FFButtonWidget(
-                            onPressed: () async {
-                              if (!(currentUserDocument?.clubs?.toList() ?? [])
-                                  .contains(
-                                      clubMembersPageClubsRecord?.reference)) {
-                                await currentUserReference!.update({
-                                  ...mapToFirestore(
-                                    {
-                                      'clubs': FieldValue.arrayUnion([
-                                        clubMembersPageClubsRecord?.reference
-                                      ]),
-                                    },
-                                  ),
-                                });
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                        child: FFButtonWidget(
+                          onPressed: () async {
+                            if (!(currentUserDocument?.clubs?.toList() ?? [])
+                                .contains(
+                                    clubMembersPageClubsRecord?.reference)) {
+                              await currentUserReference!.update({
+                                ...mapToFirestore(
+                                  {
+                                    'clubs': FieldValue.arrayUnion([
+                                      clubMembersPageClubsRecord?.reference
+                                    ]),
+                                  },
+                                ),
+                              });
 
-                                await clubMembersPageClubsRecord!.reference
-                                    .update({
-                                  ...mapToFirestore(
-                                    {
-                                      'membersRefs': FieldValue.arrayUnion(
-                                          [currentUserReference]),
-                                      'numberOfMembers':
-                                          FieldValue.increment(1),
-                                    },
-                                  ),
-                                });
-                              }
-                            },
-                            text: 'Join',
-                            options: FFButtonOptions(
-                              height: 40.0,
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  10.0, 0.0, 10.0, 0.0),
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
-                              color: FlutterFlowTheme.of(context).primary,
-                              textStyle: FlutterFlowTheme.of(context)
-                                  .titleSmall
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    color: Colors.white,
-                                  ),
-                              elevation: 3.0,
-                              borderSide: BorderSide(
-                                color: Colors.transparent,
-                                width: 1.0,
-                              ),
-                              borderRadius: BorderRadius.circular(8.0),
+                              await clubMembersPageClubsRecord!.reference
+                                  .update({
+                                ...mapToFirestore(
+                                  {
+                                    'membersRefs': FieldValue.arrayUnion(
+                                        [currentUserReference]),
+                                    'numberOfMembers': FieldValue.increment(1),
+                                  },
+                                ),
+                              });
+                            }
+                          },
+                          text: 'Join',
+                          options: FFButtonOptions(
+                            height: 40,
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                            iconPadding:
+                                EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                            color: FlutterFlowTheme.of(context).primary,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleSmall
+                                .override(
+                                  fontFamily: 'Readex Pro',
+                                  color: Colors.white,
+                                ),
+                            elevation: 3,
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1,
                             ),
+                            borderRadius: BorderRadius.circular(8),
                           ),
                         ),
                       ),
                     if (valueOrDefault(currentUserDocument?.userType, '') ==
                         'admin')
                       Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
                         child: AuthUserStreamWidget(
                           builder: (context) => FFButtonWidget(
                             onPressed: () async {
@@ -446,11 +448,11 @@ class _ClubMembersPageWidgetState extends State<ClubMembersPageWidget>
                             },
                             text: 'DELETE CLUB',
                             options: FFButtonOptions(
-                              height: 40.0,
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  10.0, 0.0, 10.0, 0.0),
-                              iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 0.0),
+                              height: 40,
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(10, 0, 10, 0),
+                              iconPadding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                               color: Color(0xFFA90E18),
                               textStyle: FlutterFlowTheme.of(context)
                                   .titleSmall
@@ -458,38 +460,37 @@ class _ClubMembersPageWidgetState extends State<ClubMembersPageWidget>
                                     fontFamily: 'Readex Pro',
                                     color: Colors.white,
                                   ),
-                              elevation: 3.0,
+                              elevation: 3,
                               borderSide: BorderSide(
                                 color: Colors.transparent,
-                                width: 1.0,
+                                width: 1,
                               ),
-                              borderRadius: BorderRadius.circular(8.0),
+                              borderRadius: BorderRadius.circular(8),
                             ),
                           ),
                         ),
                       ),
                     Expanded(
                       child: Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(0.0, 44.0, 0.0, 0.0),
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 44, 0, 0),
                         child: Container(
                           width: double.infinity,
-                          height: 400.0,
+                          height: 400,
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context)
                                 .secondaryBackground,
                             boxShadow: [
                               BoxShadow(
-                                blurRadius: 3.0,
+                                blurRadius: 3,
                                 color: Color(0x33000000),
-                                offset: Offset(0.0, -1.0),
+                                offset: Offset(0, -1),
                               )
                             ],
                             borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(0.0),
-                              bottomRight: Radius.circular(0.0),
-                              topLeft: Radius.circular(16.0),
-                              topRight: Radius.circular(16.0),
+                              bottomLeft: Radius.circular(0),
+                              bottomRight: Radius.circular(0),
+                              topLeft: Radius.circular(16),
+                              topRight: Radius.circular(16),
                             ),
                           ),
                           child: SingleChildScrollView(
@@ -498,7 +499,7 @@ class _ClubMembersPageWidgetState extends State<ClubMembersPageWidget>
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding: EdgeInsets.all(16.0),
+                                  padding: EdgeInsets.all(16),
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     crossAxisAlignment:
@@ -510,15 +511,14 @@ class _ClubMembersPageWidgetState extends State<ClubMembersPageWidget>
                                             .headlineMedium,
                                       ),
                                       Align(
-                                        alignment:
-                                            AlignmentDirectional(0.0, 0.0),
+                                        alignment: AlignmentDirectional(0, 0),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 16.0, 0.0, 0.0),
+                                                  0, 16, 0, 0),
                                           child: Wrap(
-                                            spacing: 16.0,
-                                            runSpacing: 16.0,
+                                            spacing: 16,
+                                            runSpacing: 16,
                                             alignment: WrapAlignment.start,
                                             crossAxisAlignment:
                                                 WrapCrossAlignment.start,
@@ -530,302 +530,303 @@ class _ClubMembersPageWidgetState extends State<ClubMembersPageWidget>
                                             children: [
                                               Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        8.0, 8.0, 8.0, 0.0),
-                                                child: StreamBuilder<
-                                                    List<UsersRecord>>(
-                                                  stream: queryUsersRecord(
-                                                    queryBuilder:
-                                                        (usersRecord) =>
-                                                            usersRecord.where(
-                                                      'clubs',
-                                                      arrayContains:
-                                                          clubMembersPageClubsRecord
-                                                              ?.reference,
-                                                    ),
-                                                  ),
-                                                  builder: (context, snapshot) {
-                                                    // Customize what your widget looks like when it's loading.
-                                                    if (!snapshot.hasData) {
-                                                      return Center(
-                                                        child: SizedBox(
-                                                          width: 50.0,
-                                                          height: 50.0,
-                                                          child:
-                                                              CircularProgressIndicator(
-                                                            valueColor:
-                                                                AlwaysStoppedAnimation<
-                                                                    Color>(
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .primary,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      );
-                                                    }
-                                                    List<UsersRecord>
-                                                        listViewUsersRecordList =
-                                                        snapshot.data!;
+                                                    .fromSTEB(8, 8, 8, 0),
+                                                child: Builder(
+                                                  builder: (context) {
+                                                    final clubMembers =
+                                                        clubMembersPageClubsRecord
+                                                                ?.membersRefs
+                                                                ?.toList() ??
+                                                            [];
                                                     return ListView.builder(
                                                       padding: EdgeInsets.zero,
                                                       shrinkWrap: true,
                                                       scrollDirection:
                                                           Axis.vertical,
                                                       itemCount:
-                                                          listViewUsersRecordList
-                                                              .length,
+                                                          clubMembers.length,
                                                       itemBuilder: (context,
-                                                          listViewIndex) {
-                                                        final listViewUsersRecord =
-                                                            listViewUsersRecordList[
-                                                                listViewIndex];
+                                                          clubMembersIndex) {
+                                                        final clubMembersItem =
+                                                            clubMembers[
+                                                                clubMembersIndex];
                                                         return Padding(
                                                           padding:
                                                               EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      0.0,
-                                                                      0.0,
-                                                                      0.0,
-                                                                      1.0),
-                                                          child: Container(
-                                                            width: 100.0,
-                                                            decoration:
-                                                                BoxDecoration(
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .secondaryBackground,
-                                                              boxShadow: [
-                                                                BoxShadow(
-                                                                  blurRadius:
-                                                                      0.0,
+                                                                  .fromSTEB(0,
+                                                                      0, 0, 1),
+                                                          child: StreamBuilder<
+                                                              UsersRecord>(
+                                                            stream: UsersRecord
+                                                                .getDocument(
+                                                                    clubMembersItem),
+                                                            builder: (context,
+                                                                snapshot) {
+                                                              // Customize what your widget looks like when it's loading.
+                                                              if (!snapshot
+                                                                  .hasData) {
+                                                                return Center(
+                                                                  child:
+                                                                      SizedBox(
+                                                                    width: 50,
+                                                                    height: 50,
+                                                                    child:
+                                                                        CircularProgressIndicator(
+                                                                      valueColor:
+                                                                          AlwaysStoppedAnimation<
+                                                                              Color>(
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .primary,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                );
+                                                              }
+                                                              final containerUsersRecord =
+                                                                  snapshot
+                                                                      .data!;
+                                                              return Container(
+                                                                width: 100,
+                                                                decoration:
+                                                                    BoxDecoration(
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .alternate,
-                                                                  offset:
-                                                                      Offset(
-                                                                          0.0,
-                                                                          1.0),
-                                                                )
-                                                              ],
-                                                            ),
-                                                            child: Padding(
-                                                              padding:
-                                                                  EdgeInsets
-                                                                      .all(8.0),
-                                                              child: Row(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                children: [
-                                                                  ClipRRect(
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            40.0),
-                                                                    child: Image
-                                                                        .network(
-                                                                      listViewUsersRecord
-                                                                          .photoUrl,
-                                                                      width:
-                                                                          60.0,
-                                                                      height:
-                                                                          60.0,
-                                                                      fit: BoxFit
-                                                                          .cover,
-                                                                    ),
-                                                                  ),
-                                                                  Expanded(
-                                                                    child:
-                                                                        Column(
-                                                                      mainAxisSize:
-                                                                          MainAxisSize
-                                                                              .max,
-                                                                      crossAxisAlignment:
-                                                                          CrossAxisAlignment
-                                                                              .start,
-                                                                      children: [
-                                                                        Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              12.0,
-                                                                              0.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Text(
-                                                                            listViewUsersRecord.displayName,
-                                                                            style:
-                                                                                FlutterFlowTheme.of(context).bodyLarge,
-                                                                          ),
-                                                                        ),
-                                                                      ],
-                                                                    ),
-                                                                  ),
-                                                                  FFButtonWidget(
-                                                                    onPressed:
-                                                                        () async {
-                                                                      if (listViewUsersRecord
-                                                                          .friendsList
-                                                                          .contains(
-                                                                              currentUserReference)) {
-                                                                        await showModalBottomSheet(
-                                                                          isScrollControlled:
-                                                                              true,
-                                                                          backgroundColor:
-                                                                              Colors.transparent,
-                                                                          enableDrag:
-                                                                              false,
-                                                                          context:
-                                                                              context,
-                                                                          builder:
-                                                                              (context) {
-                                                                            return GestureDetector(
-                                                                              onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
-                                                                              child: Padding(
-                                                                                padding: MediaQuery.viewInsetsOf(context),
-                                                                                child: ErrorOccuredWidget(),
-                                                                              ),
-                                                                            );
-                                                                          },
-                                                                        ).then((value) =>
-                                                                            safeSetState(() {}));
-
-                                                                        return;
-                                                                      } else {
-                                                                        if (listViewUsersRecord
-                                                                            .friendRequests
-                                                                            .contains(currentUserReference)) {
-                                                                          await showModalBottomSheet(
-                                                                            isScrollControlled:
-                                                                                true,
-                                                                            backgroundColor:
-                                                                                Colors.transparent,
-                                                                            enableDrag:
-                                                                                false,
-                                                                            context:
-                                                                                context,
-                                                                            builder:
-                                                                                (context) {
-                                                                              return GestureDetector(
-                                                                                onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
-                                                                                child: Padding(
-                                                                                  padding: MediaQuery.viewInsetsOf(context),
-                                                                                  child: ErrorOccuredWidget(),
-                                                                                ),
-                                                                              );
-                                                                            },
-                                                                          ).then((value) =>
-                                                                              safeSetState(() {}));
-
-                                                                          return;
-                                                                        }
-                                                                      }
-
-                                                                      if ((currentUserDocument?.friendRequests?.toList() ??
-                                                                              [])
-                                                                          .contains(
-                                                                              listViewUsersRecord.reference)) {
-                                                                        await showModalBottomSheet(
-                                                                          isScrollControlled:
-                                                                              true,
-                                                                          backgroundColor:
-                                                                              Colors.transparent,
-                                                                          enableDrag:
-                                                                              false,
-                                                                          context:
-                                                                              context,
-                                                                          builder:
-                                                                              (context) {
-                                                                            return GestureDetector(
-                                                                              onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
-                                                                              child: Padding(
-                                                                                padding: MediaQuery.viewInsetsOf(context),
-                                                                                child: FriendRequestUnsuccessfulWidget(),
-                                                                              ),
-                                                                            );
-                                                                          },
-                                                                        ).then((value) =>
-                                                                            safeSetState(() {}));
-
-                                                                        return;
-                                                                      } else {
-                                                                        await listViewUsersRecord
-                                                                            .reference
-                                                                            .update({
-                                                                          ...mapToFirestore(
-                                                                            {
-                                                                              'friend_requests': FieldValue.arrayUnion([
-                                                                                currentUserReference
-                                                                              ]),
-                                                                            },
-                                                                          ),
-                                                                        });
-                                                                        await showModalBottomSheet(
-                                                                          isScrollControlled:
-                                                                              true,
-                                                                          backgroundColor:
-                                                                              Colors.transparent,
-                                                                          enableDrag:
-                                                                              false,
-                                                                          context:
-                                                                              context,
-                                                                          builder:
-                                                                              (context) {
-                                                                            return GestureDetector(
-                                                                              onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
-                                                                              child: Padding(
-                                                                                padding: MediaQuery.viewInsetsOf(context),
-                                                                                child: FriendRequestSentWidget(),
-                                                                              ),
-                                                                            );
-                                                                          },
-                                                                        ).then((value) =>
-                                                                            safeSetState(() {}));
-                                                                      }
-                                                                    },
-                                                                    text: 'Add',
-                                                                    options:
-                                                                        FFButtonOptions(
-                                                                      height:
-                                                                          40.0,
-                                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                                          10.0,
-                                                                          0.0,
-                                                                          10.0,
-                                                                          0.0),
-                                                                      iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
+                                                                      .secondaryBackground,
+                                                                  boxShadow: [
+                                                                    BoxShadow(
+                                                                      blurRadius:
+                                                                          0,
                                                                       color: FlutterFlowTheme.of(
                                                                               context)
-                                                                          .primary,
-                                                                      textStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .titleSmall
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                'Readex Pro',
-                                                                            color:
-                                                                                Colors.white,
-                                                                          ),
-                                                                      elevation:
-                                                                          3.0,
-                                                                      borderSide:
-                                                                          BorderSide(
-                                                                        color: Colors
-                                                                            .transparent,
-                                                                        width:
-                                                                            1.0,
+                                                                          .alternate,
+                                                                      offset:
+                                                                          Offset(
+                                                                              0,
+                                                                              1),
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                                child: Padding(
+                                                                  padding:
+                                                                      EdgeInsets
+                                                                          .all(
+                                                                              8),
+                                                                  child: Row(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .max,
+                                                                    children: [
+                                                                      ClipRRect(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(40),
+                                                                        child: Image
+                                                                            .network(
+                                                                          containerUsersRecord
+                                                                              .photoUrl,
+                                                                          width:
+                                                                              60,
+                                                                          height:
+                                                                              60,
+                                                                          fit: BoxFit
+                                                                              .cover,
+                                                                        ),
                                                                       ),
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              8.0),
-                                                                    ),
+                                                                      Expanded(
+                                                                        child:
+                                                                            Column(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          crossAxisAlignment:
+                                                                              CrossAxisAlignment.start,
+                                                                          children: [
+                                                                            Padding(
+                                                                              padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                                                                              child: Text(
+                                                                                containerUsersRecord.displayName,
+                                                                                style: FlutterFlowTheme.of(context).bodyLarge,
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                      FFButtonWidget(
+                                                                        onPressed:
+                                                                            () async {
+                                                                          if (containerUsersRecord.reference ==
+                                                                              currentUserReference) {
+                                                                            await showModalBottomSheet(
+                                                                              isScrollControlled: true,
+                                                                              backgroundColor: Colors.transparent,
+                                                                              enableDrag: false,
+                                                                              context: context,
+                                                                              builder: (context) {
+                                                                                return GestureDetector(
+                                                                                  onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
+                                                                                  child: Padding(
+                                                                                    padding: MediaQuery.viewInsetsOf(context),
+                                                                                    child: ErrorOccuredWidget(),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                            ).then((value) =>
+                                                                                safeSetState(() {}));
+
+                                                                            return;
+                                                                          } else {
+                                                                            if ((currentUserDocument?.friendsList?.toList() ?? []).contains(containerUsersRecord.reference)) {
+                                                                              await showModalBottomSheet(
+                                                                                isScrollControlled: true,
+                                                                                backgroundColor: Colors.transparent,
+                                                                                enableDrag: false,
+                                                                                context: context,
+                                                                                builder: (context) {
+                                                                                  return GestureDetector(
+                                                                                    onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
+                                                                                    child: Padding(
+                                                                                      padding: MediaQuery.viewInsetsOf(context),
+                                                                                      child: ErrorOccuredWidget(),
+                                                                                    ),
+                                                                                  );
+                                                                                },
+                                                                              ).then((value) => safeSetState(() {}));
+
+                                                                              return;
+                                                                            } else {
+                                                                              if ((currentUserDocument?.friendRequests?.toList() ?? []).contains(containerUsersRecord.reference)) {
+                                                                                await showModalBottomSheet(
+                                                                                  isScrollControlled: true,
+                                                                                  backgroundColor: Colors.transparent,
+                                                                                  enableDrag: false,
+                                                                                  context: context,
+                                                                                  builder: (context) {
+                                                                                    return GestureDetector(
+                                                                                      onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
+                                                                                      child: Padding(
+                                                                                        padding: MediaQuery.viewInsetsOf(context),
+                                                                                        child: ErrorOccuredWidget(),
+                                                                                      ),
+                                                                                    );
+                                                                                  },
+                                                                                ).then((value) => safeSetState(() {}));
+
+                                                                                return;
+                                                                              }
+                                                                            }
+                                                                          }
+
+                                                                          if (containerUsersRecord
+                                                                              .friendsList
+                                                                              .contains(currentUserReference)) {
+                                                                            await showModalBottomSheet(
+                                                                              isScrollControlled: true,
+                                                                              backgroundColor: Colors.transparent,
+                                                                              enableDrag: false,
+                                                                              context: context,
+                                                                              builder: (context) {
+                                                                                return GestureDetector(
+                                                                                  onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
+                                                                                  child: Padding(
+                                                                                    padding: MediaQuery.viewInsetsOf(context),
+                                                                                    child: FriendRequestUnsuccessfulWidget(),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                            ).then((value) =>
+                                                                                safeSetState(() {}));
+
+                                                                            return;
+                                                                          }
+                                                                          if (containerUsersRecord
+                                                                              .friendRequests
+                                                                              .contains(currentUserReference)) {
+                                                                            await showModalBottomSheet(
+                                                                              isScrollControlled: true,
+                                                                              backgroundColor: Colors.transparent,
+                                                                              enableDrag: false,
+                                                                              context: context,
+                                                                              builder: (context) {
+                                                                                return GestureDetector(
+                                                                                  onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
+                                                                                  child: Padding(
+                                                                                    padding: MediaQuery.viewInsetsOf(context),
+                                                                                    child: FriendRequestUnsuccessfulWidget(),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                            ).then((value) =>
+                                                                                safeSetState(() {}));
+
+                                                                            return;
+                                                                          } else {
+                                                                            await containerUsersRecord.reference.update({
+                                                                              ...mapToFirestore(
+                                                                                {
+                                                                                  'friend_requests': FieldValue.arrayUnion([
+                                                                                    currentUserReference
+                                                                                  ]),
+                                                                                },
+                                                                              ),
+                                                                            });
+                                                                            await showModalBottomSheet(
+                                                                              isScrollControlled: true,
+                                                                              backgroundColor: Colors.transparent,
+                                                                              enableDrag: false,
+                                                                              context: context,
+                                                                              builder: (context) {
+                                                                                return GestureDetector(
+                                                                                  onTap: () => _model.unfocusNode.canRequestFocus ? FocusScope.of(context).requestFocus(_model.unfocusNode) : FocusScope.of(context).unfocus(),
+                                                                                  child: Padding(
+                                                                                    padding: MediaQuery.viewInsetsOf(context),
+                                                                                    child: FriendRequestSentWidget(),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                            ).then((value) =>
+                                                                                safeSetState(() {}));
+                                                                          }
+                                                                        },
+                                                                        text:
+                                                                            'Add',
+                                                                        options:
+                                                                            FFButtonOptions(
+                                                                          height:
+                                                                              40,
+                                                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                                                              10,
+                                                                              0,
+                                                                              10,
+                                                                              0),
+                                                                          iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                                                              0,
+                                                                              0,
+                                                                              0,
+                                                                              0),
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primary,
+                                                                          textStyle: FlutterFlowTheme.of(context)
+                                                                              .titleSmall
+                                                                              .override(
+                                                                                fontFamily: 'Readex Pro',
+                                                                                color: Colors.white,
+                                                                              ),
+                                                                          elevation:
+                                                                              3,
+                                                                          borderSide:
+                                                                              BorderSide(
+                                                                            color:
+                                                                                Colors.transparent,
+                                                                            width:
+                                                                                1,
+                                                                          ),
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(8),
+                                                                        ),
+                                                                      ),
+                                                                    ],
                                                                   ),
-                                                                ],
-                                                              ),
-                                                            ),
+                                                                ),
+                                                              );
+                                                            },
                                                           ),
                                                         );
                                                       },
