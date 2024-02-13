@@ -230,8 +230,7 @@ class _AdminViewCategoriesWidgetState extends State<AdminViewCategoriesWidget>
                                                   {
                                                     'businessCategories':
                                                         FieldValue.arrayRemove([
-                                                      businessCategoriesIndex
-                                                          .toString()
+                                                      businessCategoriesItem
                                                     ]),
                                                   },
                                                 ),

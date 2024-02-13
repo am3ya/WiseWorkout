@@ -453,6 +453,8 @@ class _AddProductPageWidgetState extends State<AddProductPageWidget> {
                                     brandRef: currentUserReference,
                                     brandName: valueOrDefault(
                                         currentUserDocument?.brandName, ''),
+                                    quantity: functions
+                                        .listSize(_model.ageController2.text),
                                   ),
                                   ...mapToFirestore(
                                     {

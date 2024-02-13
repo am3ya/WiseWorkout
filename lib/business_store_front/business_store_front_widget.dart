@@ -82,16 +82,18 @@ class _BusinessStoreFrontWidgetState extends State<BusinessStoreFrontWidget>
             ),
             onPressed: () async {
               if (valueOrDefault(currentUserDocument?.userType, '') == 'user') {
-      context.pushNamed('testCalendar');
-    } else {
-      if (valueOrDefault(currentUserDocument?.userType, '') == 'business') {
-        context.pushNamed('businessProfile');
-      } else {
-        if (valueOrDefault(currentUserDocument?.userType, '') == 'admin') {
-          context.pushNamed('adminProfile');
-        }
-      }
-    }
+                context.pushNamed('testCalendar');
+              } else {
+                if (valueOrDefault(currentUserDocument?.userType, '') ==
+                    'business') {
+                  context.pushNamed('businessProfile');
+                } else {
+                  if (valueOrDefault(currentUserDocument?.userType, '') ==
+                      'admin') {
+                    context.pushNamed('adminProfile');
+                  }
+                }
+              }
             },
           ),
           title: Text(
@@ -380,10 +382,26 @@ class _BusinessStoreFrontWidgetState extends State<BusinessStoreFrontWidget>
                                                     alignment:
                                                         AlignmentDirectional(
                                                             1.0, -1.0),
-                                                    child: Icon(
-                                                      Icons.delete,
-                                                      color: Color(0xFFA90E18),
-                                                      size: 24.0,
+                                                    child: InkWell(
+                                                      splashColor:
+                                                          Colors.transparent,
+                                                      focusColor:
+                                                          Colors.transparent,
+                                                      hoverColor:
+                                                          Colors.transparent,
+                                                      highlightColor:
+                                                          Colors.transparent,
+                                                      onTap: () async {
+                                                        await listViewProductsRecord
+                                                            .reference
+                                                            .delete();
+                                                      },
+                                                      child: Icon(
+                                                        Icons.delete,
+                                                        color:
+                                                            Color(0xFFA90E18),
+                                                        size: 24.0,
+                                                      ),
                                                     ),
                                                   ),
                                                 Padding(
@@ -534,15 +552,22 @@ class _BusinessStoreFrontWidgetState extends State<BusinessStoreFrontWidget>
                                                                   'purchases':
                                                                       FieldValue
                                                                           .arrayUnion([
-                                                                    listViewProductsRecord
-                                                                        .reference
-                                                                  ]),
-                                                                  'productKeys':
-                                                                      FieldValue
-                                                                          .arrayUnion([
-                                                                    listViewProductsRecord
-                                                                        .keys
-                                                                        .last
+                                                                    getPurchaseFirestoreData(
+                                                                      createPurchaseStruct(
+                                                                        productRef:
+                                                                            listViewProductsRecord.reference,
+                                                                        productName:
+                                                                            listViewProductsRecord.productName,
+                                                                        productPFP:
+                                                                            listViewProductsRecord.productPFP,
+                                                                        productKey: listViewProductsRecord
+                                                                            .keys
+                                                                            .last,
+                                                                        clearUnsetFields:
+                                                                            false,
+                                                                      ),
+                                                                      true,
+                                                                    )
                                                                   ]),
                                                                 },
                                                               ),
@@ -565,6 +590,13 @@ class _BusinessStoreFrontWidgetState extends State<BusinessStoreFrontWidget>
                                                                 },
                                                               ),
                                                             });
+                                                            if (listViewProductsRecord
+                                                                    .quantity ==
+                                                                0) {
+                                                              await listViewProductsRecord
+                                                                  .reference
+                                                                  .delete();
+                                                            }
                                                             ScaffoldMessenger
                                                                     .of(context)
                                                                 .showSnackBar(
@@ -679,7 +711,7 @@ class _BusinessStoreFrontWidgetState extends State<BusinessStoreFrontWidget>
                               children: [
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 12, 0, 0),
+                                      0.0, 12.0, 0.0, 0.0),
                                   child: StreamBuilder<List<AdviceRecord>>(
                                     stream: queryAdviceRecord(
                                       queryBuilder: (adviceRecord) =>
@@ -693,8 +725,8 @@ class _BusinessStoreFrontWidgetState extends State<BusinessStoreFrontWidget>
                                       if (!snapshot.hasData) {
                                         return Center(
                                           child: SizedBox(
-                                            width: 50,
-                                            height: 50,
+                                            width: 50.0,
+                                            height: 50.0,
                                             child: CircularProgressIndicator(
                                               valueColor:
                                                   AlwaysStoppedAnimation<Color>(
@@ -722,22 +754,22 @@ class _BusinessStoreFrontWidgetState extends State<BusinessStoreFrontWidget>
                                           return Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    16, 0, 16, 12),
+                                                    16.0, 0.0, 16.0, 12.0),
                                             child: Container(
-                                              width: 100,
+                                              width: 100.0,
                                               decoration: BoxDecoration(
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .secondaryBackground,
                                                 boxShadow: [
                                                   BoxShadow(
-                                                    blurRadius: 3,
+                                                    blurRadius: 3.0,
                                                     color: Color(0x33000000),
-                                                    offset: Offset(0, 1),
+                                                    offset: Offset(0.0, 1.0),
                                                   )
                                                 ],
                                                 borderRadius:
-                                                    BorderRadius.circular(8),
+                                                    BorderRadius.circular(8.0),
                                               ),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
@@ -791,10 +823,13 @@ class _BusinessStoreFrontWidgetState extends State<BusinessStoreFrontWidget>
                                                         padding:
                                                             EdgeInsetsDirectional
                                                                 .fromSTEB(
-                                                                    8, 0, 0, 0),
+                                                                    8.0,
+                                                                    0.0,
+                                                                    0.0,
+                                                                    0.0),
                                                         child: Container(
-                                                          width: 60,
-                                                          height: 60,
+                                                          width: 60.0,
+                                                          height: 60.0,
                                                           clipBehavior:
                                                               Clip.antiAlias,
                                                           decoration:
@@ -818,12 +853,15 @@ class _BusinessStoreFrontWidgetState extends State<BusinessStoreFrontWidget>
                                                       Align(
                                                         alignment:
                                                             AlignmentDirectional(
-                                                                -1, 0),
+                                                                -1.0, 0.0),
                                                         child: Padding(
                                                           padding:
                                                               EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      15, 0, 0),
+                                                                  .fromSTEB(
+                                                                      0.0,
+                                                                      15.0,
+                                                                      0.0,
+                                                                      0.0),
                                                           child: Text(
                                                             listViewAdviceRecord
                                                                 .adviceString,
@@ -833,7 +871,8 @@ class _BusinessStoreFrontWidgetState extends State<BusinessStoreFrontWidget>
                                                                 .override(
                                                                   fontFamily:
                                                                       'Readex Pro',
-                                                                  fontSize: 18,
+                                                                  fontSize:
+                                                                      18.0,
                                                                 ),
                                                           ),
                                                         ),
@@ -861,7 +900,7 @@ class _BusinessStoreFrontWidgetState extends State<BusinessStoreFrontWidget>
               if (FFAppState().brandName ==
                   valueOrDefault(currentUserDocument?.brandName, ''))
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(100, 0, 0, 0),
+                  padding: EdgeInsetsDirectional.fromSTEB(100.0, 0.0, 0.0, 0.0),
                   child: AuthUserStreamWidget(
                     builder: (context) => FFButtonWidget(
                       onPressed: () async {
@@ -870,24 +909,26 @@ class _BusinessStoreFrontWidgetState extends State<BusinessStoreFrontWidget>
                       text: 'Add a product',
                       icon: Icon(
                         Icons.add,
-                        size: 15,
+                        size: 15.0,
                       ),
                       options: FFButtonOptions(
-                        height: 40,
-                        padding: EdgeInsetsDirectional.fromSTEB(24, 0, 24, 0),
-                        iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                        height: 40.0,
+                        padding: EdgeInsetsDirectional.fromSTEB(
+                            24.0, 0.0, 24.0, 0.0),
+                        iconPadding:
+                            EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                         color: FlutterFlowTheme.of(context).primary,
                         textStyle:
                             FlutterFlowTheme.of(context).titleSmall.override(
                                   fontFamily: 'Readex Pro',
                                   color: Colors.white,
                                 ),
-                        elevation: 3,
+                        elevation: 3.0,
                         borderSide: BorderSide(
                           color: Colors.transparent,
-                          width: 1,
+                          width: 1.0,
                         ),
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
                   ),
