@@ -294,6 +294,31 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'leaderboardPage',
           path: '/leaderboardPage',
           builder: (context, params) => LeaderboardPageWidget(),
+        ),
+        FFRoute(
+          name: 'landingPageMedia',
+          path: '/landingPageMedia',
+          builder: (context, params) => LandingPageMediaWidget(),
+        ),
+        FFRoute(
+          name: 'addLandingPageMedia',
+          path: '/addLandingPageMedia',
+          builder: (context, params) => AddLandingPageMediaWidget(),
+        ),
+        FFRoute(
+          name: 'viewFeedback',
+          path: '/viewFeedback',
+          builder: (context, params) => ViewFeedbackWidget(),
+        ),
+        FFRoute(
+          name: 'viewFeedbackDoc',
+          path: '/viewFeedbackDoc',
+          builder: (context, params) => ViewFeedbackDocWidget(),
+        ),
+        FFRoute(
+          name: 'advertisementApplications',
+          path: '/advertisementApplications',
+          builder: (context, params) => AdvertisementApplicationsWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

@@ -1,6 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/schema/structs/index.dart';
-import '/components/viewing_application_widget.dart';
 import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -12,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
 import 'purchases_page_model.dart';
 export 'purchases_page_model.dart';
 
@@ -68,13 +68,13 @@ class _PurchasesPageWidgetState extends State<PurchasesPageWidget>
             automaticallyImplyLeading: false,
             leading: FlutterFlowIconButton(
               borderColor: Colors.transparent,
-              borderRadius: 30.0,
-              borderWidth: 1.0,
-              buttonSize: 60.0,
+              borderRadius: 30,
+              borderWidth: 1,
+              buttonSize: 60,
               icon: Icon(
                 Icons.arrow_back_rounded,
                 color: FlutterFlowTheme.of(context).primaryText,
-                size: 30.0,
+                size: 30,
               ),
               onPressed: () async {
                 context.pushNamed('userProfile');
@@ -86,7 +86,7 @@ class _PurchasesPageWidgetState extends State<PurchasesPageWidget>
             ),
             actions: [],
             centerTitle: false,
-            elevation: 0.0,
+            elevation: 0,
           ),
           body: SafeArea(
             top: true,
@@ -96,7 +96,7 @@ class _PurchasesPageWidgetState extends State<PurchasesPageWidget>
               children: [
                 Expanded(
                   child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 0),
                     child: AuthUserStreamWidget(
                       builder: (context) => Builder(
                         builder: (context) {
@@ -110,123 +110,89 @@ class _PurchasesPageWidgetState extends State<PurchasesPageWidget>
                             itemBuilder: (context, purchasesIndex) {
                               final purchasesItem = purchases[purchasesIndex];
                               return Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 1.0),
-                                child: InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    await showModalBottomSheet(
-                                      isScrollControlled: true,
-                                      backgroundColor: Colors.transparent,
-                                      enableDrag: false,
-                                      context: context,
-                                      builder: (context) {
-                                        return GestureDetector(
-                                          onTap: () => _model
-                                                  .unfocusNode.canRequestFocus
-                                              ? FocusScope.of(context)
-                                                  .requestFocus(
-                                                      _model.unfocusNode)
-                                              : FocusScope.of(context)
-                                                  .unfocus(),
-                                          child: Padding(
-                                            padding: MediaQuery.viewInsetsOf(
-                                                context),
-                                            child: ViewingApplicationWidget(),
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 1),
+                                child: Container(
+                                  width: 100,
+                                  decoration: BoxDecoration(
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    boxShadow: [
+                                      BoxShadow(
+                                        blurRadius: 0,
+                                        color: FlutterFlowTheme.of(context)
+                                            .alternate,
+                                        offset: Offset(0, 1),
+                                      )
+                                    ],
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(40),
+                                          child: Image.network(
+                                            purchasesItem.productPFP,
+                                            width: 60,
+                                            height: 60,
+                                            fit: BoxFit.cover,
                                           ),
-                                        );
-                                      },
-                                    ).then((value) => safeSetState(() {}));
-                                  },
-                                  child: Container(
-                                    width: 100.0,
-                                    decoration: BoxDecoration(
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                      boxShadow: [
-                                        BoxShadow(
-                                          blurRadius: 0.0,
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                          offset: Offset(0.0, 1.0),
-                                        )
-                                      ],
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(40.0),
-                                            child: Image.network(
-                                              purchasesItem.productPFP,
-                                              width: 60.0,
-                                              height: 60.0,
-                                              fit: BoxFit.cover,
-                                            ),
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(12, 0, 0, 0),
+                                                child: Text(
+                                                  purchasesItem.productName,
+                                                  style: FlutterFlowTheme.of(
+                                                          context)
+                                                      .bodyLarge,
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          Expanded(
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.max,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(
-                                                          12.0, 0.0, 0.0, 0.0),
-                                                  child: Text(
-                                                    purchasesItem.productName,
-                                                    style: FlutterFlowTheme.of(
+                                        ),
+                                        InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              SnackBar(
+                                                content: Text(
+                                                  purchasesItem.productKey,
+                                                  style: TextStyle(
+                                                    color: FlutterFlowTheme.of(
                                                             context)
-                                                        .bodyLarge,
+                                                        .primaryText,
                                                   ),
                                                 ),
-                                              ],
-                                            ),
+                                                duration: Duration(
+                                                    milliseconds: 4000),
+                                                backgroundColor:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondary,
+                                              ),
+                                            );
+                                          },
+                                          child: Icon(
+                                            Icons.arrow_right,
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondaryText,
+                                            size: 35,
                                           ),
-                                          InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () async {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                SnackBar(
-                                                  content: Text(
-                                                    purchasesItem.productKey,
-                                                    style: TextStyle(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                    ),
-                                                  ),
-                                                  duration: Duration(
-                                                      milliseconds: 4000),
-                                                  backgroundColor:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .secondary,
-                                                ),
-                                              );
-                                            },
-                                            child: Icon(
-                                              Icons.arrow_right,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                              size: 35.0,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),

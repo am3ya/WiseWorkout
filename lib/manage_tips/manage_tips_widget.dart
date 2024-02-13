@@ -88,13 +88,18 @@ class _ManageTipsWidgetState extends State<ManageTipsWidget> {
                 borderRadius: BorderRadius.circular(8.0),
               ),
             ),
-            title: Text(
-              'Manage tips',
-              style: FlutterFlowTheme.of(context).headlineMedium.override(
-                    fontFamily: 'Outfit',
-                    color: Colors.white,
-                    fontSize: 22.0,
-                  ),
+            title: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Text(
+                  'Manage tips',
+                  style: FlutterFlowTheme.of(context).headlineMedium.override(
+                        fontFamily: 'Outfit',
+                        color: Colors.white,
+                        fontSize: 22.0,
+                      ),
+                ),
+              ],
             ),
             actions: [],
             centerTitle: false,
@@ -170,6 +175,7 @@ class _ManageTipsWidgetState extends State<ManageTipsWidget> {
                             snapshot.data!;
                         return ListView.builder(
                           padding: EdgeInsets.zero,
+                          primary: false,
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
                           itemCount: listViewAdviceRecordList.length,
@@ -218,7 +224,12 @@ class _ManageTipsWidgetState extends State<ManageTipsWidget> {
                                                 TextSpan(
                                                   text: listViewAdviceRecord
                                                       .ageGroup,
-                                                  style: TextStyle(),
+                                                  style: TextStyle(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primaryText,
+                                                    fontSize: 12.0,
+                                                  ),
                                                 )
                                               ],
                                               style:

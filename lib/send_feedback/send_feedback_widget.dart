@@ -1,7 +1,12 @@
+import '/auth/firebase_auth/auth_util.dart';
+import '/backend/backend.dart';
+import '/components/error_occured_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/flutter_flow/custom_functions.dart' as functions;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -76,7 +81,12 @@ class _SendFeedbackWidgetState extends State<SendFeedbackWidget> {
                 size: 30.0,
               ),
               onPressed: () async {
-                context.pop();
+                if (valueOrDefault(currentUserDocument?.userType, '') ==
+                    'user') {
+                  context.pushNamed('userProfile');
+                } else {
+                  context.pushNamed('businessProfile');
+                }
               },
             ),
             title: Text(
@@ -218,8 +228,126 @@ class _SendFeedbackWidgetState extends State<SendFeedbackWidget> {
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 12.0),
                       child: FFButtonWidget(
-                        onPressed: () {
-                          print('Button pressed ...');
+                        onPressed: () async {
+                          if (valueOrDefault(
+                                  currentUserDocument?.userType, '') ==
+                              'user') {
+                            if (functions
+                                    .isEmpty(_model.textController1.text) ||
+                                functions
+                                    .isEmpty(_model.textController2.text)) {
+                              await showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                enableDrag: false,
+                                context: context,
+                                builder: (context) {
+                                  return GestureDetector(
+                                    onTap: () => _model
+                                            .unfocusNode.canRequestFocus
+                                        ? FocusScope.of(context)
+                                            .requestFocus(_model.unfocusNode)
+                                        : FocusScope.of(context).unfocus(),
+                                    child: Padding(
+                                      padding: MediaQuery.viewInsetsOf(context),
+                                      child: ErrorOccuredWidget(),
+                                    ),
+                                  );
+                                },
+                              ).then((value) => safeSetState(() {}));
+                            } else {
+                              await FeedbackRecord.collection.doc().set({
+                                ...createFeedbackRecordData(
+                                  feedbackString: _model.textController2.text,
+                                  creator: currentUserReference,
+                                  creatorPFP: currentUserPhoto,
+                                  userType: valueOrDefault(
+                                      currentUserDocument?.userType, ''),
+                                  status: 'open',
+                                  subject: _model.textController1.text,
+                                  creatorName: currentUserDisplayName,
+                                ),
+                                ...mapToFirestore(
+                                  {
+                                    'created_time':
+                                        FieldValue.serverTimestamp(),
+                                  },
+                                ),
+                              });
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Your feedback has been sent. Thank you.',
+                                    style: TextStyle(
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                    ),
+                                  ),
+                                  duration: Duration(milliseconds: 4000),
+                                  backgroundColor:
+                                      FlutterFlowTheme.of(context).secondary,
+                                ),
+                              );
+                            }
+                          } else {
+                            if (functions
+                                    .isEmpty(_model.textController1.text) ||
+                                functions
+                                    .isEmpty(_model.textController2.text)) {
+                              await showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                enableDrag: false,
+                                context: context,
+                                builder: (context) {
+                                  return GestureDetector(
+                                    onTap: () => _model
+                                            .unfocusNode.canRequestFocus
+                                        ? FocusScope.of(context)
+                                            .requestFocus(_model.unfocusNode)
+                                        : FocusScope.of(context).unfocus(),
+                                    child: Padding(
+                                      padding: MediaQuery.viewInsetsOf(context),
+                                      child: ErrorOccuredWidget(),
+                                    ),
+                                  );
+                                },
+                              ).then((value) => safeSetState(() {}));
+                            } else {
+                              await FeedbackRecord.collection.doc().set({
+                                ...createFeedbackRecordData(
+                                  feedbackString: _model.textController2.text,
+                                  creator: currentUserReference,
+                                  creatorPFP: currentUserPhoto,
+                                  userType: valueOrDefault(
+                                      currentUserDocument?.userType, ''),
+                                  status: 'open',
+                                  subject: _model.textController1.text,
+                                  creatorName: currentUserDisplayName,
+                                ),
+                                ...mapToFirestore(
+                                  {
+                                    'created_time':
+                                        FieldValue.serverTimestamp(),
+                                  },
+                                ),
+                              });
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                    'Your feedback has been sent. Thank you.',
+                                    style: TextStyle(
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                    ),
+                                  ),
+                                  duration: Duration(milliseconds: 4000),
+                                  backgroundColor:
+                                      FlutterFlowTheme.of(context).secondary,
+                                ),
+                              );
+                            }
+                          }
                         },
                         text: 'Submit Ticket',
                         icon: Icon(
