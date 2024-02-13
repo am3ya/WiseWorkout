@@ -66,3 +66,6 @@ export '/landing_page_media/landing_page_media_widget.dart'
     show LandingPageMediaWidget;
 export '/add_landing_page_media/add_landing_page_media_widget.dart'
     show AddLandingPageMediaWidget;
+export '/view_feedback/view_feedback_widget.dart' show ViewFeedbackWidget;
+export '/view_feedback_doc/view_feedback_doc_widget.dart'
+    show ViewFeedbackDocWidget;

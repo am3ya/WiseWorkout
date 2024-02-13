@@ -127,7 +127,7 @@ class _AdminProfileWidgetState extends State<AdminProfileWidget> {
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
-                    context.pushNamed('history');
+                    context.pushNamed('viewFeedback');
                   },
                   child: Material(
                     color: Colors.transparent,
@@ -215,7 +215,7 @@ class _AdminProfileWidgetState extends State<AdminProfileWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'View applications',
+                              'View business account applications',
                               style: FlutterFlowTheme.of(context).bodyLarge,
                             ),
                           ],

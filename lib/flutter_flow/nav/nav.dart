@@ -307,6 +307,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'addLandingPageMedia',
           path: '/addLandingPageMedia',
           builder: (context, params) => AddLandingPageMediaWidget(),
+        ),
+        FFRoute(
+          name: 'viewFeedback',
+          path: '/viewFeedback',
+          builder: (context, params) => ViewFeedbackWidget(),
+        ),
+        FFRoute(
+          name: 'viewFeedbackDoc',
+          path: '/viewFeedbackDoc',
+          builder: (context, params) => ViewFeedbackDocWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],

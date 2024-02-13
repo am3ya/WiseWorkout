@@ -158,6 +158,7 @@ class _ViewAboutPageWidgetState extends State<ViewAboutPageWidget> {
                                 FlutterFlowVideoPlayer(
                               path: path,
                               width: 300.0,
+                              height: 300.0,
                               autoPlay: false,
                               looping: true,
                               showControls: true,

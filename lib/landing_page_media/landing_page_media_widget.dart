@@ -79,7 +79,7 @@ class _LandingPageMediaWidgetState extends State<LandingPageMediaWidget> {
               },
             ),
             title: Text(
-              'Applications',
+              'Landing page media',
               style: FlutterFlowTheme.of(context).headlineSmall,
             ),
             actions: [],
@@ -191,6 +191,7 @@ class _LandingPageMediaWidgetState extends State<LandingPageMediaWidget> {
                                         FlutterFlowVideoPlayer(
                                       path: path,
                                       width: 300.0,
+                                      height: 300.0,
                                       autoPlay: false,
                                       looping: true,
                                       showControls: true,

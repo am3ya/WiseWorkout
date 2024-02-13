@@ -154,6 +154,8 @@ final parametersBuilderMap =
   'leaderboardPage': ParameterData.none(),
   'landingPageMedia': ParameterData.none(),
   'addLandingPageMedia': ParameterData.none(),
+  'viewFeedback': ParameterData.none(),
+  'viewFeedbackDoc': ParameterData.none(),
 };
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {
