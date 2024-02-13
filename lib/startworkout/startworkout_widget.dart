@@ -225,6 +225,8 @@ class _StartworkoutWidgetState extends State<StartworkoutWidget> {
                         context.pushNamed('trialNewUserInfoPage');
 
                         return;
+                      } else {
+                        context.pushNamed('leaderboardPage');
                       }
                     },
                     text: 'VIEW LEADERBOARD',

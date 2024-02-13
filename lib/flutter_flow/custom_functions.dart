@@ -524,3 +524,13 @@ List<String> stringSplitter(String largeString) {
 
   return array;
 }
+
+int plusOne(int number){
+  return number + 1;
+}
+
+int listSize(String theList) {
+  // converts a string to list<String> and returns list length
+  List<String> convertedList = theList.split(",");
+  return convertedList.length;
+}

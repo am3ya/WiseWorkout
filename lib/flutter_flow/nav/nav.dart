@@ -289,6 +289,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'adminSearchClubs',
           path: '/adminSearchClubs',
           builder: (context, params) => AdminSearchClubsWidget(),
+        ),
+        FFRoute(
+          name: 'leaderboardPage',
+          path: '/leaderboardPage',
+          builder: (context, params) => LeaderboardPageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
