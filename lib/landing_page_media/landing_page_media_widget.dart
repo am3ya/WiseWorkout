@@ -79,7 +79,7 @@ class _LandingPageMediaWidgetState extends State<LandingPageMediaWidget> {
               },
             ),
             title: Text(
-              'Landing page media',
+              'Advertisements',
               style: FlutterFlowTheme.of(context).headlineSmall,
             ),
             actions: [],

@@ -14,6 +14,7 @@ import 'schema/global_properties_record.dart';
 import 'schema/challenges_record.dart';
 import 'schema/products_record.dart';
 import 'schema/feedback_record.dart';
+import 'schema/media_applications_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart';
@@ -30,6 +31,7 @@ export 'schema/global_properties_record.dart';
 export 'schema/challenges_record.dart';
 export 'schema/products_record.dart';
 export 'schema/feedback_record.dart';
+export 'schema/media_applications_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -362,6 +364,43 @@ Future<List<FeedbackRecord>> queryFeedbackRecordOnce({
     queryCollectionOnce(
       FeedbackRecord.collection,
       FeedbackRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query MediaApplicationsRecords (as a Stream and as a Future).
+Future<int> queryMediaApplicationsRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      MediaApplicationsRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<MediaApplicationsRecord>> queryMediaApplicationsRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      MediaApplicationsRecord.collection,
+      MediaApplicationsRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<MediaApplicationsRecord>> queryMediaApplicationsRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      MediaApplicationsRecord.collection,
+      MediaApplicationsRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

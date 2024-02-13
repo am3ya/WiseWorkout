@@ -69,3 +69,5 @@ export '/add_landing_page_media/add_landing_page_media_widget.dart'
 export '/view_feedback/view_feedback_widget.dart' show ViewFeedbackWidget;
 export '/view_feedback_doc/view_feedback_doc_widget.dart'
     show ViewFeedbackDocWidget;
+export '/advertisement_applications/advertisement_applications_widget.dart'
+    show AdvertisementApplicationsWidget;

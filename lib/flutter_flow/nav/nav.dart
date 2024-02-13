@@ -317,6 +317,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'viewFeedbackDoc',
           path: '/viewFeedbackDoc',
           builder: (context, params) => ViewFeedbackDocWidget(),
+        ),
+        FFRoute(
+          name: 'advertisementApplications',
+          path: '/advertisementApplications',
+          builder: (context, params) => AdvertisementApplicationsWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       observers: [routeObserver],

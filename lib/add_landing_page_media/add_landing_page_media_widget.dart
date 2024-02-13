@@ -1,6 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
+import '/components/apply_media_comp_widget.dart';
 import '/components/error_occured_widget.dart';
 import '/flutter_flow/flutter_flow_media_display.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -74,19 +75,54 @@ class _AddLandingPageMediaWidgetState extends State<AddLandingPageMediaWidget> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    AuthUserStreamWidget(
-                      builder: (context) => Text(
-                        valueOrDefault(currentUserDocument?.userType, '') ==
-                                'admin'
-                            ? 'Add image'
-                            : 'Apply to add media',
-                        style: FlutterFlowTheme.of(context)
-                            .headlineMedium
-                            .override(
-                              fontFamily: 'Outfit',
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              fontSize: 22.0,
+                    if (valueOrDefault(currentUserDocument?.userType, '') ==
+                        'business')
+                      Align(
+                        alignment: AlignmentDirectional(0.0, 0.0),
+                        child: AuthUserStreamWidget(
+                          builder: (context) => InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              await showModalBottomSheet(
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                enableDrag: false,
+                                context: context,
+                                builder: (context) {
+                                  return Padding(
+                                    padding: MediaQuery.viewInsetsOf(context),
+                                    child: ApplyMediaCompWidget(),
+                                  );
+                                },
+                              ).then((value) => safeSetState(() {}));
+                            },
+                            child: Icon(
+                              Icons.info,
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                              size: 30.0,
                             ),
+                          ),
+                        ),
+                      ),
+                    Align(
+                      alignment: AlignmentDirectional(0.0, 0.0),
+                      child: AuthUserStreamWidget(
+                        builder: (context) => Text(
+                          valueOrDefault(currentUserDocument?.userType, '') ==
+                                  'admin'
+                              ? 'Add image'
+                              : 'Apply to add media',
+                          style: FlutterFlowTheme.of(context)
+                              .headlineMedium
+                              .override(
+                                fontFamily: 'Outfit',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                fontSize: 22.0,
+                              ),
+                        ),
                       ),
                     ),
                   ],
@@ -170,7 +206,7 @@ class _AddLandingPageMediaWidgetState extends State<AddLandingPageMediaWidget> {
                       children: [
                         FlutterFlowMediaDisplay(
                           path: _model.uploadedFileUrl == ''
-                              ? 'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/workout-app-o0nwer/assets/aqh5sad4fgmy/image_2024-02-13_221108359.png'
+                              ? 'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/workout-app-o0nwer/assets/smnus6likqtd/image_2024-02-13_225022406.png'
                               : _model.uploadedFileUrl,
                           imageBuilder: (path) => ClipRRect(
                             borderRadius: BorderRadius.circular(8.0),
@@ -183,8 +219,8 @@ class _AddLandingPageMediaWidgetState extends State<AddLandingPageMediaWidget> {
                           ),
                           videoPlayerBuilder: (path) => FlutterFlowVideoPlayer(
                             path: path,
-                            width: 1080.0,
-                            height: 1080.0,
+                            width: 300.0,
+                            height: 300.0,
                             autoPlay: false,
                             looping: true,
                             showControls: true,
@@ -230,6 +266,61 @@ class _AddLandingPageMediaWidgetState extends State<AddLandingPageMediaWidget> {
                                   : null;
                           return FFButtonWidget(
                             onPressed: () async {
+                              if (valueOrDefault(
+                                      currentUserDocument?.userType, '') !=
+                                  'admin') {
+                                if (_model.uploadedFileUrl == '') {
+                                  await showModalBottomSheet(
+                                    isScrollControlled: true,
+                                    backgroundColor: Colors.transparent,
+                                    enableDrag: false,
+                                    context: context,
+                                    builder: (context) {
+                                      return Padding(
+                                        padding:
+                                            MediaQuery.viewInsetsOf(context),
+                                        child: ErrorOccuredWidget(),
+                                      );
+                                    },
+                                  ).then((value) => safeSetState(() {}));
+
+                                  return;
+                                } else {
+                                  await MediaApplicationsRecord.collection
+                                      .doc()
+                                      .set({
+                                    ...createMediaApplicationsRecordData(
+                                      media: _model.uploadedFileUrl,
+                                      creator: currentUserReference,
+                                      creatorName: valueOrDefault(
+                                          currentUserDocument?.brandName, ''),
+                                      creatorPFP: currentUserPhoto,
+                                    ),
+                                    ...mapToFirestore(
+                                      {
+                                        'created_time':
+                                            FieldValue.serverTimestamp(),
+                                      },
+                                    ),
+                                  });
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'Your application has been sent.',
+                                        style: TextStyle(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                        ),
+                                      ),
+                                      duration: Duration(milliseconds: 4000),
+                                      backgroundColor:
+                                          FlutterFlowTheme.of(context)
+                                              .secondary,
+                                    ),
+                                  );
+                                  return;
+                                }
+                              }
                               if (_model.uploadedFileUrl == '') {
                                 await showModalBottomSheet(
                                   isScrollControlled: true,
