@@ -139,6 +139,12 @@ class FFAppState extends ChangeNotifier {
   set brandRef(DocumentReference? _value) {
     _brandRef = _value;
   }
+
+  DocumentReference? _feedbackRef;
+  DocumentReference? get feedbackRef => _feedbackRef;
+  set feedbackRef(DocumentReference? _value) {
+    _feedbackRef = _value;
+  }
 }
 
 void _safeInit(Function() initializeField) {
