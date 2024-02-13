@@ -51,7 +51,7 @@ export '/getting_challenged_timer/getting_challenged_timer_widget.dart'
     show GettingChallengedTimerWidget;
 export '/challenge_result_page/challenge_result_page_widget.dart'
     show ChallengeResultPageWidget;
-    export '/business_store_front/business_store_front_widget.dart'
+export '/business_store_front/business_store_front_widget.dart'
     show BusinessStoreFrontWidget;
 export '/purchases_page/purchases_page_widget.dart' show PurchasesPageWidget;
 export '/add_product_page/add_product_page_widget.dart'
@@ -60,3 +60,5 @@ export '/favourite_brands_page/favourite_brands_page_widget.dart'
     show FavouriteBrandsPageWidget;
 export '/admin_search_clubs/admin_search_clubs_widget.dart'
     show AdminSearchClubsWidget;
+export '/leaderboard_page/leaderboard_page_widget.dart'
+    show LeaderboardPageWidget;

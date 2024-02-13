@@ -1,5 +1,3 @@
-import 'package:flutter/scheduler.dart';
-
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/rest_day_are_you_sure_widget.dart';
@@ -10,8 +8,10 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/custom_functions.dart' as functions;
 import 'package:badges/badges.dart' as badges;
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -36,21 +36,37 @@ class _TestCalendarWidgetState extends State<TestCalendarWidget>
     super.initState();
     _model = createModel(context, () => TestCalendarModel());
 
-    //On page load
+    // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if (_model.calendarSelectedDay2!.start >
-          currentUserDocument!.calorieDiffLastUpdate!){
-            await currentUserReference!.update({
-              ...createUsersRecordData(
-                calorieDiffLastUpdate: getCurrentTimestamp,
-              ),
-              ...mapToFirestore({
-                'calorieDifference' : FieldValue.increment(valueOrDefault(
-                  currentUserDocument?.dailyCalorieBurningGoal, 0.0)),
-              },
-              ),
-            });
+      if (valueOrDefault(currentUserDocument?.userType, '') != 'user') {
+        if (valueOrDefault(currentUserDocument?.userType, '') == 'business') {
+          context.pushNamed('businessProfile');
+        } else {
+          if (valueOrDefault(currentUserDocument?.userType, '') == 'admin') {
+            context.pushNamed('adminProfile');
+
+            return;
           }
+        }
+
+        return;
+      }
+      if (_model.calendarSelectedDay2!.start >
+          currentUserDocument!.calorieDiffLastUpdate!) {
+        await currentUserReference!.update({
+          ...createUsersRecordData(
+            calorieDiffLastUpdate: getCurrentTimestamp,
+          ),
+          ...mapToFirestore(
+            {
+              'calorieDifference': FieldValue.increment(valueOrDefault(
+                  currentUserDocument?.dailyCalorieBurningGoal, 0.0)),
+            },
+          ),
+        });
+      } else {
+        return;
+      }
     });
 
     _model.tabBarController = TabController(
@@ -738,17 +754,11 @@ class _TestCalendarWidgetState extends State<TestCalendarWidget>
                                                                             Colors.transparent,
                                                                         onTap:
                                                                             () async {
-                                                                              if (listViewAdviceRecord.creatorName!="admin"){
                                                                           FFAppState().brandName =
                                                                               listViewAdviceRecord.creatorName;
-                                                                          FFAppState().brandRef =
-                                                                              listViewAdviceRecord.creatorRef;
 
                                                                           context
                                                                               .pushNamed('businessStoreFront');
-                                                                            } else {
-                                                                              print("Image pressed...");
-                                                                            }
                                                                         },
                                                                         child:
                                                                             Container(
@@ -1321,13 +1331,16 @@ class _TestCalendarWidgetState extends State<TestCalendarWidget>
                                                                               .transparent,
                                                                       onTap:
                                                                           () async {
-                                                                        FFAppState().brandName =
-                                                                            listViewAdviceRecord.creatorName;
-                                                                        FFAppState().brandRef =
-                                                                            listViewAdviceRecord.creatorRef;
+                                                                        if (listViewAdviceRecord.creatorName !=
+                                                                            'admin') {
+                                                                          FFAppState().brandName =
+                                                                              listViewAdviceRecord.creatorName;
+                                                                          FFAppState().brandRef =
+                                                                              listViewAdviceRecord.creatorRef;
 
-                                                                        context.pushNamed(
-                                                                            'businessStoreFront');
+                                                                          context
+                                                                              .pushNamed('businessStoreFront');
+                                                                        }
                                                                       },
                                                                       child:
                                                                           Container(
