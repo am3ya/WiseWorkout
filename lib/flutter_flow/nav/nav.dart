@@ -297,8 +297,19 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'leaderboardPage',
           path: '/leaderboardPage',
           builder: (context, params) => LeaderboardPageWidget(),
+        ),
+        FFRoute(
+          name: 'landingPageMedia',
+          path: '/landingPageMedia',
+          builder: (context, params) => LandingPageMediaWidget(),
+        ),
+        FFRoute(
+          name: 'addLandingPageMedia',
+          path: '/addLandingPageMedia',
+          builder: (context, params) => AddLandingPageMediaWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
+      observers: [routeObserver],
     );
 
 extension NavParamExtensions on Map<String, String?> {

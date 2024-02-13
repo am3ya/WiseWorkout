@@ -152,6 +152,8 @@ final parametersBuilderMap =
   'favouriteBrandsPage': ParameterData.none(),
   'adminSearchClubs': ParameterData.none(),
   'leaderboardPage': ParameterData.none(),
+  'landingPageMedia': ParameterData.none(),
+  'addLandingPageMedia': ParameterData.none(),
 };
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {

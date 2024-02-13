@@ -41,12 +41,18 @@ class GlobalPropertiesRecord extends FirestoreRecord {
   List<String> get fitnessGoal => _fitnessGoal ?? const [];
   bool hasFitnessGoal() => _fitnessGoal != null;
 
+  // "landingPageMedia" field.
+  List<String>? _landingPageMedia;
+  List<String> get landingPageMedia => _landingPageMedia ?? const [];
+  bool hasLandingPageMedia() => _landingPageMedia != null;
+
   void _initializeFields() {
     _businessCategories = getDataList(snapshotData['businessCategories']);
     _howActive = getDataList(snapshotData['howActive']);
     _ageGroup = getDataList(snapshotData['ageGroup']);
     _bmiGroup = getDataList(snapshotData['bmiGroup']);
     _fitnessGoal = getDataList(snapshotData['fitnessGoal']);
+    _landingPageMedia = getDataList(snapshotData['landingPageMedia']);
   }
 
   static CollectionReference get collection =>
@@ -104,7 +110,8 @@ class GlobalPropertiesRecordDocumentEquality
         listEquality.equals(e1?.howActive, e2?.howActive) &&
         listEquality.equals(e1?.ageGroup, e2?.ageGroup) &&
         listEquality.equals(e1?.bmiGroup, e2?.bmiGroup) &&
-        listEquality.equals(e1?.fitnessGoal, e2?.fitnessGoal);
+        listEquality.equals(e1?.fitnessGoal, e2?.fitnessGoal) &&
+        listEquality.equals(e1?.landingPageMedia, e2?.landingPageMedia);
   }
 
   @override
@@ -113,7 +120,8 @@ class GlobalPropertiesRecordDocumentEquality
         e?.howActive,
         e?.ageGroup,
         e?.bmiGroup,
-        e?.fitnessGoal
+        e?.fitnessGoal,
+        e?.landingPageMedia
       ]);
 
   @override

@@ -62,3 +62,7 @@ export '/admin_search_clubs/admin_search_clubs_widget.dart'
     show AdminSearchClubsWidget;
 export '/leaderboard_page/leaderboard_page_widget.dart'
     show LeaderboardPageWidget;
+export '/landing_page_media/landing_page_media_widget.dart'
+    show LandingPageMediaWidget;
+export '/add_landing_page_media/add_landing_page_media_widget.dart'
+    show AddLandingPageMediaWidget;
