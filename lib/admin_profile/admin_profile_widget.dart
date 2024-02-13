@@ -1,5 +1,4 @@
 import '/auth/firebase_auth/auth_util.dart';
-import '/components/business_account_application_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -128,7 +127,7 @@ class _AdminProfileWidgetState extends State<AdminProfileWidget> {
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
-                    context.pushNamed('history');
+                    context.pushNamed('viewFeedback');
                   },
                   child: Material(
                     color: Colors.transparent,
@@ -216,7 +215,7 @@ class _AdminProfileWidgetState extends State<AdminProfileWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'View applications',
+                              'View business account applications',
                               style: FlutterFlowTheme.of(context).bodyLarge,
                             ),
                           ],
@@ -234,18 +233,7 @@ class _AdminProfileWidgetState extends State<AdminProfileWidget> {
                   hoverColor: Colors.transparent,
                   highlightColor: Colors.transparent,
                   onTap: () async {
-                    await showModalBottomSheet(
-                      isScrollControlled: true,
-                      backgroundColor: Colors.transparent,
-                      enableDrag: false,
-                      context: context,
-                      builder: (context) {
-                        return Padding(
-                          padding: MediaQuery.viewInsetsOf(context),
-                          child: BusinessAccountApplicationWidget(),
-                        );
-                      },
-                    ).then((value) => safeSetState(() {}));
+                    context.pushNamed('advertisementApplications');
                   },
                   child: Material(
                     color: Colors.transparent,
@@ -280,7 +268,7 @@ class _AdminProfileWidgetState extends State<AdminProfileWidget> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'View achievements',
+                              'View advertisement applications',
                               style: FlutterFlowTheme.of(context).bodyLarge,
                             ),
                           ],
@@ -440,6 +428,59 @@ class _AdminProfileWidgetState extends State<AdminProfileWidget> {
                           children: [
                             Text(
                               'View business categories',
+                              style: FlutterFlowTheme.of(context).bodyLarge,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
+                child: InkWell(
+                  splashColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () async {
+                    context.pushNamed('landingPageMedia');
+                  },
+                  child: Material(
+                    color: Colors.transparent,
+                    elevation: 0.0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Container(
+                      width: double.infinity,
+                      height: 60.0,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 3.0,
+                            color: Color(0x33000000),
+                            offset: Offset(0.0, 1.0),
+                          )
+                        ],
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(
+                          color:
+                              FlutterFlowTheme.of(context).secondaryBackground,
+                          width: 0.0,
+                        ),
+                      ),
+                      child: Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 4.0, 0.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'View advertisements',
                               style: FlutterFlowTheme.of(context).bodyLarge,
                             ),
                           ],
