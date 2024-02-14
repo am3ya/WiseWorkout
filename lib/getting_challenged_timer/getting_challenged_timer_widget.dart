@@ -1075,6 +1075,7 @@ class _GettingChallengedTimerWidgetState
                                                 _model.timerMilliseconds;
                                             DateTime now = DateTime.now();
                                             DateTime today = DateTime(now.year, now.month, now.day);
+                                            buttonWorkoutsRecordList.sort((a, b) => a.dateUploaded!.compareTo(b.dateUploaded!));
                                             if (FFAppState().stepCount >
                                                 gettingChallengedTimerChallengesRecord
                                                     .challengerSteps) {

@@ -1,3 +1,5 @@
+import 'package:collection/collection.dart';
+
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/explain_calorie_difference_widget.dart';
@@ -1053,6 +1055,7 @@ class _StartWorkoutTimerWidgetState extends State<StartWorkoutTimerWidget> {
                                             getCurrentTimestamp;
                                         DateTime now = DateTime.now();
                                         DateTime today = DateTime(now.year, now.month, now.day);
+                                        startWorkoutTimerWorkoutsRecordList.sort((a, b) => a.dateUploaded!.compareTo(b.dateUploaded!));
                                         if (startWorkoutTimerWorkoutsRecordList
                                                 .length >
                                             0) {

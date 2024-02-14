@@ -1118,6 +1118,7 @@ class _ChallengeTimerWidgetState extends State<ChallengeTimerWidget> {
                                                 getCurrentTimestamp;
                                             DateTime now = DateTime.now();
                                             DateTime today = DateTime(now.year, now.month, now.day);
+                                            challengeTimerWorkoutsRecordList.sort((a, b) => a.dateUploaded!.compareTo(b.dateUploaded!));
                                             if (challengeTimerWorkoutsRecordList.isNotEmpty) {
                                               if (challengeTimerWorkoutsRecordList
                                                       .last.dateUploaded ==

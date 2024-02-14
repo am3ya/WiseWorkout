@@ -1,4 +1,4 @@
-import 'package:geolocator/geolocator.dart';
+/*import 'package:geolocator/geolocator.dart';
 import 'dart:async';
 
 class DistanceTracker {
@@ -135,4 +135,105 @@ class DistanceTracker {
   /*void manuallyUpdateLiveDistance() {
     _updateLiveDistance();
   }*/
+}*/
+
+import 'package:geolocator/geolocator.dart';
+import 'dart:async';
+
+class DistanceTracker {
+  bool isTracking = false;
+  double totalDistance = 0.0;
+  Position? lastPosition;
+  StreamSubscription<Position>? positionSubscription;
+  final void Function(double) onUpdateLiveDistance;
+  static const double distanceThreshold = 0.01; // Minimum distance (in kilometers) to update
+  bool _isPaused = false;
+
+  DistanceTracker({required this.onUpdateLiveDistance});
+
+  void startTracking() {
+    if (!isTracking) {
+      isTracking = true;
+      totalDistance = 0.0;
+      listenToPositionChanges();
+    }
+  }
+
+  void stopTracking() {
+    if (isTracking) {
+      isTracking = false;    
+      positionSubscription?.cancel();
+      totalDistance = 0.0;
+      lastPosition = null;
+    }
+  }
+
+  void pauseTracking() {
+    _isPaused = true;
+  }
+
+  void resumeTracking() {
+    _isPaused = false;
+  }
+
+  void listenToPositionChanges() {
+    var locationSettings = LocationSettings(
+      accuracy: LocationAccuracy.best,
+      distanceFilter: 10, // Only notify if the distance changes by at least 10 meters
+    );
+
+    positionSubscription = Geolocator.getPositionStream(locationSettings: locationSettings).listen(
+      (Position position) {
+        if (!_isPaused) {
+          updateLiveDistance(position);
+        }
+      },
+    );
+  }
+
+  void updateLiveDistance(Position currentPosition) {
+    if (lastPosition != null) {
+      double distanceInMeters = Geolocator.distanceBetween(
+        lastPosition!.latitude,
+        lastPosition!.longitude,
+        currentPosition.latitude,
+        currentPosition.longitude,
+      );
+
+      double distanceInKilometers = distanceInMeters / 1000.0;
+        totalDistance += distanceInKilometers;
+        lastPosition = currentPosition;
+        onUpdateLiveDistance(totalDistance);
+      
+    } else {
+      lastPosition = currentPosition;
+    }
+  }
+
+  Future<Position?> determinePosition() async {
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled
+      return Future.error('Location services are disabled.');
+    }
+
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied || permission == LocationPermission.deniedForever) {
+        // Permissions are denied (forever)
+        return Future.error('Location permissions are denied (forever).');
+      }
+    }
+
+    return await Geolocator.getCurrentPosition();
+  }
+
+  Future<Position?> getLastKnownPosition() async {
+    return await Geolocator.getLastKnownPosition();
+  }
+
+  double calculateDistance(double startLatitude, double startLongitude, double endLatitude, double endLongitude) {
+    return Geolocator.distanceBetween(startLatitude, startLongitude, endLatitude, endLongitude) / 1000.0; // Convert to kilometers
+  }
 }
