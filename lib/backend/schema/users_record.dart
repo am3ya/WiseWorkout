@@ -212,6 +212,11 @@ class UsersRecord extends FirestoreRecord {
   List<PurchaseStruct> get purchases => _purchases ?? const [];
   bool hasPurchases() => _purchases != null;
 
+  // "timesFavourited" field.
+  int? _timesFavourited;
+  int get timesFavourited => _timesFavourited ?? 0;
+  bool hasTimesFavourited() => _timesFavourited != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -257,6 +262,7 @@ class UsersRecord extends FirestoreRecord {
       snapshotData['purchases'],
       PurchaseStruct.fromMap,
     );
+    _timesFavourited = castToType<int>(snapshotData['timesFavourited']);
   }
 
   static CollectionReference get collection =>
@@ -327,6 +333,7 @@ Map<String, dynamic> createUsersRecordData({
   double? winPercentage,
   int? credits,
   DateTime? calorieDiffLastUpdate,
+  int? timesFavourited,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -364,6 +371,7 @@ Map<String, dynamic> createUsersRecordData({
       'winPercentage': winPercentage,
       'credits': credits,
       'calorieDiffLastUpdate': calorieDiffLastUpdate,
+      'timesFavourited': timesFavourited,
     }.withoutNulls,
   );
 
@@ -414,7 +422,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.credits == e2?.credits &&
         listEquality.equals(e1?.favouriteBusinesses, e2?.favouriteBusinesses) &&
         e1?.calorieDiffLastUpdate == e2?.calorieDiffLastUpdate &&
-        listEquality.equals(e1?.purchases, e2?.purchases);
+        listEquality.equals(e1?.purchases, e2?.purchases) &&
+        e1?.timesFavourited == e2?.timesFavourited;
   }
 
   @override
@@ -457,7 +466,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.credits,
         e?.favouriteBusinesses,
         e?.calorieDiffLastUpdate,
-        e?.purchases
+        e?.purchases,
+        e?.timesFavourited
       ]);
 
   @override

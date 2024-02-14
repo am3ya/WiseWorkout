@@ -204,76 +204,95 @@ class _BusinessStoreFrontWidgetState extends State<BusinessStoreFrontWidget>
                           ),
                         ),
                       ),
-                      Padding(
-                        padding:
-                            EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 0.0, 0.0),
-                        child: FlutterFlowIconButton(
-                          borderColor: FlutterFlowTheme.of(context).primary,
-                          borderRadius: 20.0,
-                          borderWidth: 1.0,
-                          buttonSize: 40.0,
-                          fillColor: FlutterFlowTheme.of(context).accent1,
-                          icon: Icon(
-                            Icons.favorite,
-                            color: FlutterFlowTheme.of(context).primaryText,
-                            size: 24.0,
+                      if (rowUsersRecord?.reference != currentUserReference)
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              8.0, 0.0, 0.0, 0.0),
+                          child: FlutterFlowIconButton(
+                            borderColor: FlutterFlowTheme.of(context).primary,
+                            borderRadius: 20.0,
+                            borderWidth: 1.0,
+                            buttonSize: 40.0,
+                            fillColor: FlutterFlowTheme.of(context).accent1,
+                            icon: Icon(
+                              Icons.favorite,
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              size: 24.0,
+                            ),
+                            onPressed: () async {
+                              if ((currentUserDocument?.favouriteBusinesses
+                                          ?.toList() ??
+                                      [])
+                                  .contains(rowUsersRecord?.reference)) {
+                                await currentUserReference!.update({
+                                  ...mapToFirestore(
+                                    {
+                                      'favouriteBusinesses':
+                                          FieldValue.arrayRemove(
+                                              [rowUsersRecord?.reference]),
+                                    },
+                                  ),
+                                });
+
+                                await rowUsersRecord!.reference.update({
+                                  ...mapToFirestore(
+                                    {
+                                      'timesFavourited':
+                                          FieldValue.increment(-(1)),
+                                    },
+                                  ),
+                                });
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Business removed from favourites.',
+                                      style: TextStyle(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                      ),
+                                    ),
+                                    duration: Duration(milliseconds: 4000),
+                                    backgroundColor:
+                                        FlutterFlowTheme.of(context).secondary,
+                                  ),
+                                );
+                              } else {
+                                await currentUserReference!.update({
+                                  ...mapToFirestore(
+                                    {
+                                      'favouriteBusinesses':
+                                          FieldValue.arrayUnion(
+                                              [rowUsersRecord?.reference]),
+                                    },
+                                  ),
+                                });
+
+                                await rowUsersRecord!.reference.update({
+                                  ...mapToFirestore(
+                                    {
+                                      'timesFavourited':
+                                          FieldValue.increment(1),
+                                    },
+                                  ),
+                                });
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text(
+                                      'Business added to favourites.',
+                                      style: TextStyle(
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryText,
+                                      ),
+                                    ),
+                                    duration: Duration(milliseconds: 4000),
+                                    backgroundColor:
+                                        FlutterFlowTheme.of(context).secondary,
+                                  ),
+                                );
+                              }
+                            },
                           ),
-                          onPressed: () async {
-                            if ((currentUserDocument?.favouriteBusinesses
-                                        ?.toList() ??
-                                    [])
-                                .contains(rowUsersRecord?.reference)) {
-                              await currentUserReference!.update({
-                                ...mapToFirestore(
-                                  {
-                                    'favouriteBusinesses':
-                                        FieldValue.arrayRemove(
-                                            [rowUsersRecord?.reference]),
-                                  },
-                                ),
-                              });
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    'Business removed from favourites.',
-                                    style: TextStyle(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                    ),
-                                  ),
-                                  duration: Duration(milliseconds: 4000),
-                                  backgroundColor:
-                                      FlutterFlowTheme.of(context).secondary,
-                                ),
-                              );
-                            } else {
-                              await currentUserReference!.update({
-                                ...mapToFirestore(
-                                  {
-                                    'favouriteBusinesses':
-                                        FieldValue.arrayUnion(
-                                            [rowUsersRecord?.reference]),
-                                  },
-                                ),
-                              });
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(
-                                    'Business added to favourites.',
-                                    style: TextStyle(
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                    ),
-                                  ),
-                                  duration: Duration(milliseconds: 4000),
-                                  backgroundColor:
-                                      FlutterFlowTheme.of(context).secondary,
-                                ),
-                              );
-                            }
-                          },
                         ),
-                      ),
                     ],
                   );
                 },

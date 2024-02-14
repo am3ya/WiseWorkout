@@ -261,6 +261,7 @@ class _EditClubPageWidgetState extends State<EditClubPageWidget> {
                         ),
                         focusNode: _model.yourNameFocusNode,
                         textCapitalization: TextCapitalization.words,
+                        readOnly: true,
                         obscureText: false,
                         decoration: InputDecoration(
                           labelText: 'Enter club name here...',
@@ -403,49 +404,28 @@ class _EditClubPageWidgetState extends State<EditClubPageWidget> {
 
                                   return;
                                 } else {
-                                  if (functions.doesClubExist(
-                                      buttonClubsRecordList.toList(),
-                                      _model.yourNameController.text)) {
-                                    await showModalBottomSheet(
-                                      isScrollControlled: true,
-                                      backgroundColor: Colors.transparent,
-                                      enableDrag: false,
-                                      context: context,
-                                      builder: (context) {
-                                        return Padding(
-                                          padding:
-                                              MediaQuery.viewInsetsOf(context),
-                                          child: ErrorOccuredWidget(),
-                                        );
-                                      },
-                                    ).then((value) => safeSetState(() {}));
-
-                                    return;
-                                  } else {
-                                    await editClubPageClubsRecord!.reference
-                                        .update(createClubsRecordData(
-                                      clubName: _model.yourNameController.text,
-                                      photoUrl: _model.uploadedFileUrl == ''
-                                          ? editClubPageClubsRecord?.photoUrl
-                                          : _model.uploadedFileUrl,
-                                      bio: _model.ageController.text,
-                                    ));
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                          'Details have been updated.',
-                                          style: TextStyle(
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                          ),
+                                  await editClubPageClubsRecord!.reference
+                                      .update(createClubsRecordData(
+                                    photoUrl: _model.uploadedFileUrl == ''
+                                        ? editClubPageClubsRecord?.photoUrl
+                                        : _model.uploadedFileUrl,
+                                    bio: _model.ageController.text,
+                                  ));
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'Details have been updated.',
+                                        style: TextStyle(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
                                         ),
-                                        duration: Duration(milliseconds: 4000),
-                                        backgroundColor:
-                                            FlutterFlowTheme.of(context)
-                                                .secondary,
                                       ),
-                                    );
-                                  }
+                                      duration: Duration(milliseconds: 4000),
+                                      backgroundColor:
+                                          FlutterFlowTheme.of(context)
+                                              .secondary,
+                                    ),
+                                  );
                                 }
                               },
                               text: 'Edit',

@@ -180,87 +180,96 @@ class _ClubsPageWidgetState extends State<ClubsPageWidget>
                                           ],
                                         ),
                                       ),
-                                      FFButtonWidget(
-                                        onPressed: () async {
-                                          if (listViewClubsRecord
-                                                  .numberOfMembers >
-                                              1) {
-                                            await currentUserReference!.update({
-                                              ...mapToFirestore(
-                                                {
-                                                  'clubs':
-                                                      FieldValue.arrayRemove([
-                                                    listViewClubsRecord
-                                                        .reference
-                                                  ]),
-                                                },
-                                              ),
-                                            });
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 10.0, 0.0),
+                                        child: FFButtonWidget(
+                                          onPressed: () async {
+                                            if (listViewClubsRecord
+                                                    .numberOfMembers >
+                                                1) {
+                                              await currentUserReference!
+                                                  .update({
+                                                ...mapToFirestore(
+                                                  {
+                                                    'clubs':
+                                                        FieldValue.arrayRemove([
+                                                      listViewClubsRecord
+                                                          .reference
+                                                    ]),
+                                                  },
+                                                ),
+                                              });
 
-                                            await listViewClubsRecord.reference
-                                                .update({
-                                              ...mapToFirestore(
-                                                {
-                                                  'membersRefs':
-                                                      FieldValue.arrayRemove([
-                                                    currentUserReference
-                                                  ]),
-                                                  'numberOfMembers':
-                                                      FieldValue.increment(
-                                                          -(1)),
-                                                },
-                                              ),
-                                            });
-                                            if (listViewClubsRecord.creator ==
-                                                currentUserReference) {
                                               await listViewClubsRecord
                                                   .reference
-                                                  .update(createClubsRecordData(
-                                                creator: listViewClubsRecord
-                                                    .membersRefs.first,
-                                              ));
+                                                  .update({
+                                                ...mapToFirestore(
+                                                  {
+                                                    'membersRefs':
+                                                        FieldValue.arrayRemove([
+                                                      currentUserReference
+                                                    ]),
+                                                    'numberOfMembers':
+                                                        FieldValue.increment(
+                                                            -(1)),
+                                                  },
+                                                ),
+                                              });
+                                              if (listViewClubsRecord.creator ==
+                                                  currentUserReference) {
+                                                await listViewClubsRecord
+                                                    .reference
+                                                    .update(
+                                                        createClubsRecordData(
+                                                  creator: listViewClubsRecord
+                                                      .membersRefs.first,
+                                                ));
+                                              }
+                                            } else {
+                                              await currentUserReference!
+                                                  .update({
+                                                ...mapToFirestore(
+                                                  {
+                                                    'clubs':
+                                                        FieldValue.arrayRemove([
+                                                      listViewClubsRecord
+                                                          .reference
+                                                    ]),
+                                                  },
+                                                ),
+                                              });
+                                              await listViewClubsRecord
+                                                  .reference
+                                                  .delete();
                                             }
-                                          } else {
-                                            await currentUserReference!.update({
-                                              ...mapToFirestore(
-                                                {
-                                                  'clubs':
-                                                      FieldValue.arrayRemove([
-                                                    listViewClubsRecord
-                                                        .reference
-                                                  ]),
-                                                },
-                                              ),
-                                            });
-                                            await listViewClubsRecord.reference
-                                                .delete();
-                                          }
-                                        },
-                                        text: 'Leave',
-                                        options: FFButtonOptions(
-                                          height: 40.0,
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  10.0, 0.0, 10.0, 0.0),
-                                          iconPadding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0.0, 0.0, 0.0, 0.0),
-                                          color: FlutterFlowTheme.of(context)
-                                              .primary,
-                                          textStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmall
-                                                  .override(
-                                                    fontFamily: 'Readex Pro',
-                                                    color: Colors.white,
-                                                  ),
-                                          elevation: 3.0,
-                                          borderSide: BorderSide(
-                                            color: Colors.transparent,
-                                            width: 1.0,
+                                          },
+                                          text: 'Leave',
+                                          options: FFButtonOptions(
+                                            height: 40.0,
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    10.0, 0.0, 10.0, 0.0),
+                                            iconPadding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 0.0, 0.0, 0.0),
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            textStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .titleSmall
+                                                    .override(
+                                                      fontFamily: 'Readex Pro',
+                                                      color: Colors.white,
+                                                    ),
+                                            elevation: 3.0,
+                                            borderSide: BorderSide(
+                                              color: Colors.transparent,
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
                                         ),
                                       ),
                                       Padding(

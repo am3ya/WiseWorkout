@@ -413,6 +413,22 @@ class _CreateClubPageWidgetState extends State<CreateClubPageWidget> {
                                       FlutterFlowTheme.of(context).secondary,
                                 ),
                               );
+
+                              await currentUserReference!.update({
+                                ...mapToFirestore(
+                                  {
+                                    'clubs': FieldValue.arrayUnion([
+                                      buttonClubsRecordList
+                                          .where((e) =>
+                                              e.clubName ==
+                                              _model.yourNameController.text)
+                                          .toList()
+                                          .first
+                                          .reference
+                                    ]),
+                                  },
+                                ),
+                              });
                             }
                           },
                           text: 'Create',

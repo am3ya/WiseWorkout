@@ -555,6 +555,7 @@ class _ViewingApplicationWidgetState extends State<ViewingApplicationWidget>
                                                         .text,
                                                     category:
                                                         _model.dropDownValue,
+                                                    timesFavourited: 0,
                                                   ));
                                                   await formApplicationsRecord!
                                                       .reference

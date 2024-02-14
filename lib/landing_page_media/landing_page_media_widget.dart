@@ -167,6 +167,7 @@ class _LandingPageMediaWidgetState extends State<LandingPageMediaWidget> {
                               [];
                           return ListView.builder(
                             padding: EdgeInsets.zero,
+                            primary: false,
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
                             itemCount: landingPageMedia.length,

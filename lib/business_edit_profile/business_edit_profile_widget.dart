@@ -427,63 +427,73 @@ class _BusinessEditProfileWidgetState extends State<BusinessEditProfileWidget> {
                   child: Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
-                    child: StreamBuilder<List<UsersRecord>>(
-                      stream: queryUsersRecord(),
-                      builder: (context, snapshot) {
-                        // Customize what your widget looks like when it's loading.
-                        if (!snapshot.hasData) {
-                          return Center(
-                            child: SizedBox(
-                              width: 50.0,
-                              height: 50.0,
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  FlutterFlowTheme.of(context).primary,
+                    child: AuthUserStreamWidget(
+                      builder: (context) => StreamBuilder<List<UsersRecord>>(
+                        stream: queryUsersRecord(
+                          queryBuilder: (usersRecord) => usersRecord.where(
+                            'brand_name',
+                            isNotEqualTo: valueOrDefault(
+                                currentUserDocument?.brandName, ''),
+                          ),
+                        ),
+                        builder: (context, snapshot) {
+                          // Customize what your widget looks like when it's loading.
+                          if (!snapshot.hasData) {
+                            return Center(
+                              child: SizedBox(
+                                width: 50.0,
+                                height: 50.0,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    FlutterFlowTheme.of(context).primary,
+                                  ),
                                 ),
                               ),
+                            );
+                          }
+                          List<UsersRecord> buttonUsersRecordList =
+                              snapshot.data!;
+                          return FFButtonWidget(
+                            onPressed: () async {
+                              if (!functions.doesUserExist(
+                                  buttonUsersRecordList.toList(),
+                                  _model.yourNameController.text)) {
+                                await currentUserReference!
+                                    .update(createUsersRecordData(
+                                  photoUrl: _model.uploadedFileUrl == ''
+                                      ? currentUserPhoto
+                                      : _model.uploadedFileUrl,
+                                  brandName: _model.yourNameController.text,
+                                  bio: _model.heightController.text,
+                                  category: _model.dropDownValue,
+                                ));
+                              }
+                            },
+                            text: 'Save Changes',
+                            options: FFButtonOptions(
+                              width: 270.0,
+                              height: 50.0,
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              color: FlutterFlowTheme.of(context).primary,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleMedium
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Colors.white,
+                                  ),
+                              elevation: 2.0,
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.circular(12.0),
                             ),
                           );
-                        }
-                        List<UsersRecord> buttonUsersRecordList =
-                            snapshot.data!;
-                        return FFButtonWidget(
-                          onPressed: () async {
-                            if (!functions.doesUserExist(
-                                buttonUsersRecordList.toList(),
-                                _model.yourNameController.text)) {
-                              await currentUserReference!
-                                  .update(createUsersRecordData(
-                                photoUrl: _model.uploadedFileUrl,
-                                brandName: _model.yourNameController.text,
-                                bio: _model.heightController.text,
-                                category: _model.dropDownValue,
-                              ));
-                            }
-                          },
-                          text: 'Save Changes',
-                          options: FFButtonOptions(
-                            width: 270.0,
-                            height: 50.0,
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            color: FlutterFlowTheme.of(context).primary,
-                            textStyle: FlutterFlowTheme.of(context)
-                                .titleMedium
-                                .override(
-                                  fontFamily: 'Readex Pro',
-                                  color: Colors.white,
-                                ),
-                            elevation: 2.0,
-                            borderSide: BorderSide(
-                              color: Colors.transparent,
-                              width: 1.0,
-                            ),
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                        );
-                      },
+                        },
+                      ),
                     ),
                   ),
                 ),

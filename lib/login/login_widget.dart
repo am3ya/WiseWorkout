@@ -922,10 +922,6 @@ class _LoginWidgetState extends State<LoginWidget>
 
                                                           await authManager
                                                               .sendEmailVerification();
-
-                                                          context.goNamedAuth(
-                                                              'testCalendar',
-                                                              context.mounted);
                                                         },
                                                         text: 'Get Started',
                                                         options:
@@ -1288,6 +1284,8 @@ class _LoginWidgetState extends State<LoginWidget>
                                                           0.0, 0.0, 0.0, 16.0),
                                                   child: FFButtonWidget(
                                                     onPressed: () async {
+                                                      await authManager
+                                                          .refreshUser();
                                                       GoRouter.of(context)
                                                           .prepareAuthEvent();
 
@@ -1303,6 +1301,34 @@ class _LoginWidgetState extends State<LoginWidget>
                                                             .text,
                                                       );
                                                       if (user == null) {
+                                                        return;
+                                                      }
+
+                                                      if (currentUserEmailVerified !=
+                                                          true) {
+                                                        ScaffoldMessenger.of(
+                                                                context)
+                                                            .showSnackBar(
+                                                          SnackBar(
+                                                            content: Text(
+                                                              'Please verify you account with the link in your email.',
+                                                              style: TextStyle(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText,
+                                                              ),
+                                                            ),
+                                                            duration: Duration(
+                                                                milliseconds:
+                                                                    4000),
+                                                            backgroundColor:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondary,
+                                                          ),
+                                                        );
+                                                        await authManager
+                                                            .sendEmailVerification();
                                                         return;
                                                       }
 
