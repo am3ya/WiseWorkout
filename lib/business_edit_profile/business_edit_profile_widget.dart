@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
 import 'business_edit_profile_model.dart';
 export 'business_edit_profile_model.dart';
 
@@ -71,37 +72,36 @@ class _BusinessEditProfileWidgetState extends State<BusinessEditProfileWidget> {
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(100.0),
+          preferredSize: Size.fromHeight(100),
           child: AppBar(
             backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
             automaticallyImplyLeading: false,
             actions: [],
             flexibleSpace: FlexibleSpaceBar(
               title: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 14.0),
+                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 14),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 8.0),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                12.0, 0.0, 0.0, 0.0),
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
                             child: FlutterFlowIconButton(
                               borderColor: Colors.transparent,
-                              borderRadius: 30.0,
-                              borderWidth: 1.0,
-                              buttonSize: 50.0,
+                              borderRadius: 30,
+                              borderWidth: 1,
+                              buttonSize: 50,
                               icon: Icon(
                                 Icons.arrow_back_rounded,
                                 color: FlutterFlowTheme.of(context).primaryText,
-                                size: 30.0,
+                                size: 30,
                               ),
                               onPressed: () async {
                                 context.pop();
@@ -109,8 +109,8 @@ class _BusinessEditProfileWidgetState extends State<BusinessEditProfileWidget> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                24.0, 0.0, 0.0, 0.0),
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
                             child: Text(
                               'Edit your Profile',
                               style: FlutterFlowTheme.of(context)
@@ -119,7 +119,7 @@ class _BusinessEditProfileWidgetState extends State<BusinessEditProfileWidget> {
                                     fontFamily: 'Outfit',
                                     color: FlutterFlowTheme.of(context)
                                         .primaryText,
-                                    fontSize: 22.0,
+                                    fontSize: 22,
                                   ),
                             ),
                           ),
@@ -132,7 +132,7 @@ class _BusinessEditProfileWidgetState extends State<BusinessEditProfileWidget> {
               centerTitle: true,
               expandedTitleScale: 1.0,
             ),
-            elevation: 0.0,
+            elevation: 0,
           ),
         ),
         body: SafeArea(
@@ -142,7 +142,7 @@ class _BusinessEditProfileWidgetState extends State<BusinessEditProfileWidget> {
               mainAxisSize: MainAxisSize.max,
               children: [
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -220,18 +220,18 @@ class _BusinessEditProfileWidgetState extends State<BusinessEditProfileWidget> {
                           }
                         },
                         child: Container(
-                          width: 100.0,
-                          height: 100.0,
+                          width: 100,
+                          height: 100,
                           decoration: BoxDecoration(
                             color: FlutterFlowTheme.of(context).alternate,
                             shape: BoxShape.circle,
                           ),
                           child: Padding(
-                            padding: EdgeInsets.all(2.0),
+                            padding: EdgeInsets.all(2),
                             child: AuthUserStreamWidget(
                               builder: (context) => Container(
-                                width: 90.0,
-                                height: 90.0,
+                                width: 90,
+                                height: 90,
                                 clipBehavior: Clip.antiAlias,
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
@@ -251,8 +251,7 @@ class _BusinessEditProfileWidgetState extends State<BusinessEditProfileWidget> {
                   ),
                 ),
                 Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 16.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 16),
                   child: AuthUserStreamWidget(
                     builder: (context) => TextFormField(
                       controller: _model.yourNameController,
@@ -266,36 +265,36 @@ class _BusinessEditProfileWidgetState extends State<BusinessEditProfileWidget> {
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: FlutterFlowTheme.of(context).alternate,
-                            width: 2.0,
+                            width: 2,
                           ),
-                          borderRadius: BorderRadius.circular(8.0),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: FlutterFlowTheme.of(context).primary,
-                            width: 2.0,
+                            width: 2,
                           ),
-                          borderRadius: BorderRadius.circular(8.0),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         errorBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: FlutterFlowTheme.of(context).error,
-                            width: 2.0,
+                            width: 2,
                           ),
-                          borderRadius: BorderRadius.circular(8.0),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: FlutterFlowTheme.of(context).error,
-                            width: 2.0,
+                            width: 2,
                           ),
-                          borderRadius: BorderRadius.circular(8.0),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         filled: true,
                         fillColor:
                             FlutterFlowTheme.of(context).secondaryBackground,
-                        contentPadding: EdgeInsetsDirectional.fromSTEB(
-                            20.0, 24.0, 0.0, 24.0),
+                        contentPadding:
+                            EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
                       ),
                       style: FlutterFlowTheme.of(context).bodyMedium,
                       validator: _model.yourNameControllerValidator
@@ -304,8 +303,7 @@ class _BusinessEditProfileWidgetState extends State<BusinessEditProfileWidget> {
                   ),
                 ),
                 Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 16.0),
+                  padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 16),
                   child: AuthUserStreamWidget(
                     builder: (context) => TextFormField(
                       controller: _model.heightController,
@@ -319,36 +317,36 @@ class _BusinessEditProfileWidgetState extends State<BusinessEditProfileWidget> {
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: FlutterFlowTheme.of(context).alternate,
-                            width: 2.0,
+                            width: 2,
                           ),
-                          borderRadius: BorderRadius.circular(8.0),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: FlutterFlowTheme.of(context).primary,
-                            width: 2.0,
+                            width: 2,
                           ),
-                          borderRadius: BorderRadius.circular(8.0),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         errorBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: FlutterFlowTheme.of(context).error,
-                            width: 2.0,
+                            width: 2,
                           ),
-                          borderRadius: BorderRadius.circular(8.0),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         focusedErrorBorder: OutlineInputBorder(
                           borderSide: BorderSide(
                             color: FlutterFlowTheme.of(context).error,
-                            width: 2.0,
+                            width: 2,
                           ),
-                          borderRadius: BorderRadius.circular(8.0),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         filled: true,
                         fillColor:
                             FlutterFlowTheme.of(context).secondaryBackground,
-                        contentPadding: EdgeInsetsDirectional.fromSTEB(
-                            20.0, 24.0, 0.0, 24.0),
+                        contentPadding:
+                            EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
                       ),
                       style: FlutterFlowTheme.of(context).bodyMedium,
                       validator:
@@ -367,8 +365,8 @@ class _BusinessEditProfileWidgetState extends State<BusinessEditProfileWidget> {
                       if (!snapshot.hasData) {
                         return Center(
                           child: SizedBox(
-                            width: 50.0,
-                            height: 50.0,
+                            width: 50,
+                            height: 50,
                             child: CircularProgressIndicator(
                               valueColor: AlwaysStoppedAnimation<Color>(
                                 FlutterFlowTheme.of(context).primary,
@@ -397,23 +395,22 @@ class _BusinessEditProfileWidgetState extends State<BusinessEditProfileWidget> {
                             dropDownGlobalPropertiesRecord!.businessCategories,
                         onChanged: (val) =>
                             setState(() => _model.dropDownValue = val),
-                        width: 300.0,
-                        height: 50.0,
+                        width: 300,
+                        height: 50,
                         textStyle: FlutterFlowTheme.of(context).bodyMedium,
                         hintText: 'Please select...',
                         icon: Icon(
                           Icons.keyboard_arrow_down_rounded,
                           color: FlutterFlowTheme.of(context).secondaryText,
-                          size: 24.0,
+                          size: 24,
                         ),
                         fillColor:
                             FlutterFlowTheme.of(context).secondaryBackground,
-                        elevation: 2.0,
+                        elevation: 2,
                         borderColor: FlutterFlowTheme.of(context).alternate,
-                        borderWidth: 2.0,
-                        borderRadius: 8.0,
-                        margin: EdgeInsetsDirectional.fromSTEB(
-                            16.0, 4.0, 16.0, 4.0),
+                        borderWidth: 2,
+                        borderRadius: 8,
+                        margin: EdgeInsetsDirectional.fromSTEB(16, 4, 16, 4),
                         hidesUnderline: true,
                         isOverButton: true,
                         isSearchable: false,
@@ -423,67 +420,76 @@ class _BusinessEditProfileWidgetState extends State<BusinessEditProfileWidget> {
                   ),
                 ),
                 Align(
-                  alignment: AlignmentDirectional(0.0, 0.05),
+                  alignment: AlignmentDirectional(0, 0.05),
                   child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
-                    child: StreamBuilder<List<UsersRecord>>(
-                      stream: queryUsersRecord(),
-                      builder: (context, snapshot) {
-                        // Customize what your widget looks like when it's loading.
-                        if (!snapshot.hasData) {
-                          return Center(
-                            child: SizedBox(
-                              width: 50.0,
-                              height: 50.0,
-                              child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  FlutterFlowTheme.of(context).primary,
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
+                    child: AuthUserStreamWidget(
+                      builder: (context) => StreamBuilder<List<UsersRecord>>(
+                        stream: queryUsersRecord(
+                          queryBuilder: (usersRecord) => usersRecord.where(
+                            'brand_name',
+                            isNotEqualTo: valueOrDefault(
+                                currentUserDocument?.brandName, ''),
+                          ),
+                        ),
+                        builder: (context, snapshot) {
+                          // Customize what your widget looks like when it's loading.
+                          if (!snapshot.hasData) {
+                            return Center(
+                              child: SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    FlutterFlowTheme.of(context).primary,
+                                  ),
                                 ),
                               ),
+                            );
+                          }
+                          List<UsersRecord> buttonUsersRecordList =
+                              snapshot.data!;
+                          return FFButtonWidget(
+                            onPressed: () async {
+                              if (!functions.doesUserExist(
+                                  buttonUsersRecordList.toList(),
+                                  _model.yourNameController.text)) {
+                                await currentUserReference!
+                                    .update(createUsersRecordData(
+                                  photoUrl: _model.uploadedFileUrl == ''
+                                      ? currentUserPhoto
+                                      : _model.uploadedFileUrl,
+                                  brandName: _model.yourNameController.text,
+                                  bio: _model.heightController.text,
+                                  category: _model.dropDownValue,
+                                ));
+                              }
+                            },
+                            text: 'Save Changes',
+                            options: FFButtonOptions(
+                              width: 270,
+                              height: 50,
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                              iconPadding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                              color: FlutterFlowTheme.of(context).primary,
+                              textStyle: FlutterFlowTheme.of(context)
+                                  .titleMedium
+                                  .override(
+                                    fontFamily: 'Readex Pro',
+                                    color: Colors.white,
+                                  ),
+                              elevation: 2,
+                              borderSide: BorderSide(
+                                color: Colors.transparent,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(12),
                             ),
                           );
-                        }
-                        List<UsersRecord> buttonUsersRecordList =
-                            snapshot.data!;
-                        return FFButtonWidget(
-                          onPressed: () async {
-                            if (!functions.doesUserExist(
-                                buttonUsersRecordList.toList(),
-                                _model.yourNameController.text)) {
-                              await currentUserReference!
-                                  .update(createUsersRecordData(
-                                photoUrl: _model.uploadedFileUrl,
-                                brandName: _model.yourNameController.text,
-                                bio: _model.heightController.text,
-                                category: _model.dropDownValue,
-                              ));
-                            }
-                          },
-                          text: 'Save Changes',
-                          options: FFButtonOptions(
-                            width: 270.0,
-                            height: 50.0,
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                0.0, 0.0, 0.0, 0.0),
-                            color: FlutterFlowTheme.of(context).primary,
-                            textStyle: FlutterFlowTheme.of(context)
-                                .titleMedium
-                                .override(
-                                  fontFamily: 'Readex Pro',
-                                  color: Colors.white,
-                                ),
-                            elevation: 2.0,
-                            borderSide: BorderSide(
-                              color: Colors.transparent,
-                              width: 1.0,
-                            ),
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                        );
-                      },
+                        },
+                      ),
                     ),
                   ),
                 ),

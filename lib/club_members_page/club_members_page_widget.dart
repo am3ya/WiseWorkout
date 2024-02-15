@@ -445,6 +445,8 @@ class _ClubMembersPageWidgetState extends State<ClubMembersPageWidget>
                             onPressed: () async {
                               await clubMembersPageClubsRecord!.reference
                                   .delete();
+
+                              context.goNamed('adminProfile');
                             },
                             text: 'DELETE CLUB',
                             options: FFButtonOptions(
