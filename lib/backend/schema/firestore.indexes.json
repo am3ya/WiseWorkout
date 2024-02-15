@@ -15,6 +15,10 @@
         {
           "fieldPath": "isActive",
           "order": "ASCENDING"
+        },
+        {
+          "fieldPath":"timesFavourited",
+          "order":"DESCENDING"
         }
       ]
     },
