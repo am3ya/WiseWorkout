@@ -12,6 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
+
 import 'history_model.dart';
 export 'history_model.dart';
 
@@ -72,24 +73,24 @@ class _HistoryWidgetState extends State<HistoryWidget> {
               text: '',
               icon: Icon(
                 Icons.keyboard_backspace,
-                size: 15.0,
+                size: 15,
               ),
               options: FFButtonOptions(
-                width: 48.0,
-                height: 48.0,
-                padding: EdgeInsets.all(0.0),
-                iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                width: 48,
+                height: 48,
+                padding: EdgeInsets.all(0),
+                iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                 color: FlutterFlowTheme.of(context).primary,
                 textStyle: FlutterFlowTheme.of(context).titleSmall.override(
                       fontFamily: 'Readex Pro',
                       color: Colors.white,
                     ),
-                elevation: 3.0,
+                elevation: 3,
                 borderSide: BorderSide(
                   color: Colors.transparent,
-                  width: 1.0,
+                  width: 1,
                 ),
-                borderRadius: BorderRadius.circular(8.0),
+                borderRadius: BorderRadius.circular(8),
               ),
             ),
             title: Text(
@@ -97,12 +98,12 @@ class _HistoryWidgetState extends State<HistoryWidget> {
               style: FlutterFlowTheme.of(context).headlineMedium.override(
                     fontFamily: 'Outfit',
                     color: Colors.white,
-                    fontSize: 22.0,
+                    fontSize: 22,
                   ),
             ),
             actions: [],
             centerTitle: false,
-            elevation: 2.0,
+            elevation: 2,
           ),
           body: SafeArea(
             top: true,
@@ -111,21 +112,20 @@ class _HistoryWidgetState extends State<HistoryWidget> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                     child: StreamBuilder<List<WorkoutsRecord>>(
                       stream: queryWorkoutsRecord(
                         parent: currentUserReference,
                         queryBuilder: (workoutsRecord) =>
-                        workoutsRecord.orderBy('dateUploaded'),
+                            workoutsRecord.orderBy('dateUploaded'),
                       ),
                       builder: (context, snapshot) {
                         // Customize what your widget looks like when it's loading.
                         if (!snapshot.hasData) {
                           return Center(
                             child: SizedBox(
-                              width: 50.0,
-                              height: 50.0,
+                              width: 50,
+                              height: 50,
                               child: CircularProgressIndicator(
                                 valueColor: AlwaysStoppedAnimation<Color>(
                                   FlutterFlowTheme.of(context).primary,
@@ -141,6 +141,7 @@ class _HistoryWidgetState extends State<HistoryWidget> {
                         }
                         return ListView.builder(
                           padding: EdgeInsets.zero,
+                          primary: false,
                           shrinkWrap: true,
                           scrollDirection: Axis.vertical,
                           itemCount: listViewWorkoutsRecordList.length,
@@ -148,11 +149,11 @@ class _HistoryWidgetState extends State<HistoryWidget> {
                             final listViewWorkoutsRecord =
                                 listViewWorkoutsRecordList[listViewIndex];
                             return Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 5.0),
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 0, 5),
                               child: Container(
-                                width: 100.0,
-                                height: 130.0,
+                                width: 100,
+                                height: 130,
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
@@ -192,7 +193,7 @@ class _HistoryWidgetState extends State<HistoryWidget> {
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    75.0, 0.0, 0.0, 0.0),
+                                                    75, 0, 0, 0),
                                             child: RichText(
                                               textScaleFactor:
                                                   MediaQuery.of(context)
@@ -224,7 +225,7 @@ class _HistoryWidgetState extends State<HistoryWidget> {
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    40.0, 0.0, 0.0, 0.0),
+                                                    40, 0, 0, 0),
                                             child: Text(
                                               listViewWorkoutsRecord.stepsTaken
                                                   .toString(),
@@ -247,13 +248,13 @@ class _HistoryWidgetState extends State<HistoryWidget> {
                                                 .bodyMedium
                                                 .override(
                                                   fontFamily: 'Readex Pro',
-                                                  fontSize: 20.0,
+                                                  fontSize: 20,
                                                 ),
                                           ),
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    50.0, 0.0, 0.0, 0.0),
+                                                    50, 0, 0, 0),
                                             child: RichText(
                                               textScaleFactor:
                                                   MediaQuery.of(context)
@@ -285,7 +286,7 @@ class _HistoryWidgetState extends State<HistoryWidget> {
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    30.0, 0.0, 0.0, 0.0),
+                                                    30, 0, 0, 0),
                                             child: Text(
                                               listViewWorkoutsRecord.distance
                                                   .toString(),
@@ -302,7 +303,7 @@ class _HistoryWidgetState extends State<HistoryWidget> {
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    140.0, 5.0, 0.0, 0.0),
+                                                    140, 5, 0, 0),
                                             child: RichText(
                                               textScaleFactor:
                                                   MediaQuery.of(context)
@@ -334,7 +335,7 @@ class _HistoryWidgetState extends State<HistoryWidget> {
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    40.0, 0.0, 0.0, 0.0),
+                                                    40, 0, 0, 0),
                                             child: Text(
                                               listViewWorkoutsRecord
                                                   .caloriesBurned
@@ -357,9 +358,9 @@ class _HistoryWidgetState extends State<HistoryWidget> {
                                               borderColor:
                                                   FlutterFlowTheme.of(context)
                                                       .primary,
-                                              borderRadius: 20.0,
-                                              borderWidth: 1.0,
-                                              buttonSize: 40.0,
+                                              borderRadius: 20,
+                                              borderWidth: 1,
+                                              buttonSize: 40,
                                               fillColor:
                                                   FlutterFlowTheme.of(context)
                                                       .accent1,
@@ -368,7 +369,7 @@ class _HistoryWidgetState extends State<HistoryWidget> {
                                                 color:
                                                     FlutterFlowTheme.of(context)
                                                         .primaryText,
-                                                size: 24.0,
+                                                size: 24,
                                               ),
                                               onPressed: () async {
                                                 await Share.share(
@@ -394,7 +395,7 @@ class _HistoryWidgetState extends State<HistoryWidget> {
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    130.0, 8.0, 0.0, 0.0),
+                                                    130, 8, 0, 0),
                                             child: RichText(
                                               textScaleFactor:
                                                   MediaQuery.of(context)
@@ -426,7 +427,7 @@ class _HistoryWidgetState extends State<HistoryWidget> {
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    40.0, 0.0, 0.0, 0.0),
+                                                    40, 0, 0, 0),
                                             child: Text(
                                               functions.formatDuration(
                                                   listViewWorkoutsRecord

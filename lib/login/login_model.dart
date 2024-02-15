@@ -1,5 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/components/email_not_verified_widget.dart';
 import '/components/username_empty_widget.dart';
 import '/components/username_exists_widget.dart';
 import '/components/username_no_spaces_widget.dart';
